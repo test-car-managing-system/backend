@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  sql:
+    init:
+      platform: mysql
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:test}?autoReconnect=true&setTimezone=Asia/Seoul
+    username: ${DB_USERNAME:test}
+    password: ${DB_PASSWORD:example}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: ${MAX_CONNECTION_POOL_SIZE:30}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    generate-ddl: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
