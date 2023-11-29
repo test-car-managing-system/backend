@@ -9,7 +9,7 @@ CREATE TABLE `Member` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_MEMBER PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Department` (
     `id`	        BIGINT	        NOT NULL	COMMENT '부서 id',
@@ -18,7 +18,7 @@ CREATE TABLE `Department` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_DEPARTMENT PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Car` (
     `id`	        BIGINT	        NOT NULL	COMMENT '차량 id',
@@ -29,7 +29,7 @@ CREATE TABLE `Car` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_MEMBER PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `CarStock` (
     `id`	        BIGINT	        NOT NULL	COMMENT '차량재고 id',
@@ -40,7 +40,7 @@ CREATE TABLE `CarStock` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_CAR_STOCK PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `CarReservation` (
     `id`	        BIGINT	        NOT NULL	COMMENT '시험차량 대여 id',
@@ -52,7 +52,7 @@ CREATE TABLE `CarReservation` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_CAR_RESERVATION PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Track` (
     `id`	        BIGINT	        NOT NULL	COMMENT '시험장 id',
@@ -66,7 +66,7 @@ CREATE TABLE `Track` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_TRACK PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `TrackReservation` (
     `id`	        BIGINT	        NOT NULL	COMMENT '주행시험장 대여 id',
@@ -78,7 +78,7 @@ CREATE TABLE `TrackReservation` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_TRACK_RESERVATION PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `CarTest` (
     `id`	        BIGINT	        NOT NULL	COMMENT '주행시험 이력 id',
@@ -92,7 +92,7 @@ CREATE TABLE `CarTest` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_CAR_TEST PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `GasStation` (
     `id`	        BIGINT	        NOT NULL	COMMENT '주유소 id',
@@ -101,7 +101,7 @@ CREATE TABLE `GasStation` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_GAS_STATION PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `GasStationHistory` (
     `id`	        BIGINT	        NOT NULL	COMMENT '주유소 이용 id',
@@ -114,7 +114,7 @@ CREATE TABLE `GasStationHistory` (
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
     `deleted`       BIT(1)          NOT NULL    COMMENT '삭제 여부',
     CONSTRAINT PK_GAS_STATION_HISTORY PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `Member`
     ADD CONSTRAINT FK_MEMBER_DEPARTMENT_ID FOREIGN KEY (departmentId) REFERENCES Department(id);
