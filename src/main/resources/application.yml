@@ -6,9 +6,9 @@ spring:
     init:
       platform: mysql
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:test}?autoReconnect=true&setTimezone=Asia/Seoul
-    username: ${DB_USERNAME:test}
-    password: ${DB_PASSWORD:example}
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:test_car}?autoReconnect=true&setTimezone=Asia/Seoul
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: ${MAX_CONNECTION_POOL_SIZE:30}
@@ -26,6 +26,3 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:test}?autoReconnect=true&setTimezone=Asia/Seoul
-    user: ${DB_USERNAME:test}
-    password: ${DB_PASSWORD:example}
