@@ -1,5 +1,5 @@
 CREATE TABLE `Member` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '사용자 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '사용자 id',
     `departmentId`	BIGINT	        NOT NULL	COMMENT '부서 id',
     `email`	        VARCHAR(50)	    NOT NULL	COMMENT '이메일(계정)',
     `password`	    VARCHAR(50)	    NOT NULL	COMMENT '패스워드',
@@ -12,7 +12,7 @@ CREATE TABLE `Member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Department` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '부서 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '부서 id',
     `name`	        VARCHAR(20)	    NOT NULL	COMMENT '부서명',
     `createdAt`	    DATETIME(6)	    NOT NULL	COMMENT '생성일시',
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
@@ -21,7 +21,7 @@ CREATE TABLE `Department` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Car` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '차량 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '차량 id',
     `name`	        VARCHAR(50)	    NOT NULL	COMMENT '차량명',
     `releasedAt`	DATETIME(6)	    NOT NULL	COMMENT '출시일자',
     `type`	        VARCHAR(10)	    NOT NULL	COMMENT '처종',
@@ -32,7 +32,7 @@ CREATE TABLE `Car` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `CarStock` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '차량재고 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '차량재고 id',
     `carId`	        BIGINT	        NOT NULL	COMMENT '차량 id',
     `stockNumber`	VARCHAR(12)	    NOT NULL	COMMENT '재고번호',
     `status`	    VARCHAR(10)	    NOT NULL	COMMENT '재고상태',
@@ -43,7 +43,7 @@ CREATE TABLE `CarStock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `CarReservation` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '시험차량 대여 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '시험차량 대여 id',
     `memberId`	    BIGINT	        NOT NULL	COMMENT '사용자 id',
     `carStockId`	BIGINT	        NOT NULL	COMMENT '차량재고 id',
     `reservedAt`	DATETIME(6)	    NOT NULL	COMMENT '대여시각',
@@ -55,7 +55,7 @@ CREATE TABLE `CarReservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Track` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '시험장 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '시험장 id',
     `name`	        VARCHAR(50)	    NOT NULL	COMMENT '시험장 이름',
     `location`	    VARCHAR(255)	NOT NULL	COMMENT '위치',
     `latitude`	    DOUBLE	            NULL	COMMENT '위도',
@@ -69,7 +69,7 @@ CREATE TABLE `Track` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `TrackReservation` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '주행시험장 대여 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '주행시험장 대여 id',
     `memberId`	    BIGINT	        NOT NULL	COMMENT '사용자 id',
     `trackId`	    BIGINT	        NOT NULL	COMMENT '시험장 id',
     `reservedAt`	DATETIME(6)	    NOT NULL	COMMENT '예약시각',
@@ -81,7 +81,7 @@ CREATE TABLE `TrackReservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `CarTest` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '주행시험 이력 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '주행시험 이력 id',
     `memberId`	    BIGINT	        NOT NULL	COMMENT '사용자 id',
     `trackId`	    BIGINT	        NOT NULL	COMMENT '시험장 id',
     `carStockId`	BIGINT	        NOT NULL	COMMENT '차량재고 id',
@@ -95,7 +95,7 @@ CREATE TABLE `CarTest` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `GasStation` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '주유소 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '주유소 id',
     `name`	        VARCHAR(50)	    NOT NULL	COMMENT '이름',
     `createdAt`	    DATETIME(6)	    NOT NULL	COMMENT '생성일시',
     `updatedAt`	    DATETIME(6)	    NOT NULL	COMMENT '수정일시',
@@ -104,7 +104,7 @@ CREATE TABLE `GasStation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `GasStationHistory` (
-    `id`	        BIGINT	        NOT NULL	COMMENT '주유소 이용 id',
+    `id`	        BIGINT	        NOT NULL	AUTO_INCREMENT COMMENT '주유소 이용 id',
     `memberId`	    BIGINT	        NOT NULL	COMMENT '사용자 id',
     `gasStationId`	BIGINT	        NOT NULL	COMMENT '주유소 id',
     `carStockId`	BIGINT	        NOT NULL	COMMENT '차량재고 id',

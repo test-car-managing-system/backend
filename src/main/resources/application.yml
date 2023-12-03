@@ -26,3 +26,6 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY:secret1231241232141asdasdwe}

@@ -1,6 +1,6 @@
 package com.testcar.car.config;
 
-import static com.testcar.car.common.exception.ErrorCode._INTERNAL_SERVER_ERROR;
+import static com.testcar.car.common.exception.ErrorCode.INTERNAL_SERVER_ERROR;
 
 import com.testcar.car.common.exception.BaseException;
 import com.testcar.car.common.exception.InternalServerException;
@@ -25,7 +25,7 @@ public class ExceptionAdvice {
     protected ResponseEntity<ErrorResponse> handleAllException(Exception e) {
         log.error("Exception has occurred ", e);
         final InternalServerException exception =
-                new InternalServerException(_INTERNAL_SERVER_ERROR);
+                new InternalServerException(INTERNAL_SERVER_ERROR);
         final ErrorResponse response = ErrorResponse.from(exception);
         return new ResponseEntity<>(response, exception.getHttpStatus());
     }
