@@ -1,6 +1,7 @@
 package com.testcar.car.common.response;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testcar.car.common.exception.BaseException;
 import com.testcar.car.common.exception.ErrorField;
 import java.time.LocalDateTime;
@@ -19,8 +20,10 @@ public class ErrorResponse {
     private final boolean success = false;
     private int status;
     private String message;
-    private List<ErrorField> errors;
     private String code;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<ErrorField> errors;
 
     public static ErrorResponse from(BaseException exception) {
         return ErrorResponse.builder()
