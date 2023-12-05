@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,9 +29,9 @@ public class Car extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
-    // 출시일자
+    // 배기량
     @Column(nullable = false)
-    private LocalDateTime releasedAt;
+    private Double displacement;
 
     // 차종
     @Column(nullable = false)
@@ -40,9 +39,16 @@ public class Car extends BaseEntity {
     private Type type;
 
     @Builder
-    public Car(String name, LocalDateTime releasedAt, Type type) {
+    public Car(String name, Double displacement, Type type) {
         this.name = name;
-        this.releasedAt = releasedAt;
+        this.displacement = displacement;
         this.type = type;
+    }
+
+    public Car update(Car car) {
+        this.name = car.getName();
+        this.displacement = car.getDisplacement();
+        this.type = car.getType();
+        return this;
     }
 }
