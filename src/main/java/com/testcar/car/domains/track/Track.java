@@ -52,4 +52,11 @@ public class Track extends BaseEntity {
         this.description = description;
         this.length = length;
     }
+
+    public void update(Track track) {
+        this.name = track.getName();
+        this.location = track.getLocation();
+        this.description = track.getDescription();
+        this.length = track.getLength();
+    }
 }
