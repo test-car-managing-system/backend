@@ -1,12 +1,12 @@
 package com.testcar.car.common.resolver;
 
-import static com.testcar.car.domains.member.ErrorCode.MEMBER_NOT_FOUND;
+import static com.testcar.car.domains.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 import com.testcar.car.common.annotation.AuthMember;
 import com.testcar.car.common.auth.JwtService;
 import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.MemberRepository;
+import com.testcar.car.domains.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.Nullable;
@@ -34,7 +34,7 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
             @Nullable ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest,
             @Nullable WebDataBinderFactory binderFactory) {
-        final Long userId = jwtService.getUserId();
+        final Long userId = jwtService.getMemberId();
         return memberRepository
                 .findByIdAndDeletedFalse(userId)
                 .orElseThrow(() -> new NotFoundException(MEMBER_NOT_FOUND));

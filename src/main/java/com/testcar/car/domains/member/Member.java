@@ -2,6 +2,7 @@ package com.testcar.car.domains.member;
 
 
 import com.testcar.car.common.entity.BaseEntity;
+import com.testcar.car.domains.department.Department;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,19 +29,24 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 부서
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departmentId", nullable = false)
     private Department department;
 
+    // 이메일 아이디
     @Column(length = 50, nullable = false)
     private String email;
 
+    // 비밀번호
     @Column(length = 50, nullable = false)
     private String password;
 
+    // 이름
     @Column(length = 20, nullable = false)
     private String name;
 
+    // 권한
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -52,5 +58,14 @@ public class Member extends BaseEntity {
         this.password = password;
         this.name = name;
         this.role = role;
+    }
+
+    public Member update(Member member) {
+        this.department = member.getDepartment();
+        this.email = member.getEmail();
+        this.password = member.getPassword();
+        this.name = member.getName();
+        this.role = member.getRole();
+        return this;
     }
 }

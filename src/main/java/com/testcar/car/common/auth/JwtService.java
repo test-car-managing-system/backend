@@ -28,20 +28,20 @@ public class JwtService {
     private static final String BEARER = "^Bearer( )*";
     private final JwtProperty jwtProperty;
 
-    public String generateAccessToken(Long userId) {
+    public String generateAccessToken(Long memberId) {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam(HEADER_KEY, HEADER_VALUE)
-                .claim(CLAIM_KEY, userId)
+                .claim(CLAIM_KEY, memberId)
                 .setIssuedAt(now)
                 .setExpiration(getExpiryDate())
                 .signWith(SignatureAlgorithm.HS256, jwtProperty.getSecretKey())
                 .compact();
     }
 
-    public Long getUserId() {
+    public Long getMemberId() {
         final String accessToken = getBearerToken();
-        return parseUserId(accessToken);
+        return parseMemberId(accessToken);
     }
 
     private String getBearerToken() {
@@ -57,7 +57,7 @@ public class JwtService {
         return accessToken.replaceAll(BEARER, "");
     }
 
-    private Long parseUserId(String token) {
+    private Long parseMemberId(String token) {
         try {
             Jws<Claims> claims =
                     Jwts.parser().setSigningKey(jwtProperty.getSecretKey()).parseClaimsJws(token);
