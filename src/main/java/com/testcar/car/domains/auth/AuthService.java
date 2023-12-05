@@ -26,8 +26,7 @@ public class AuthService {
                         .findByEmailAndDeletedFalse(request.getEmail())
                         .orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
         final String memberPassword = member.getPassword();
-        final String encodedPassword = PasswordEncoder.encode(request.getPassword());
-        if (!memberPassword.equals(encodedPassword)) {
+        if (!PasswordEncoder.matches(request.getPassword(), memberPassword)) {
             throw new UnauthorizedException(ErrorCode.INVALID_PASSWORD);
         }
         return jwtService.generateAccessToken(member.getId());

@@ -34,7 +34,7 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
             @Nullable ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest,
             @Nullable WebDataBinderFactory binderFactory) {
-        final Long userId = jwtService.getUserId();
+        final Long userId = jwtService.getMemberId();
         return memberRepository
                 .findByIdAndDeletedFalse(userId)
                 .orElseThrow(() -> new NotFoundException(MEMBER_NOT_FOUND));

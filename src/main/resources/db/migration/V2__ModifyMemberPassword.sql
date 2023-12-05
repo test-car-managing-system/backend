@@ -1,0 +1,2 @@
+ALTER TABLE `Member`
+    MODIFY COLUMN `password` VARCHAR(100) NOT NULL COMMENT '비밀번호';

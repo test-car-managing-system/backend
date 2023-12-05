@@ -2,6 +2,7 @@ package com.testcar.car.domains.member;
 
 
 import com.testcar.car.common.annotation.AuthMember;
+import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.domains.member.model.MemberResponse;
 import com.testcar.car.domains.member.model.RegisterMemberRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +26,7 @@ public class MemberController {
         return MemberResponse.from(member);
     }
 
+    @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[사용자 관리] 계정 생성", description = "새로운 사용자 계정을 생성합니다.")
     @PostMapping("/register")
     public MemberResponse register(@Valid @RequestBody RegisterMemberRequest request) {
