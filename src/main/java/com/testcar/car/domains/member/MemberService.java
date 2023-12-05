@@ -32,39 +32,42 @@ public class MemberService {
 
     /** 사용자를 조건에 맞게 조회합니다. */
     public Page<Member> findAllPageByCondition(MemberFilterCondition condition, Pageable pageable) {
-        return memberRepository.findAllPageByCondition(condition);
+        return memberRepository.findAllPageByCondition(condition, pageable);
     }
 
     /** 새로운 계정을 등록합니다. */
     public Member register(RegisterMemberRequest request) {
-        validateEmailNotDuplicated(request.getEmail());
-        final Department department = departmentService.findById(request.getDepartmentId());
-        final String encodedPassword = PasswordEncoder.encode(request.getPassword());
-        final Member member =
-                Member.builder()
-                        .department(department)
-                        .email(request.getEmail())
-                        .password(encodedPassword)
-                        .name(request.getName())
-                        .role(request.getRole())
-                        .build();
+        final Member member = createEntity(request);
         return memberRepository.save(member);
     }
 
-    /** 계정을 삭제합니다. */
-    public Member update(RegisterMemberRequest request) {
+    /** 계정 정보를 업데이트 합니다. */
+    public Member updateById(Long memberId, RegisterMemberRequest request) {
+        final Member member = this.findById(memberId);
+        final Member updateMember = createEntity(request);
+        member.update(updateMember);
+        return memberRepository.save(member);
+    }
+
+    /** 계정을 삭제 처리 합니다. (soft delete) */
+    public Member deleteById(Long memberId) {
+        final Member member = this.findById(memberId);
+        member.delete();
+        return memberRepository.save(member);
+    }
+
+    /** 영속되지 않은 멤버 엔티티를 생성합니다. */
+    private Member createEntity(RegisterMemberRequest request) {
         validateEmailNotDuplicated(request.getEmail());
         final Department department = departmentService.findById(request.getDepartmentId());
         final String encodedPassword = PasswordEncoder.encode(request.getPassword());
-        final Member member =
-                Member.builder()
-                        .department(department)
-                        .email(request.getEmail())
-                        .password(encodedPassword)
-                        .name(request.getName())
-                        .role(request.getRole())
-                        .build();
-        return memberRepository.save(member);
+        return Member.builder()
+                .department(department)
+                .email(request.getEmail())
+                .password(encodedPassword)
+                .name(request.getName())
+                .role(request.getRole())
+                .build();
     }
 
     /** 이메일 중복을 검사합니다. */

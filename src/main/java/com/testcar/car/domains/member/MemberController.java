@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +56,23 @@ public class MemberController {
     @PostMapping("/register")
     public MemberResponse register(@Valid @RequestBody RegisterMemberRequest request) {
         final Member member = memberService.register(request);
+        return MemberResponse.from(member);
+    }
+
+    @RoleAllowed(role = Role.ADMIN)
+    @Operation(summary = "[사용자 관리] 사용자 정보 수정", description = "(관리자) 사용자 정보를 수정합니다.")
+    @PatchMapping("/{memberId}")
+    public MemberResponse update(
+            @PathVariable Long memberId, @Valid @RequestBody RegisterMemberRequest request) {
+        final Member member = memberService.updateById(memberId, request);
+        return MemberResponse.from(member);
+    }
+
+    @RoleAllowed(role = Role.ADMIN)
+    @Operation(summary = "[사용자 관리] 사용자 삭제", description = "(관리자) 사용자를 삭제합니다.")
+    @DeleteMapping("/{memberId}")
+    public MemberResponse withdraw(@PathVariable Long memberId) {
+        final Member member = memberService.deleteById(memberId);
         return MemberResponse.from(member);
     }
 }
