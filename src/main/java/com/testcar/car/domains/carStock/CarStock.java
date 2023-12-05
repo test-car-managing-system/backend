@@ -46,4 +46,12 @@ public class CarStock extends BaseEntity {
         this.stockNumber = stockNumber;
         this.status = status;
     }
+
+    public void updateStockNumber(String stockNumber) {
+        this.stockNumber = stockNumber;
+    }
+
+    public void updateStatus(StockStatus status) {
+        this.status = status;
+    }
 }

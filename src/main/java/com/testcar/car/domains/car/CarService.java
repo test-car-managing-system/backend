@@ -26,6 +26,13 @@ public class CarService {
                 .orElseThrow(() -> new NotFoundException(ErrorCode.CAR_NOT_FOUND));
     }
 
+    /** 차량을 이름으로 조회합니다. */
+    public Car findByName(String name) {
+        return carRepository
+                .findByNameAndDeletedFalse(name)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.CAR_NOT_FOUND));
+    }
+
     /** 차량을 조건에 맞게 조회합니다. */
     public Page<Car> findAllPageByCondition(CarFilterCondition condition, Pageable pageable) {
         return carRepository.findAllPageByCondition(condition, pageable);
