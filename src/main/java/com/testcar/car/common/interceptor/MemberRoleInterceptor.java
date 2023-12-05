@@ -8,7 +8,7 @@ import com.testcar.car.common.auth.JwtService;
 import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.common.exception.UnauthorizedException;
 import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.MemberRepository;
+import com.testcar.car.domains.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

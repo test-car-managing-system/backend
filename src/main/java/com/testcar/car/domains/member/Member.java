@@ -29,19 +29,28 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 부서
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departmentId", nullable = false)
     private Department department;
 
+    // 이메일 아이디
     @Column(length = 50, nullable = false)
     private String email;
 
+    // 비밀번호
     @Column(length = 50, nullable = false)
     private String password;
 
+    // 이름
     @Column(length = 20, nullable = false)
     private String name;
 
+    // 직책명
+    @Column(length = 20, nullable = false)
+    private String position;
+
+    // 권한
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
