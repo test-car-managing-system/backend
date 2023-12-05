@@ -8,6 +8,7 @@ import com.testcar.car.common.auth.JwtService;
 import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.common.exception.UnauthorizedException;
 import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.Role;
 import com.testcar.car.domains.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,10 +38,18 @@ public class MemberRoleInterceptor implements HandlerInterceptor {
                     memberRepository
                             .findByIdAndDeletedFalse(memberId)
                             .orElseThrow(() -> new NotFoundException(MEMBER_NOT_FOUND));
-            if (member.getRole() != role.role()) {
+            if (!isRoleAllowed(role, member)) {
                 throw new UnauthorizedException(UNAUTHORIZED_USER);
             }
         }
         return true;
+    }
+
+    private boolean isRoleAllowed(RoleAllowed role, Member member) {
+        final Role memberRole = member.getRole();
+        return switch (role.role()) {
+            case ADMIN -> memberRole == Role.ADMIN;
+            case USER -> memberRole == Role.ADMIN || memberRole == Role.USER;
+        };
     }
 }
