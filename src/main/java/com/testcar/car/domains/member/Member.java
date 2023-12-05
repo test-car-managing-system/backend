@@ -46,10 +46,6 @@ public class Member extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String name;
 
-    // 직책명
-    @Column(length = 20, nullable = false)
-    private String position;
-
     // 권한
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

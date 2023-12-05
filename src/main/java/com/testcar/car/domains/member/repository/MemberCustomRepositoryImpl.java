@@ -1,5 +1,6 @@
 package com.testcar.car.domains.member.repository;
 
+import static com.testcar.car.domains.department.QDepartment.department;
 import static com.testcar.car.domains.member.QMember.member;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -40,7 +41,7 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository, BaseQ
         final List<Member> members =
                 jpaQueryFactory
                         .selectFrom(member)
-                        .leftJoin(member.department)
+                        .leftJoin(member.department, department)
                         .fetchJoin()
                         .where(member.id.in(coveringIndex))
                         .offset(pageable.getOffset())
