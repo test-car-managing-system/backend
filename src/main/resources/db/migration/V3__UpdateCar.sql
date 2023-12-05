@@ -1,0 +1,9 @@
+DROP INDEX `IDX_CAR_RELEASED_AT` ON `Car`;
+
+ALTER TABLE `Car`
+    DROP COLUMN `releasedAt`;
+
+ALTER TABLE `Car`
+    ADD COLUMN `displacement` DOUBLE NOT NULL COMMENT '배기량';
+
+CREATE INDEX IDX_CAR_CREATED_AT ON `Car` (createdAt);
