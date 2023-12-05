@@ -29,14 +29,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
 
-    @Operation(summary = "[사용자 관리] 내 정보", description = "나의 정보를 가져옵니다.")
     @GetMapping("/me")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[사용자 관리] 내 정보", description = "나의 정보를 가져옵니다.")
     public MemberResponse getMe(@AuthMember Member member) {
         return MemberResponse.from(member);
     }
 
-    @Operation(summary = "[사용자 관리] 사용자 조회 필터", description = "조건에 맞는 모든 사용자를 페이지네이션으로 조회합니다.")
     @GetMapping
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[사용자 관리] 사용자 조회 필터", description = "조건에 맞는 모든 사용자를 페이지네이션으로 조회합니다.")
     public PageResponse<MemberResponse> getMembersByCondition(
             @ParameterObject @ModelAttribute MemberFilterCondition condition,
             @ParameterObject Pageable pageable) {
@@ -44,33 +46,34 @@ public class MemberController {
         return PageResponse.from(members.map(MemberResponse::from));
     }
 
-    @Operation(summary = "[사용자 관리] 사용자 상세 정보", description = "사용자의 상세 정보를 가져옵니다.")
     @GetMapping("/{memberId}")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[사용자 관리] 사용자 상세 정보", description = "사용자의 상세 정보를 가져옵니다.")
     public MemberResponse getMemberById(@PathVariable Long memberId) {
         final Member member = memberService.findById(memberId);
         return MemberResponse.from(member);
     }
 
+    @PostMapping("/register")
     @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[사용자 관리] 계정 생성", description = "(관리자) 새로운 사용자 계정을 생성합니다.")
-    @PostMapping("/register")
     public MemberResponse register(@Valid @RequestBody RegisterMemberRequest request) {
         final Member member = memberService.register(request);
         return MemberResponse.from(member);
     }
 
+    @PatchMapping("/{memberId}")
     @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[사용자 관리] 사용자 정보 수정", description = "(관리자) 사용자 정보를 수정합니다.")
-    @PatchMapping("/{memberId}")
     public MemberResponse update(
             @PathVariable Long memberId, @Valid @RequestBody RegisterMemberRequest request) {
         final Member member = memberService.updateById(memberId, request);
         return MemberResponse.from(member);
     }
 
+    @DeleteMapping("/{memberId}")
     @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[사용자 관리] 사용자 삭제", description = "(관리자) 사용자를 삭제합니다.")
-    @DeleteMapping("/{memberId}")
     public MemberResponse withdraw(@PathVariable Long memberId) {
         final Member member = memberService.deleteById(memberId);
         return MemberResponse.from(member);
