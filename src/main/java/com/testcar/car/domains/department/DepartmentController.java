@@ -22,6 +22,7 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
+    @RoleAllowed(role = Role.USER)
     @Operation(summary = "[부서 관리] 부서 조회", description = "전체 부서를 조회합니다.")
     public List<DepartmentResponse> findAll() {
         final List<Department> departments = departmentService.findAll();
