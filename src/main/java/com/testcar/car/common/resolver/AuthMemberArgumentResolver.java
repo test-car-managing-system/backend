@@ -1,6 +1,6 @@
 package com.testcar.car.common.resolver;
 
-import static com.testcar.car.domains.member.ErrorCode.MEMBER_NOT_FOUND;
+import static com.testcar.car.domains.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 import com.testcar.car.common.annotation.AuthMember;
 import com.testcar.car.common.auth.JwtService;

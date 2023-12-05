@@ -2,6 +2,7 @@ package com.testcar.car.domains.member;
 
 
 import com.testcar.car.common.entity.BaseEntity;
+import com.testcar.car.domains.department.Department;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
