@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -48,8 +49,8 @@ public class Track extends BaseEntity {
     @Column(nullable = false)
     private Double length;
 
-    @OneToMany(mappedBy = "trackReservation")
-    private Set<TrackReservationSlot> trackReservationSlots;
+    @OneToMany(mappedBy = "track")
+    private Set<TrackReservationSlot> trackReservationSlots = new HashSet<>();
 
     @Builder
     public Track(String name, String location, String description, Double length) {

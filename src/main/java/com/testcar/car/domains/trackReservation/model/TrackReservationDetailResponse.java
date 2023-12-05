@@ -4,9 +4,11 @@ package com.testcar.car.domains.trackReservation.model;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.trackReservation.ReservationStatus;
 import com.testcar.car.domains.trackReservation.TrackReservation;
+import com.testcar.car.domains.trackReservation.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.vo.ReservationSlotVo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -38,13 +40,9 @@ public class TrackReservationDetailResponse {
     private List<ReservationSlotVo> reservationTime;
 
     public static TrackReservationDetailResponse from(
-            Member member, List<TrackReservation> trackReservations) {
-        final TrackReservation trackReservation =
-                trackReservations.stream().findFirst().orElseThrow();
-        final List<ReservationSlotVo> reservedTimes =
-                trackReservations.stream()
-                        .map(it -> ReservationSlotVo.from(it.getStartedAt()))
-                        .toList();
+            Member member, TrackReservation trackReservation) {
+        final Set<TrackReservationSlot> slots = trackReservation.getTrackReservationSlots();
+        List<ReservationSlotVo> slotsVo = slots.stream().map(ReservationSlotVo::from).toList();
 
         return TrackReservationDetailResponse.builder()
                 .id(trackReservation.getId())
@@ -55,7 +53,7 @@ public class TrackReservationDetailResponse {
                 .description(trackReservation.getTrack().getDescription())
                 .length(trackReservation.getTrack().getLength())
                 .status(trackReservation.getStatus())
-                .reservationTime(reservedTimes)
+                .reservationTime(slotsVo)
                 .build();
     }
 }

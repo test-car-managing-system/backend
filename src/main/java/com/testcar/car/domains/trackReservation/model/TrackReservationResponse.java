@@ -2,8 +2,10 @@ package com.testcar.car.domains.trackReservation.model;
 
 
 import com.testcar.car.common.annotation.DateFormat;
+import com.testcar.car.domains.trackReservation.ReservationStatus;
+import com.testcar.car.domains.trackReservation.TrackReservation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -18,5 +20,17 @@ public class TrackReservationResponse {
 
     @DateFormat
     @Schema(description = "예약일자", example = "2023-01-01")
-    private LocalDate reservedAt;
+    private LocalDateTime createdAt;
+
+    @Schema(description = "예약상태", example = "RESERVED", implementation = ReservationStatus.class)
+    private ReservationStatus status;
+
+    public static TrackReservationResponse from(TrackReservation trackReservation) {
+        return TrackReservationResponse.builder()
+                .id(trackReservation.getId())
+                .name(trackReservation.getTrack().getName())
+                .createdAt(trackReservation.getCreatedAt())
+                .status(trackReservation.getStatus())
+                .build();
+    }
 }

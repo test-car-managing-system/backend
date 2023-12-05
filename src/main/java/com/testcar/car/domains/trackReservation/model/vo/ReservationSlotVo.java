@@ -2,6 +2,7 @@ package com.testcar.car.domains.trackReservation.model.vo;
 
 
 import com.testcar.car.common.annotation.DateTimeFormat;
+import com.testcar.car.domains.trackReservation.TrackReservationSlot;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -19,7 +20,10 @@ public class ReservationSlotVo {
     @Schema(description = "예약 시간", example = "2021-10-10 11:00:00")
     private LocalDateTime expiredAt;
 
-    public static ReservationSlotVo from(LocalDateTime startedAt, LocalDateTime expiredAt) {
-        return ReservationSlotVo.builder().startedAt(startedAt).expiredAt(expiredAt).build();
+    public static ReservationSlotVo from(TrackReservationSlot slot) {
+        return ReservationSlotVo.builder()
+                .startedAt(slot.getStartedAt())
+                .expiredAt(slot.getExpiredAt())
+                .build();
     }
 }

@@ -4,6 +4,7 @@ package com.testcar.car.domains.trackReservation;
 import com.testcar.car.common.entity.BaseEntity;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.track.Track;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -47,8 +49,8 @@ public class TrackReservation extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    @OneToMany(mappedBy = "trackReservation")
-    private Set<TrackReservationSlot> trackReservationSlots;
+    @OneToMany(mappedBy = "trackReservation", cascade = CascadeType.ALL)
+    private Set<TrackReservationSlot> trackReservationSlots = new HashSet<>();
 
     @Builder
     public TrackReservation(Member member, Track track, ReservationStatus status) {

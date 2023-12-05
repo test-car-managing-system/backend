@@ -14,7 +14,7 @@ public class TrackReservationFilterCondition {
     private String name;
 
     @Schema(description = "예약일자", example = "null")
-    private LocalDate reservedAt;
+    private LocalDate createdAt;
 
     @Schema(description = "예약상태", example = "null", implementation = ReservationStatus.class)
     private ReservationStatus status;
