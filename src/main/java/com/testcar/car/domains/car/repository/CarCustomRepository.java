@@ -1,7 +1,7 @@
 package com.testcar.car.domains.car.repository;
 
 
-import com.testcar.car.domains.car.Car;
+import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

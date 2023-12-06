@@ -1,8 +1,8 @@
-package com.testcar.car.domains.carStock;
+package com.testcar.car.domains.carStock.entity;
 
 
 import com.testcar.car.common.entity.BaseEntity;
-import com.testcar.car.domains.car.Car;
+import com.testcar.car.domains.car.entity.Car;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

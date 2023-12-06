@@ -3,6 +3,7 @@ package com.testcar.car.domains.carStock;
 
 import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.common.response.PageResponse;
+import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.model.CarStockResponse;
 import com.testcar.car.domains.carStock.model.RegisterCarStockRequest;
 import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;

@@ -1,8 +1,8 @@
 package com.testcar.car.domains.carStock.model;
 
 
-import com.testcar.car.domains.carStock.CarStock;
-import com.testcar.car.domains.carStock.StockStatus;
+import com.testcar.car.domains.carStock.entity.CarStock;
+import com.testcar.car.domains.carStock.entity.StockStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

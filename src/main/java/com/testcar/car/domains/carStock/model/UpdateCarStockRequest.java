@@ -1,7 +1,7 @@
 package com.testcar.car.domains.carStock.model;
 
 
-import com.testcar.car.domains.carStock.StockStatus;
+import com.testcar.car.domains.carStock.entity.StockStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.testcar.car.domains.carReservation;
+package com.testcar.car.domains.carReservation.entity;
 
 
 import lombok.Getter;

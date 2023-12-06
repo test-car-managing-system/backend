@@ -3,8 +3,9 @@ package com.testcar.car.domains.carStock;
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
-import com.testcar.car.domains.car.Car;
 import com.testcar.car.domains.car.CarService;
+import com.testcar.car.domains.car.entity.Car;
+import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.exception.ErrorCode;
 import com.testcar.car.domains.carStock.model.RegisterCarStockRequest;
 import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;

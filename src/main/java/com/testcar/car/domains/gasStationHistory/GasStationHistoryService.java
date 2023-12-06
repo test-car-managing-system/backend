@@ -2,8 +2,8 @@ package com.testcar.car.domains.gasStationHistory; // package com.testcar.car.do
 
 
 import com.testcar.car.common.exception.NotFoundException;
-import com.testcar.car.domains.carStock.CarStock;
 import com.testcar.car.domains.carStock.CarStockService;
+import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.gasStation.GasStationService;
 import com.testcar.car.domains.gasStation.entity.GasStation;
 import com.testcar.car.domains.gasStationHistory.entity.GasStationHistory;
