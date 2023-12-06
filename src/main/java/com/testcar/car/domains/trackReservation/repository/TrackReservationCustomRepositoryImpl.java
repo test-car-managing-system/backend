@@ -1,8 +1,8 @@
 package com.testcar.car.domains.trackReservation.repository;
 
 import static com.testcar.car.domains.track.QTrack.track;
-import static com.testcar.car.domains.trackReservation.QTrackReservation.trackReservation;
-import static com.testcar.car.domains.trackReservation.QTrackReservationSlot.trackReservationSlot;
+import static com.testcar.car.domains.trackReservation.entity.QTrackReservation.trackReservation;
+import static com.testcar.car.domains.trackReservation.entity.QTrackReservationSlot.trackReservationSlot;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;

@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +59,16 @@ public class TrackReservationController {
             @Valid @RequestBody TrackReservationRequest request) {
         final TrackReservation trackReservation =
                 trackReservationService.reserve(member, trackId, request);
+        return TrackReservationDetailResponse.from(member, trackReservation);
+    }
+
+    @PatchMapping("/reservations/{trackReservationId}/cancel")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[시험장 관리] 시험장 예약 취소", description = "해당 시험장을 예약을 취소합니다.")
+    public TrackReservationDetailResponse postTrackReservation(
+            @AuthMember Member member, @PathVariable Long trackReservationId) {
+        final TrackReservation trackReservation =
+                trackReservationService.cancel(member, trackReservationId);
         return TrackReservationDetailResponse.from(member, trackReservation);
     }
 }

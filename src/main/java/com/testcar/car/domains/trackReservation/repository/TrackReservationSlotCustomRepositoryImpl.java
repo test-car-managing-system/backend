@@ -1,6 +1,6 @@
 package com.testcar.car.domains.trackReservation.repository;
 
-import static com.testcar.car.domains.trackReservation.QTrackReservationSlot.trackReservationSlot;
+import static com.testcar.car.domains.trackReservation.entity.QTrackReservationSlot.trackReservationSlot;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -29,6 +29,18 @@ public class TrackReservationSlotCustomRepositoryImpl
                                 trackReservationSlot.track.id.eq(trackId),
                                 reservationTimeIn(date))
                         .orderBy(trackReservationSlot.startedAt.asc())
+                        .fetch();
+        return new HashSet<>(result);
+    }
+
+    @Override
+    public Set<TrackReservationSlot> findAllByTrackReservationId(Long trackReservationId) {
+        final List<TrackReservationSlot> result =
+                jpaQueryFactory
+                        .selectFrom(trackReservationSlot)
+                        .where(
+                                notDeleted(trackReservationSlot),
+                                trackReservationSlot.trackReservation.id.eq(trackReservationId))
                         .fetch();
         return new HashSet<>(result);
     }

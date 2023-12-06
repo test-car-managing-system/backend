@@ -43,6 +43,14 @@ public class TrackReservationSlotService {
         return trackReservationSlotRepository.saveAll(reservations);
     }
 
+    /** 해당 예약 건의 슬롯을 모두 삭제(취소) 합니다. */
+    public List<TrackReservationSlot> cancelByTrackReservationId(Long trackReservationId) {
+        final Set<TrackReservationSlot> slots =
+                trackReservationSlotRepository.findAllByTrackReservationId(trackReservationId);
+        slots.forEach(TrackReservationSlot::delete);
+        return trackReservationSlotRepository.saveAll(slots);
+    }
+
     /** 예약하려는 시간이 현재 시간 이후이며, 모든 날짜가 똑같은지 검증합니다. */
     private void validateReservationSlots(LocalDate date, List<ReservationSlotVo> slots) {
         if (slots == null || slots.isEmpty()) {

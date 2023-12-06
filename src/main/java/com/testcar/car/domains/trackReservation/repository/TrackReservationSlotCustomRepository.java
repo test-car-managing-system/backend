@@ -10,5 +10,7 @@ import java.util.Set;
 public interface TrackReservationSlotCustomRepository {
     Set<TrackReservationSlot> findAllByTrackIdAndDate(Long trackId, LocalDate date);
 
+    Set<TrackReservationSlot> findAllByTrackReservationId(Long trackReservationId);
+
     boolean existsByTrackIdAndSlots(Long trackId, List<ReservationSlotVo> slots);
 }

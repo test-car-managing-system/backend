@@ -58,4 +58,8 @@ public class TrackReservation extends BaseEntity {
         this.track = track;
         this.status = status;
     }
+
+    public void cancel() {
+        this.status = ReservationStatus.CANCELED;
+    }
 }

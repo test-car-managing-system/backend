@@ -1,7 +1,9 @@
 package com.testcar.car.domains.trackReservation;
 
+import static com.testcar.car.domains.trackReservation.exception.ErrorCode.RESERVATION_ALREADY_CANCELED;
 import static com.testcar.car.domains.trackReservation.exception.ErrorCode.TRACK_RESERVATION_NOT_FOUND;
 
+import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.track.Track;
@@ -44,6 +46,18 @@ public class TrackReservationService {
         trackReservationRepository.save(trackReservation);
         trackReservationSlotService.reserve(track, trackReservation, request);
         return trackReservation;
+    }
+
+    public TrackReservation cancel(Member member, Long trackReservationId) {
+        final TrackReservation trackReservation =
+                this.findByMemberAndId(member, trackReservationId);
+
+        if (trackReservation.getStatus() == ReservationStatus.CANCELED) {
+            throw new BadRequestException(RESERVATION_ALREADY_CANCELED);
+        }
+        trackReservation.cancel();
+        trackReservationSlotService.cancelByTrackReservationId(trackReservationId);
+        return trackReservationRepository.save(trackReservation);
     }
 
     /** 영속되지 않은 시험장 예약 엔티티를 생성합니다. */
