@@ -7,6 +7,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.PathBuilder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,16 +21,29 @@ public interface BaseQueryDslRepository {
     }
 
     default BooleanExpression dateTimeBetween(
+            DateTimePath<LocalDateTime> entityPath, LocalDate begin, LocalDate end) {
+        BooleanExpression beginExpression =
+                (begin == null) ? null : entityPath.goe(begin.atStartOfDay());
+        BooleanExpression endExpression =
+                (end == null) ? null : entityPath.lt(end.plusDays(1).atStartOfDay());
+        return timeExpressionBetween(beginExpression, endExpression);
+    }
+
+    default BooleanExpression dateTimeBetween(
             DateTimePath<LocalDateTime> entityPath, LocalDateTime begin, LocalDateTime end) {
         BooleanExpression beginExpression = (begin != null) ? entityPath.goe(begin) : null;
         BooleanExpression endExpression = (end != null) ? entityPath.loe(end) : null;
+        return timeExpressionBetween(beginExpression, endExpression);
+    }
 
-        if (beginExpression != null && endExpression != null) {
-            return beginExpression.and(endExpression);
-        } else if (beginExpression != null) {
-            return beginExpression;
+    private BooleanExpression timeExpressionBetween(
+            BooleanExpression begin, BooleanExpression end) {
+        if (begin != null && end != null) {
+            return begin.and(end);
+        } else if (begin != null) {
+            return begin;
         }
-        return endExpression;
+        return end;
     }
 
     default OrderSpecifier<?>[] getOrders(EntityPath<?> qEntity, Sort sort) {
