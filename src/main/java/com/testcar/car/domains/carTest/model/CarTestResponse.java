@@ -45,4 +45,15 @@ public class CarTestResponse {
                 .performedAt(carTest.getPerformedAt())
                 .build();
     }
+
+    public static CarTestResponse from(CarTest carTest) {
+        return CarTestResponse.builder()
+                .id(carTest.getId())
+                .trackName(carTest.getTrack().getName())
+                .memberName(carTest.getMember().getName())
+                .carName(carTest.getCarStock().getCar().getName())
+                .stockNumber(carTest.getCarStock().getStockNumber())
+                .performedAt(carTest.getPerformedAt())
+                .build();
+    }
 }
