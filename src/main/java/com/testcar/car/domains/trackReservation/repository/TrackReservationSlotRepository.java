@@ -1,7 +1,7 @@
 package com.testcar.car.domains.trackReservation.repository;
 
 
-import com.testcar.car.domains.trackReservation.TrackReservationSlot;
+import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TrackReservationSlotRepository

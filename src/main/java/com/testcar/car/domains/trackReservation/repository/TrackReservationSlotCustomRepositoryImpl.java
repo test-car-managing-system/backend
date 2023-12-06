@@ -5,7 +5,7 @@ import static com.testcar.car.domains.trackReservation.QTrackReservationSlot.tra
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.testcar.car.common.entity.BaseQueryDslRepository;
-import com.testcar.car.domains.trackReservation.TrackReservationSlot;
+import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.vo.ReservationSlotVo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

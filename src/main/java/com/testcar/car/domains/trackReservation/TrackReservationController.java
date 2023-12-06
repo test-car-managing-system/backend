@@ -5,6 +5,7 @@ import com.testcar.car.common.annotation.AuthMember;
 import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.model.TrackReservationDetailResponse;
 import com.testcar.car.domains.trackReservation.model.TrackReservationResponse;
 import com.testcar.car.domains.trackReservation.model.vo.TrackReservationFilterCondition;

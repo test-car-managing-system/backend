@@ -2,7 +2,7 @@ package com.testcar.car.domains.trackReservation.model.vo;
 
 
 import com.testcar.car.common.annotation.DateTimeFormat;
-import com.testcar.car.domains.trackReservation.TrackReservationSlot;
+import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Builder;

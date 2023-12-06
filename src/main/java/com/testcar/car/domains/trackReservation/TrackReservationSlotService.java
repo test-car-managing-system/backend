@@ -5,6 +5,8 @@ import static com.testcar.car.domains.trackReservation.exception.ErrorCode.INVAL
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.trackReservation.entity.TrackReservation;
+import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.TrackReservationRequest;
 import com.testcar.car.domains.trackReservation.model.vo.ReservationSlotVo;
 import com.testcar.car.domains.trackReservation.repository.TrackReservationSlotRepository;

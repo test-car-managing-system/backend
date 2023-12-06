@@ -1,7 +1,7 @@
 package com.testcar.car.domains.trackReservation.model.vo;
 
 
-import com.testcar.car.domains.trackReservation.ReservationStatus;
+import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import lombok.Getter;

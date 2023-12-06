@@ -2,7 +2,7 @@ package com.testcar.car.domains.track;
 
 
 import com.testcar.car.common.entity.BaseEntity;
-import com.testcar.car.domains.trackReservation.TrackReservationSlot;
+import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
