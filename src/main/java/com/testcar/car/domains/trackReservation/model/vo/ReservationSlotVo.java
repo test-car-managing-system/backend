@@ -11,7 +11,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ReservationSlotVo {
-
     @DateTimeFormat
     @Schema(description = "예약 시간", example = "2021-10-10 10:00:00")
     private LocalDateTime startedAt;
