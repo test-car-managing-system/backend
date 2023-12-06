@@ -1,6 +1,6 @@
 package com.testcar.car.domains.car.repository;
 
-import static com.testcar.car.domains.car.QCar.car;
+import static com.testcar.car.domains.car.entity.QCar.car;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

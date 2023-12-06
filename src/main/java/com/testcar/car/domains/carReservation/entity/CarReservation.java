@@ -41,9 +41,13 @@ public class CarReservation extends BaseEntity {
     @JoinColumn(name = "carStockId", nullable = false)
     private CarStock carStock;
 
-    // 대여시각
+    // 대여 시각
     @Column(nullable = false)
-    private LocalDateTime reservedAt;
+    private LocalDateTime startedAt;
+
+    // 대여 만료시각
+    @Column(nullable = false)
+    private LocalDateTime expiredAt;
 
     // 대여상태
     @Column(nullable = false)
@@ -52,10 +56,15 @@ public class CarReservation extends BaseEntity {
 
     @Builder
     public CarReservation(
-            Member member, CarStock carStock, LocalDateTime reservedAt, ReservationStatus status) {
+            Member member,
+            CarStock carStock,
+            LocalDateTime startedAt,
+            LocalDateTime expiredAt,
+            ReservationStatus status) {
         this.member = member;
         this.carStock = carStock;
-        this.reservedAt = reservedAt;
+        this.startedAt = startedAt;
+        this.expiredAt = expiredAt;
         this.status = status;
     }
 }

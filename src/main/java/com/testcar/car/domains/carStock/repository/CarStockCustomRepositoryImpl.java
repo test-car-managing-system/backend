@@ -1,7 +1,7 @@
 package com.testcar.car.domains.carStock.repository;
 
-import static com.testcar.car.domains.car.QCar.car;
-import static com.testcar.car.domains.carStock.QCarStock.carStock;
+import static com.testcar.car.domains.car.entity.QCar.car;
+import static com.testcar.car.domains.carStock.entity.QCarStock.carStock;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
