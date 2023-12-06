@@ -14,7 +14,7 @@ public class GasStationHistoryDto {
     private final String carName;
     private final String stockNumber;
     private final String departmentName;
-    private final LocalDateTime createdAt;
+    private final LocalDateTime usedAt;
     private final Double amount;
 
     @QueryProjection
@@ -30,7 +30,7 @@ public class GasStationHistoryDto {
         this.carName = carName;
         this.stockNumber = stockNumber;
         this.departmentName = departmentName;
-        this.createdAt = gasStationHistory.getCreatedAt();
+        this.usedAt = gasStationHistory.getUsedAt();
         this.amount = gasStationHistory.getAmount();
     }
 }

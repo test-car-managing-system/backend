@@ -5,6 +5,8 @@ import com.testcar.car.common.entity.BaseEntity;
 import com.testcar.car.domains.car.Car;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,6 +40,7 @@ public class CarStock extends BaseEntity {
 
     // 재고상태
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private StockStatus status;
 
     @Builder

@@ -2,6 +2,7 @@ package com.testcar.car.domains.gasStationHistory.model;
 
 
 import com.testcar.car.common.annotation.DateTimeFormat;
+import com.testcar.car.domains.gasStationHistory.entity.GasStationHistory;
 import com.testcar.car.domains.gasStationHistory.model.dto.GasStationHistoryDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class GasStationHistoryResponse {
 
     @DateTimeFormat
     @Schema(description = "주유일자", example = "2021-01-01 00:00:00")
-    private final LocalDateTime createdAt;
+    private final LocalDateTime usedAt;
 
     @Schema(description = "주유량", example = "100.33")
     private final Double amount;
@@ -44,8 +45,21 @@ public class GasStationHistoryResponse {
                 .carName(gasStationHistoryDto.getCarName())
                 .stockNumber(gasStationHistoryDto.getStockNumber())
                 .departmentName(gasStationHistoryDto.getDepartmentName())
-                .createdAt(gasStationHistoryDto.getCreatedAt())
+                .usedAt(gasStationHistoryDto.getUsedAt())
                 .amount(gasStationHistoryDto.getAmount())
+                .build();
+    }
+
+    public static GasStationHistoryResponse from(GasStationHistory gasStationHistory) {
+        return GasStationHistoryResponse.builder()
+                .id(gasStationHistory.getId())
+                .name(gasStationHistory.getGasStation().getName())
+                .memberName(gasStationHistory.getMember().getName())
+                .carName(gasStationHistory.getCarStock().getCar().getName())
+                .stockNumber(gasStationHistory.getCarStock().getStockNumber())
+                .departmentName(gasStationHistory.getMember().getDepartment().getName())
+                .usedAt(gasStationHistory.getUsedAt())
+                .amount(gasStationHistory.getAmount())
                 .build();
     }
 }
