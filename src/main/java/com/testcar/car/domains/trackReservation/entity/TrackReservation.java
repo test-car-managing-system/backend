@@ -1,9 +1,10 @@
-package com.testcar.car.domains.trackReservation;
+package com.testcar.car.domains.trackReservation.entity;
 
 
 import com.testcar.car.common.entity.BaseEntity;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.track.Track;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,8 +15,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,21 +44,22 @@ public class TrackReservation extends BaseEntity {
     @JoinColumn(name = "trackId", nullable = false)
     private Track track;
 
-    // 예약일시
-    @Column(nullable = false)
-    private LocalDateTime reservedAt;
-
     // 예약상태
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
+    @OneToMany(mappedBy = "trackReservation", cascade = CascadeType.ALL)
+    private Set<TrackReservationSlot> trackReservationSlots = new HashSet<>();
+
     @Builder
-    public TrackReservation(
-            Member member, Track track, LocalDateTime reservedAt, ReservationStatus status) {
+    public TrackReservation(Member member, Track track, ReservationStatus status) {
         this.member = member;
         this.track = track;
-        this.reservedAt = reservedAt;
         this.status = status;
+    }
+
+    public void cancel() {
+        this.status = ReservationStatus.CANCELED;
     }
 }

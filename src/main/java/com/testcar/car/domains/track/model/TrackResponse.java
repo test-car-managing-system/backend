@@ -27,6 +27,9 @@ public class TrackResponse {
     @Schema(description = "시험장 특성", example = "평지")
     private String description;
 
+    @Schema(description = "길이", example = "100.32")
+    private Double length;
+
     public static TrackResponse from(Track track) {
         return TrackResponse.builder()
                 .id(track.getId())
@@ -35,6 +38,7 @@ public class TrackResponse {
                 .longitude(track.getLongitude())
                 .latitude(track.getLatitude())
                 .description(track.getDescription())
+                .length(track.getLength())
                 .build();
     }
 }
