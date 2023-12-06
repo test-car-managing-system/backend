@@ -1,7 +1,7 @@
 package com.testcar.car.domains.carStock.model.vo;
 
 
-import com.testcar.car.domains.carStock.StockStatus;
+import com.testcar.car.domains.carStock.entity.StockStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

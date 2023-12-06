@@ -2,7 +2,7 @@ package com.testcar.car.domains.carTest;
 
 
 import com.testcar.car.common.entity.BaseEntity;
-import com.testcar.car.domains.carStock.CarStock;
+import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.track.Track;
 import jakarta.persistence.Column;

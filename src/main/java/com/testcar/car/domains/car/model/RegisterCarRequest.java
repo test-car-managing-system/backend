@@ -1,7 +1,7 @@
 package com.testcar.car.domains.car.model;
 
 
-import com.testcar.car.domains.car.Type;
+import com.testcar.car.domains.car.entity.Type;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

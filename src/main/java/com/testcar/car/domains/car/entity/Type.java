@@ -1,4 +1,4 @@
-package com.testcar.car.domains.car;
+package com.testcar.car.domains.car.entity;
 
 
 import lombok.Getter;

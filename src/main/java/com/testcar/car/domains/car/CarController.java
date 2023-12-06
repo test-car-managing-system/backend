@@ -3,6 +3,7 @@ package com.testcar.car.domains.car;
 
 import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.common.response.PageResponse;
+import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.model.CarResponse;
 import com.testcar.car.domains.car.model.RegisterCarRequest;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;

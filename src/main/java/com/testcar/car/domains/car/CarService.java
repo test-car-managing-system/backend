@@ -3,6 +3,7 @@ package com.testcar.car.domains.car;
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
+import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.exception.ErrorCode;
 import com.testcar.car.domains.car.model.RegisterCarRequest;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;

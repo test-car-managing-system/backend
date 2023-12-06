@@ -1,14 +1,14 @@
 package com.testcar.car.domains.carStock.repository;
 
-import static com.testcar.car.domains.car.QCar.car;
-import static com.testcar.car.domains.carStock.QCarStock.carStock;
+import static com.testcar.car.domains.car.entity.QCar.car;
+import static com.testcar.car.domains.carStock.entity.QCarStock.carStock;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.testcar.car.common.entity.BaseQueryDslRepository;
-import com.testcar.car.domains.carStock.CarStock;
-import com.testcar.car.domains.carStock.StockStatus;
+import com.testcar.car.domains.carStock.entity.CarStock;
+import com.testcar.car.domains.carStock.entity.StockStatus;
 import com.testcar.car.domains.carStock.model.vo.CarStockFilterCondition;
 import java.util.List;
 import java.util.Optional;

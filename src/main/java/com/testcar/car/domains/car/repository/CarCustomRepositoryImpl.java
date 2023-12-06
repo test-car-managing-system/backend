@@ -1,12 +1,12 @@
 package com.testcar.car.domains.car.repository;
 
-import static com.testcar.car.domains.car.QCar.car;
+import static com.testcar.car.domains.car.entity.QCar.car;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.testcar.car.common.entity.BaseQueryDslRepository;
-import com.testcar.car.domains.car.Car;
-import com.testcar.car.domains.car.Type;
+import com.testcar.car.domains.car.entity.Car;
+import com.testcar.car.domains.car.entity.Type;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;
 import java.time.LocalDateTime;
 import java.util.List;
