@@ -42,7 +42,8 @@ public class TrackReservationDetailResponse {
     public static TrackReservationDetailResponse from(
             Member member, TrackReservation trackReservation) {
         final Set<TrackReservationSlot> slots = trackReservation.getTrackReservationSlots();
-        List<ReservationSlotVo> slotsVo = slots.stream().map(ReservationSlotVo::from).toList();
+        final List<ReservationSlotVo> slotsVo =
+                slots.stream().map(ReservationSlotVo::from).toList();
 
         return TrackReservationDetailResponse.builder()
                 .id(trackReservation.getId())
