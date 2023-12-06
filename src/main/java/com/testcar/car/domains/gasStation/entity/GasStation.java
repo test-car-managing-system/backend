@@ -1,4 +1,4 @@
-package com.testcar.car.domains.gasStation;
+package com.testcar.car.domains.gasStation.entity;
 
 
 import com.testcar.car.common.entity.BaseEntity;
