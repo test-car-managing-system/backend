@@ -48,6 +48,9 @@ public class CarService {
     /** 차량 정보를 업데이트 합니다. */
     public Car updateById(Long carId, RegisterCarRequest request) {
         final Car car = this.findById(carId);
+        if (!car.getName().equals(request.getName())) {
+            validateNameNotDuplicated(request.getName());
+        }
         final Car updateMember = createEntity(request);
         car.update(updateMember);
         return carRepository.save(car);
@@ -62,7 +65,6 @@ public class CarService {
 
     /** 영속되지 않은 차량 엔티티를 생성합니다. */
     private Car createEntity(RegisterCarRequest request) {
-        validateNameNotDuplicated(request.getName());
         return Car.builder()
                 .name(request.getName())
                 .type(request.getType())

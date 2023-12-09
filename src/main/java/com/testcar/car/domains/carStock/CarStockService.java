@@ -7,10 +7,12 @@ import com.testcar.car.domains.car.CarService;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.exception.ErrorCode;
+import com.testcar.car.domains.carStock.model.DeleteCarStockRequest;
 import com.testcar.car.domains.carStock.model.RegisterCarStockRequest;
 import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;
 import com.testcar.car.domains.carStock.model.vo.CarStockFilterCondition;
 import com.testcar.car.domains.carStock.repository.CarStockRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,15 @@ public class CarStockService {
                 .orElseThrow(() -> new NotFoundException(ErrorCode.CAR_STOCK_NOT_FOUND));
     }
 
+    /** 차량 재고 리스트를 id 리스트로 조회합니다. */
+    public List<CarStock> findAllByIdIn(List<Long> ids) {
+        List<CarStock> stocks = carStockRepository.findAllByIdInAndDeletedFalse(ids);
+        if (stocks.size() != ids.size()) {
+            throw new NotFoundException(ErrorCode.CAR_STOCK_NOT_FOUND);
+        }
+        return stocks;
+    }
+
     /** 재고를 조건에 맞게 조회합니다. */
     public Page<CarStock> findAllPageByCondition(
             CarStockFilterCondition condition, Pageable pageable) {
@@ -39,6 +50,7 @@ public class CarStockService {
 
     /** 새로운 재고를 등록합니다. */
     public CarStock register(RegisterCarStockRequest request) {
+        validateStockNumberNotDuplicated(request.getStockNumber());
         final CarStock car = createEntity(request);
         return carStockRepository.save(car);
     }
@@ -46,23 +58,24 @@ public class CarStockService {
     /** 재고 정보를 업데이트 합니다. */
     public CarStock updateById(Long carStockId, UpdateCarStockRequest request) {
         final CarStock carStock = this.findById(carStockId);
-        validateStockNumberNotDuplicated(request.getStockNumber());
+        if (!carStock.getStockNumber().equals(request.getStockNumber())) {
+            validateStockNumberNotDuplicated(request.getStockNumber());
+        }
         carStock.updateStockNumber(request.getStockNumber());
         carStock.updateStatus(request.getStatus());
         return carStockRepository.save(carStock);
     }
 
     /** 재고를 삭제 처리 합니다. (soft delete) */
-    public CarStock deleteById(Long carStockId) {
-        final CarStock carStock = this.findById(carStockId);
-        carStock.delete();
-        return carStockRepository.save(carStock);
+    public List<CarStock> deleteAll(DeleteCarStockRequest request) {
+        final List<CarStock> stocks = this.findAllByIdIn(request.getIds());
+        stocks.forEach(CarStock::delete);
+        return carStockRepository.saveAll(stocks);
     }
 
     /** 영속되지 않은 재고 엔티티를 생성합니다. */
     private CarStock createEntity(RegisterCarStockRequest request) {
-        final Car car = carService.findByName(request.getName());
-        validateStockNumberNotDuplicated(request.getStockNumber());
+        final Car car = carService.findById(request.getCarId());
         return CarStock.builder()
                 .car(car)
                 .stockNumber(request.getStockNumber())

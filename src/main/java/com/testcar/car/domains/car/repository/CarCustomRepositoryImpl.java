@@ -8,7 +8,7 @@ import com.testcar.car.common.entity.BaseQueryDslRepository;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.entity.Type;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +64,7 @@ public class CarCustomRepositoryImpl implements CarCustomRepository, BaseQueryDs
         return type == null ? null : car.type.eq(type);
     }
 
-    private BooleanExpression createdAtBetween(LocalDateTime begin, LocalDateTime end) {
+    private BooleanExpression createdAtBetween(LocalDate begin, LocalDate end) {
         return dateTimeBetween(car.createdAt, begin, end);
     }
 }

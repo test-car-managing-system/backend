@@ -63,7 +63,6 @@ public class Member extends BaseEntity {
     public Member update(Member member) {
         this.department = member.getDepartment();
         this.email = member.getEmail();
-        this.password = member.getPassword();
         this.name = member.getName();
         this.role = member.getRole();
         return this;

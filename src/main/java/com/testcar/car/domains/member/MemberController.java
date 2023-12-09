@@ -6,6 +6,7 @@ import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.common.response.PageResponse;
 import com.testcar.car.domains.member.model.MemberResponse;
 import com.testcar.car.domains.member.model.RegisterMemberRequest;
+import com.testcar.car.domains.member.model.UpdateMemberRequest;
 import com.testcar.car.domains.member.model.vo.MemberFilterCondition;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -66,7 +67,7 @@ public class MemberController {
     @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[사용자 관리] 사용자 정보 수정", description = "(관리자) 사용자 정보를 수정합니다.")
     public MemberResponse update(
-            @PathVariable Long memberId, @Valid @RequestBody RegisterMemberRequest request) {
+            @PathVariable Long memberId, @Valid @RequestBody UpdateMemberRequest request) {
         final Member member = memberService.updateById(memberId, request);
         return MemberResponse.from(member);
     }
@@ -74,8 +75,8 @@ public class MemberController {
     @DeleteMapping("/{memberId}")
     @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[사용자 관리] 사용자 삭제", description = "(관리자) 사용자를 삭제합니다.")
-    public MemberResponse withdraw(@PathVariable Long memberId) {
-        final Member member = memberService.deleteById(memberId);
-        return MemberResponse.from(member);
+    public MemberResponse withdraw(@AuthMember Member member, @PathVariable Long memberId) {
+        final Member deleteMember = memberService.deleteById(member, memberId);
+        return MemberResponse.from(deleteMember);
     }
 }

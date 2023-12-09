@@ -1,0 +1,2 @@
+ALTER TABLE `CarStock`
+    MODIFY COLUMN `status` VARCHAR(20) NOT NULL COMMENT '차량 재고 상태';

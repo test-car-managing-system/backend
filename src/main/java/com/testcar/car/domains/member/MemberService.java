@@ -8,6 +8,7 @@ import com.testcar.car.domains.department.Department;
 import com.testcar.car.domains.department.DepartmentService;
 import com.testcar.car.domains.member.exception.ErrorCode;
 import com.testcar.car.domains.member.model.RegisterMemberRequest;
+import com.testcar.car.domains.member.model.UpdateMemberRequest;
 import com.testcar.car.domains.member.model.vo.MemberFilterCondition;
 import com.testcar.car.domains.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,34 +38,49 @@ public class MemberService {
 
     /** 새로운 계정을 등록합니다. */
     public Member register(RegisterMemberRequest request) {
+        validateEmailNotDuplicated(request.getEmail());
         final Member member = createEntity(request);
         return memberRepository.save(member);
     }
 
     /** 계정 정보를 업데이트 합니다. */
-    public Member updateById(Long memberId, RegisterMemberRequest request) {
+    public Member updateById(Long memberId, UpdateMemberRequest request) {
         final Member member = this.findById(memberId);
         final Member updateMember = createEntity(request);
+        if (!member.getEmail().equals(updateMember.getEmail())) {
+            validateEmailNotDuplicated(updateMember.getEmail());
+        }
         member.update(updateMember);
         return memberRepository.save(member);
     }
 
     /** 계정을 삭제 처리 합니다. (soft delete) */
-    public Member deleteById(Long memberId) {
-        final Member member = this.findById(memberId);
-        member.delete();
-        return memberRepository.save(member);
+    public Member deleteById(Member member, Long memberId) {
+        if (member.getId() == memberId) {
+            throw new BadRequestException(ErrorCode.CANNOT_DELETE_MYSELF);
+        }
+        final Member deleteMember = this.findById(memberId);
+        deleteMember.delete();
+        return memberRepository.save(deleteMember);
     }
 
     /** 영속되지 않은 멤버 엔티티를 생성합니다. */
     private Member createEntity(RegisterMemberRequest request) {
-        validateEmailNotDuplicated(request.getEmail());
         final Department department = departmentService.findById(request.getDepartmentId());
-        final String encodedPassword = PasswordEncoder.encode(request.getPassword());
         return Member.builder()
                 .department(department)
                 .email(request.getEmail())
-                .password(encodedPassword)
+                .password(PasswordEncoder.encode(request.getPassword()))
+                .name(request.getName())
+                .role(request.getRole())
+                .build();
+    }
+
+    private Member createEntity(UpdateMemberRequest request) {
+        final Department department = departmentService.findById(request.getDepartmentId());
+        return Member.builder()
+                .department(department)
+                .email(request.getEmail())
                 .name(request.getName())
                 .role(request.getRole())
                 .build();

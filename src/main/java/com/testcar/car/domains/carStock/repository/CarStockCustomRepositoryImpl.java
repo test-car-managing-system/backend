@@ -41,6 +41,7 @@ public class CarStockCustomRepositoryImpl
                         .from(carStock)
                         .where(
                                 notDeleted(carStock),
+                                carIdEqOrNull(condition.getCarId()),
                                 carNameContainsOrNull(condition.getName()),
                                 stockNumberEqOrNull(condition.getStockNumber()),
                                 stockStatusEqOrNull(condition.getStatus()))
@@ -62,6 +63,10 @@ public class CarStockCustomRepositoryImpl
                                         car.name.asc()))
                         .fetch();
         return PageableExecutionUtils.getPage(carStocks, pageable, coveringIndex::size);
+    }
+
+    private BooleanExpression carIdEqOrNull(Long carId) {
+        return carId == null ? null : carStock.car.id.eq(carId);
     }
 
     private BooleanExpression carNameContainsOrNull(String name) {
