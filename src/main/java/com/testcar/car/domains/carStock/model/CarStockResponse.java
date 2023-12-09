@@ -2,7 +2,6 @@ package com.testcar.car.domains.carStock.model;
 
 
 import com.testcar.car.common.annotation.DateFormat;
-import com.testcar.car.common.annotation.DateTimeFormat;
 import com.testcar.car.domains.car.entity.Type;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.entity.StockStatus;

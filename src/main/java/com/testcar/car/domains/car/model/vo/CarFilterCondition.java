@@ -2,11 +2,9 @@ package com.testcar.car.domains.car.model.vo;
 
 
 import com.testcar.car.common.annotation.DateFormat;
-import com.testcar.car.common.annotation.DateTimeFormat;
 import com.testcar.car.domains.car.entity.Type;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 

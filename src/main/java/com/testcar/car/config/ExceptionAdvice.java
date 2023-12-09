@@ -7,7 +7,6 @@ import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.BaseException;
 import com.testcar.car.common.exception.InternalServerException;
 import com.testcar.car.common.response.ErrorResponse;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionAdvice {
     /** Request Param 필수 파라미터에 대한 예외 처리 */
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    protected ResponseEntity<ErrorResponse>  handleMissingServletRequestParameterException(
+    protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
             MissingServletRequestParameterException e) {
         log.warn("MissingServletRequestParameterException. error message: request field error");
         final BadRequestException exception = new BadRequestException(BAD_REQUEST);

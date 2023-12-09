@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CarStockRepository
         extends JpaRepository<CarStock, Long>, CarStockCustomRepository {
     Optional<CarStock> findByIdAndDeletedFalse(Long id);
+
     List<CarStock> findAllByIdInAndDeletedFalse(List<Long> ids);
+
     boolean existsByStockNumberAndDeletedFalse(String stockNumber);
 }
