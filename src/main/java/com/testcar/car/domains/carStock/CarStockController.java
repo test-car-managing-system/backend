@@ -5,12 +5,14 @@ import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.common.response.PageResponse;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.model.CarStockResponse;
+import com.testcar.car.domains.carStock.model.DeleteCarStockRequest;
 import com.testcar.car.domains.carStock.model.RegisterCarStockRequest;
 import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;
 import com.testcar.car.domains.carStock.model.vo.CarStockFilterCondition;
 import com.testcar.car.domains.member.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -67,11 +69,11 @@ public class CarStockController {
         return CarStockResponse.from(carStock);
     }
 
-    @DeleteMapping("/{carStockId}")
+    @DeleteMapping
     @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[재고 관리] 재고 삭제", description = "(관리자) 차량 재고를 삭제합니다.")
-    public CarStockResponse delete(@PathVariable Long carStockId) {
-        final CarStock carStock = carStockService.deleteById(carStockId);
-        return CarStockResponse.from(carStock);
+    public List<Long> delete(@Valid @RequestBody DeleteCarStockRequest request) {
+        carStockService.deleteAll(request);
+        return request.getIds();
     }
 }

@@ -1,9 +1,11 @@
 package com.testcar.car.domains.car.model.vo;
 
 
+import com.testcar.car.common.annotation.DateFormat;
 import com.testcar.car.common.annotation.DateTimeFormat;
 import com.testcar.car.domains.car.entity.Type;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,11 +19,11 @@ public class CarFilterCondition {
     @Schema(description = "차종", example = "null", implementation = Type.class)
     private Type type;
 
-    @DateTimeFormat
+    @DateFormat
     @Schema(description = "등록일자 시작일", example = "null")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    @DateTimeFormat
+    @DateFormat
     @Schema(description = "등록일자 종료일", example = "null")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 }

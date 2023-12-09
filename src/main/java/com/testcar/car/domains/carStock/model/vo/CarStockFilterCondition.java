@@ -9,6 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CarStockFilterCondition {
+    @Schema(description = "차량 id", example = "null")
+    private Long carId;
+
     @Schema(description = "차량명", example = "null")
     private String name;
 

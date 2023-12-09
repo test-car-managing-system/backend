@@ -11,13 +11,12 @@ import org.hibernate.validator.constraints.Length;
 
 @Getter
 public class RegisterCarStockRequest {
-    @NotBlank
-    @Length(max = 20)
-    @Schema(description = "차량명", example = "아반떼")
-    private String name;
+    @NotNull
+    @Schema(description = "차량 ID", example = "아반떼")
+    private Long carId;
 
     @NotBlank
-    @Pattern(regexp = "^[0-9]{13}$")
+    @Pattern(regexp = "^[0-9]{12}$")
     @Schema(description = "차량 재고번호", example = "2023010300001")
     private String stockNumber;
 

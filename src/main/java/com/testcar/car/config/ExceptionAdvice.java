@@ -1,12 +1,17 @@
 package com.testcar.car.config;
 
+import static com.testcar.car.common.exception.ErrorCode.BAD_REQUEST;
 import static com.testcar.car.common.exception.ErrorCode.INTERNAL_SERVER_ERROR;
 
+import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.BaseException;
 import com.testcar.car.common.exception.InternalServerException;
 import com.testcar.car.common.response.ErrorResponse;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +19,26 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionAdvice {
+    /** Request Param 필수 파라미터에 대한 예외 처리 */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    protected ResponseEntity<ErrorResponse>  handleMissingServletRequestParameterException(
+            MissingServletRequestParameterException e) {
+        log.warn("MissingServletRequestParameterException. error message: request field error");
+        final BadRequestException exception = new BadRequestException(BAD_REQUEST);
+        final ErrorResponse response = ErrorResponse.from(exception);
+        return new ResponseEntity<>(response, e.getStatusCode());
+    }
+
+    /** Request body 파라미터에 대한 예외 처리 */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException e) {
+        log.warn("MethodArgumentNotValidException. error message: request field error");
+        final BadRequestException exception = new BadRequestException(BAD_REQUEST);
+        final ErrorResponse response = ErrorResponse.of(exception, e.getBindingResult());
+        return new ResponseEntity<>(response, e.getStatusCode());
+    }
+
     @ExceptionHandler
     protected ResponseEntity<ErrorResponse> handleBaseException(BaseException e) {
         log.error("handleBaseException", e);

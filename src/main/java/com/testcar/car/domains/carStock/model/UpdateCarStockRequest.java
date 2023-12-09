@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 public class UpdateCarStockRequest {
     @NotBlank
-    @Pattern(regexp = "^[0-9]{13}$")
+    @Pattern(regexp = "^[0-9]{12}$")
     @Schema(description = "차량 재고번호", example = "2023010300001")
     private String stockNumber;
 
