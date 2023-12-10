@@ -1,12 +1,14 @@
 package com.testcar.car.domains.carReservation.repository;
 
 import static com.testcar.car.domains.carReservation.entity.QCarReservation.carReservation;
+import static com.testcar.car.domains.carStock.entity.QCarStock.carStock;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.testcar.car.common.entity.BaseQueryDslRepository;
+import com.testcar.car.domains.carReservation.entity.CarReservation;
 import com.testcar.car.domains.carReservation.entity.ReservationStatus;
 import com.testcar.car.domains.carReservation.model.dto.CarReservationDto;
 import com.testcar.car.domains.carReservation.model.vo.CarReservationFilterCondition;
@@ -54,6 +56,16 @@ public class CarReservationCustomRepositoryImpl
                                         carReservation.startedAt.desc()))
                         .fetch();
         return PageableExecutionUtils.getPage(carReservations, pageable, coveringIndex::size);
+    }
+
+    @Override
+    public List<CarReservation> findAllWithCarStockByIdInAndMemberId(List<Long> ids, Long memberId) {
+        return jpaQueryFactory
+                        .selectFrom(carReservation)
+                        .leftJoin(carReservation.carStock, carStock)
+                        .fetchJoin()
+                        .where(notDeleted(carReservation), carReservation.id.in(ids), carReservation.member.id.eq(memberId))
+                        .fetch();
     }
 
     private BooleanExpression carNameContainsOrNull(String name) {

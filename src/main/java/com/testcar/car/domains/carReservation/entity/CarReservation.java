@@ -67,4 +67,9 @@ public class CarReservation extends BaseEntity {
         this.expiredAt = expiredAt;
         this.status = status;
     }
+
+    public void updateReturn() {
+        this.status = ReservationStatus.RETURNED;
+        this.expiredAt = LocalDateTime.now();
+    }
 }
