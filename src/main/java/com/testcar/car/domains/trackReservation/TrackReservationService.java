@@ -10,10 +10,13 @@ import com.testcar.car.domains.track.Track;
 import com.testcar.car.domains.track.TrackService;
 import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
+import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.TrackReservationRequest;
 import com.testcar.car.domains.trackReservation.model.vo.TrackReservationFilterCondition;
 import com.testcar.car.domains.trackReservation.repository.TrackReservationRepository;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +40,11 @@ public class TrackReservationService {
     public List<TrackReservation> findAllByMemberAndCondition(
             Member member, TrackReservationFilterCondition condition) {
         return trackReservationRepository.findAllByMemberIdAndCondition(member.getId(), condition);
+    }
+
+    /** 시험장의 해당 일자 예약 정보를 모두 조회합니다. */
+    public Set<TrackReservationSlot> findUnavailableReservationSlots(Long trackId, LocalDate date) {
+        return trackReservationSlotService.findAllByTrackIdAndDate(trackId, date);
     }
 
     /** 해당 시험장을 예약합니다. */

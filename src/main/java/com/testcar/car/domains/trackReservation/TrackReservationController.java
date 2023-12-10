@@ -6,15 +6,22 @@ import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.member.Role;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
+import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.TrackReservationDetailResponse;
 import com.testcar.car.domains.trackReservation.model.TrackReservationRequest;
 import com.testcar.car.domains.trackReservation.model.TrackReservationResponse;
+import com.testcar.car.domains.trackReservation.model.TrackReservationSlotResponse;
 import com.testcar.car.domains.trackReservation.model.vo.TrackReservationFilterCondition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +41,7 @@ public class TrackReservationController {
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 내 시험장 예약 이력 조회", description = "나의 시험장 예약 이력을 조건에 맞게 조회합니다.")
     public List<TrackReservationResponse> getTrackReservationsByCondition(
-            @AuthMember Member member, TrackReservationFilterCondition condition) {
+            @AuthMember Member member, @ParameterObject TrackReservationFilterCondition condition) {
         final List<TrackReservation> trackReservations =
                 trackReservationService.findAllByMemberAndCondition(member, condition);
         return trackReservations.stream().map(TrackReservationResponse::from).toList();
@@ -50,6 +57,15 @@ public class TrackReservationController {
         return TrackReservationDetailResponse.from(member, trackReservation);
     }
 
+    @GetMapping("/{trackId}/reservations")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[시험장 관리] 시험장 예약 내역 조회", description = "해당 시험장의 해당 일자에 예약된 내역을 조회합니다.")
+    public TrackReservationSlotResponse getTrackReservationsByTrackId(@PathVariable Long trackId, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        final Set<TrackReservationSlot> unavailableReservationSlots = trackReservationService.findUnavailableReservationSlots(
+                trackId, date);
+        return TrackReservationSlotResponse.of(date, unavailableReservationSlots);
+    }
+
     @PostMapping("/{trackId}/reserve")
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 시험장 예약", description = "해당 시험장을 예약합니다.")
@@ -62,7 +78,7 @@ public class TrackReservationController {
         return TrackReservationDetailResponse.from(member, trackReservation);
     }
 
-    @PatchMapping("/reservations/{trackReservationId}/cancel")
+    @DeleteMapping("/reservations/{trackReservationId}/cancel")
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 시험장 예약 취소", description = "해당 시험장을 예약을 취소합니다.")
     public TrackReservationDetailResponse postTrackReservation(
