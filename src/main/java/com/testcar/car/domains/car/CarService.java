@@ -39,6 +39,12 @@ public class CarService {
         return carRepository.findAllPageByCondition(condition, pageable);
     }
 
+    /** 시험 차량을 조건에 맞게 조회합니다. */
+    public Page<Car> findAllWithStocksPageByCondition(
+            CarFilterCondition condition, Pageable pageable) {
+        return carRepository.findAllWithStocksPageByCondition(condition, pageable);
+    }
+
     /** 새로운 차량을 등록합니다. */
     public Car register(RegisterCarRequest request) {
         final Car car = createEntity(request);

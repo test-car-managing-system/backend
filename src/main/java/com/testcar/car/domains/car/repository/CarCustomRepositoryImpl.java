@@ -1,6 +1,7 @@
 package com.testcar.car.domains.car.repository;
 
 import static com.testcar.car.domains.car.entity.QCar.car;
+import static com.testcar.car.domains.carStock.entity.QCarStock.carStock;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -28,6 +29,18 @@ public class CarCustomRepositoryImpl implements CarCustomRepository, BaseQueryDs
     }
 
     @Override
+    public Optional<Car> findWithStocksById(Long id) {
+        final Car result =
+                jpaQueryFactory
+                        .selectFrom(car)
+                        .leftJoin(car.carStocks, carStock)
+                        .fetchJoin()
+                        .where(notDeleted(car), notDeleted(carStock), car.id.eq(id))
+                        .fetchFirst();
+        return Optional.ofNullable(result);
+    }
+
+    @Override
     public Page<Car> findAllPageByCondition(CarFilterCondition condition, Pageable pageable) {
         final List<Long> coveringIndex =
                 jpaQueryFactory
@@ -44,6 +57,40 @@ public class CarCustomRepositoryImpl implements CarCustomRepository, BaseQueryDs
                 jpaQueryFactory
                         .selectFrom(car)
                         .where(car.id.in(coveringIndex))
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize())
+                        .orderBy(
+                                getOrders(
+                                        car,
+                                        pageable.getSort(),
+                                        car.createdAt.desc(),
+                                        car.name.asc()))
+                        .fetch();
+        return PageableExecutionUtils.getPage(cars, pageable, coveringIndex::size);
+    }
+
+    @Override
+    public Page<Car> findAllWithStocksPageByCondition(
+            CarFilterCondition condition, Pageable pageable) {
+        final List<Long> coveringIndex =
+                jpaQueryFactory
+                        .select(car.id)
+                        .from(car)
+                        .leftJoin(car.carStocks, carStock)
+                        .where(
+                                notDeleted(car),
+                                notDeleted(carStock),
+                                carNameContainsOrNull(condition.getName()),
+                                typeEqOrNull(condition.getType()),
+                                createdAtBetween(condition.getStartDate(), condition.getEndDate()))
+                        .fetch();
+
+        final List<Car> cars =
+                jpaQueryFactory
+                        .selectFrom(car)
+                        .where(car.id.in(coveringIndex))
+                        .leftJoin(car.carStocks, carStock)
+                        .fetchJoin()
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
                         .orderBy(

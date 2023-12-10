@@ -43,7 +43,7 @@ public class CarStockCustomRepositoryImpl
                                 notDeleted(carStock),
                                 carIdEqOrNull(condition.getCarId()),
                                 carNameContainsOrNull(condition.getName()),
-                                stockNumberEqOrNull(condition.getStockNumber()),
+                                stockNumberContainsOrNull(condition.getStockNumber()),
                                 stockStatusEqOrNull(condition.getStatus()))
                         .fetch();
 
@@ -73,8 +73,8 @@ public class CarStockCustomRepositoryImpl
         return name == null ? null : car.name.contains(name);
     }
 
-    private BooleanExpression stockNumberEqOrNull(String stockNumber) {
-        return stockNumber == null ? null : carStock.stockNumber.eq(stockNumber);
+    private BooleanExpression stockNumberContainsOrNull(String stockNumber) {
+        return stockNumber == null ? null : carStock.stockNumber.contains(stockNumber);
     }
 
     private BooleanExpression stockStatusEqOrNull(StockStatus status) {
@@ -85,11 +85,11 @@ public class CarStockCustomRepositoryImpl
         return carStock.status
                 .when(StockStatus.AVAILABLE)
                 .then(1)
-                .when(StockStatus.INSPECTION)
-                .then(2)
-                .when(StockStatus.UNAVAILABLE)
-                .then(3)
                 .when(StockStatus.RESERVED)
+                .then(2)
+                .when(StockStatus.INSPECTION)
+                .then(3)
+                .when(StockStatus.UNAVAILABLE)
                 .then(4)
                 .otherwise(5)
                 .asc();
