@@ -1,15 +1,11 @@
 package com.testcar.car.domains.trackReservation.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.testcar.car.common.annotation.DateFormat;
-import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
-import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.vo.ReservationSlotVo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import lombok.Builder;

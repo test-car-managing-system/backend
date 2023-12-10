@@ -29,7 +29,8 @@ public class TrackController {
     @GetMapping
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 시험장 조회", description = "시험장을 조건에 맞게 조회합니다.")
-    public List<TrackResponse> getTracksByCondition(@ParameterObject TrackFilterCondition condition) {
+    public List<TrackResponse> getTracksByCondition(
+            @ParameterObject TrackFilterCondition condition) {
         final List<Track> tracks = trackService.findAllByCondition(condition);
         return tracks.stream().map(TrackResponse::from).toList();
     }

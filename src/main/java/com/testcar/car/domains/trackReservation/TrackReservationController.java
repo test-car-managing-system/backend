@@ -23,7 +23,6 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,9 +59,10 @@ public class TrackReservationController {
     @GetMapping("/{trackId}/reservations")
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 시험장 예약 내역 조회", description = "해당 시험장의 해당 일자에 예약된 내역을 조회합니다.")
-    public TrackReservationSlotResponse getTrackReservationsByTrackId(@PathVariable Long trackId, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        final Set<TrackReservationSlot> unavailableReservationSlots = trackReservationService.findUnavailableReservationSlots(
-                trackId, date);
+    public TrackReservationSlotResponse getTrackReservationsByTrackId(
+            @PathVariable Long trackId, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        final Set<TrackReservationSlot> unavailableReservationSlots =
+                trackReservationService.findUnavailableReservationSlots(trackId, date);
         return TrackReservationSlotResponse.of(date, unavailableReservationSlots);
     }
 

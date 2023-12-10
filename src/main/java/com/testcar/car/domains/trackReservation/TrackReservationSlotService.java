@@ -40,16 +40,24 @@ public class TrackReservationSlotService {
         final List<ReservationSlotVo> slots = request.getReservationSlots();
 
         // 이미 존재하는 슬롯과 비교하여 일치하면 금지한다.
-        final Set<TrackReservationSlot> existSlots = trackReservationSlotRepository.findAllByTrackIdAndDate(
-                track.getId(), request.getDate());
-        Map<LocalDateTime, TrackReservationSlot> existSlotMap = existSlots.stream()
-                .collect(Collectors.toMap(TrackReservationSlot::getStartedAt, Function.identity()));
-        slots.forEach(slot -> {
-            if (existSlotMap.containsKey(slot.getStartedAt()) &&
-                    existSlotMap.get(slot.getStartedAt()).getExpiredAt().equals(slot.getExpiredAt())) {
-                throw new BadRequestException(ALREADY_RESERVED_SLOT);
-            }
-        });
+        final Set<TrackReservationSlot> existSlots =
+                trackReservationSlotRepository.findAllByTrackIdAndDate(
+                        track.getId(), request.getDate());
+        Map<LocalDateTime, TrackReservationSlot> existSlotMap =
+                existSlots.stream()
+                        .collect(
+                                Collectors.toMap(
+                                        TrackReservationSlot::getStartedAt, Function.identity()));
+        slots.forEach(
+                slot -> {
+                    if (existSlotMap.containsKey(slot.getStartedAt())
+                            && existSlotMap
+                                    .get(slot.getStartedAt())
+                                    .getExpiredAt()
+                                    .equals(slot.getExpiredAt())) {
+                        throw new BadRequestException(ALREADY_RESERVED_SLOT);
+                    }
+                });
 
         final List<TrackReservationSlot> reservations =
                 slots.stream().map(slot -> createEntity(track, trackReservation, slot)).toList();
