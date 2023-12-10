@@ -61,11 +61,10 @@ public class TrackReservationCustomRepositoryImpl
     }
 
     private BooleanExpression createdAtEqOrNull(LocalDate date) {
+        if (date == null) return null;
         final LocalDateTime startTime = date.atStartOfDay();
         final LocalDateTime tomorrowStartTime = date.plusDays(1).atStartOfDay();
-        return (date == null)
-                ? null
-                : track.createdAt.goe(startTime).and(track.createdAt.lt(tomorrowStartTime));
+        return track.createdAt.goe(startTime).and(track.createdAt.lt(tomorrowStartTime));
     }
 
     private BooleanExpression reservationStatusEqOrNull(ReservationStatus status) {
