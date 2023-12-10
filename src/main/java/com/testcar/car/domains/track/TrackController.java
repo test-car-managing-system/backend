@@ -3,6 +3,7 @@ package com.testcar.car.domains.track;
 
 import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.TrackResponse;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
@@ -60,11 +61,10 @@ public class TrackController {
         return TrackResponse.from(track);
     }
 
-    @DeleteMapping("/{trackId}")
+    @DeleteMapping
     @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[시험장 관리] 시험장 삭제", description = "(관리자) 시험장을 삭제합니다.")
-    public TrackResponse delete(@PathVariable Long trackId) {
-        final Track track = trackService.deleteById(trackId);
-        return TrackResponse.from(track);
+    public List<Long> delete(@RequestBody DeleteTrackRequest request) {
+        return trackService.deleteAll(request);
     }
 }
