@@ -6,9 +6,11 @@ import com.testcar.car.common.response.PageResponse;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.model.CarResponse;
 import com.testcar.car.domains.car.model.RegisterCarRequest;
+import com.testcar.car.domains.car.model.TestCarResponse;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;
 import com.testcar.car.domains.member.Role;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "[차량 관리] ", description = "차량 관리 API")
 @RestController
 @RequestMapping("/cars")
 @RequiredArgsConstructor
@@ -33,17 +36,27 @@ public class CarController {
     @GetMapping
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[차량 관리] 차량 조회 필터", description = "조건에 맞는 모든 차량을 페이지네이션으로 조회합니다.")
-    public PageResponse<CarResponse> getMembersByCondition(
+    public PageResponse<CarResponse> getCarsByCondition(
             @ParameterObject @ModelAttribute CarFilterCondition condition,
             @ParameterObject Pageable pageable) {
         final Page<Car> cars = carService.findAllPageByCondition(condition, pageable);
         return PageResponse.from(cars.map(CarResponse::from));
     }
 
+    @GetMapping("/test")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[시험차량 관리] 차량 조회 필터", description = "조건에 맞는 시험 차량을 페이지네이션으로 조회합니다.")
+    public PageResponse<TestCarResponse> getTestCarsByCondition(
+            @ParameterObject @ModelAttribute CarFilterCondition condition,
+            @ParameterObject Pageable pageable) {
+        final Page<Car> cars = carService.findAllWithStocksPageByCondition(condition, pageable);
+        return PageResponse.from(cars.map(TestCarResponse::from));
+    }
+
     @GetMapping("/{carId}")
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[차량 관리] 사용자 상세 정보", description = "차량 상세 정보를 가져옵니다.")
-    public CarResponse getMemberById(@PathVariable Long carId) {
+    public CarResponse getCarById(@PathVariable Long carId) {
         final Car car = carService.findById(carId);
         return CarResponse.from(car);
     }

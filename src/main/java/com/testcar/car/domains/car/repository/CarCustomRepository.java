@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface CarCustomRepository {
     Optional<Car> findById(Long id);
-
+    Optional<Car> findWithStocksById(Long id);
     Page<Car> findAllPageByCondition(CarFilterCondition condition, Pageable pageable);
+    Page<Car> findAllWithStocksPageByCondition(CarFilterCondition condition, Pageable pageable);
 }
