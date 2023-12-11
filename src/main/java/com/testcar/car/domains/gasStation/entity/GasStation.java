@@ -31,4 +31,8 @@ public class GasStation extends BaseEntity {
     public GasStation(String name) {
         this.name = name;
     }
+
+    public void update(String name) {
+        this.name = name;
+    }
 }
