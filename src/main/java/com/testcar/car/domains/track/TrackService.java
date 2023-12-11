@@ -26,6 +26,13 @@ public class TrackService {
                 .orElseThrow(() -> new NotFoundException(ErrorCode.TRACK_NOT_FOUND));
     }
 
+    /** 시험장을 이름으로 조회합니다. */
+    public Track findByName(String name) {
+        return trackRepository
+                .findByNameAndDeletedFalse(name)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.TRACK_NOT_FOUND));
+    }
+
     /** 시험장 리스트를 id 리스트로 조회합니다. */
     public List<Track> findAllByIdIn(List<Long> ids) {
         List<Track> tracks = trackRepository.findAllByIdInAndDeletedFalse(ids);

@@ -14,18 +14,21 @@ public class CarTestDto {
     private final String departmentName;
     private final String carName;
     private final String stockNumber;
+    private final String updateMemberName;
 
     @QueryProjection
     public CarTestDto(
             CarTest carTest,
             Track track,
             String memberName,
+            String updateMemberName,
             String departmentName,
             String carName,
             String stockNumber) {
         this.carTest = carTest;
         this.track = track;
         this.memberName = memberName;
+        this.updateMemberName = updateMemberName;
         this.departmentName = departmentName;
         this.carName = carName;
         this.stockNumber = stockNumber;
