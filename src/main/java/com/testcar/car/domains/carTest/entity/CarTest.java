@@ -35,6 +35,11 @@ public class CarTest extends BaseEntity {
     @JoinColumn(name = "memberId", nullable = false)
     private Member member;
 
+    // 수정인
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "updateMemberId", nullable = false)
+    private Member updateMember;
+
     // 시험장
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trackId", nullable = false)
@@ -66,8 +71,27 @@ public class CarTest extends BaseEntity {
             String result,
             String memo) {
         this.member = member;
+        this.updateMember = member;
         this.track = track;
         this.carStock = carStock;
+        this.performedAt = performedAt;
+        this.result = result;
+        this.memo = memo;
+    }
+
+    public void updateCarStock(CarStock carStock) {
+        this.carStock = carStock;
+    }
+
+    public void updateTrack(Track track) {
+        this.track = track;
+    }
+
+    public void updateMemberBy(Member member) {
+        this.updateMember = member;
+    }
+
+    public void update(LocalDateTime performedAt, String result, String memo) {
         this.performedAt = performedAt;
         this.result = result;
         this.memo = memo;

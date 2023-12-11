@@ -1,7 +1,6 @@
 package com.testcar.car.domains.carTest.repository;
 
 import static com.testcar.car.domains.carTest.entity.QCarTest.carTest;
-import static com.testcar.car.domains.gasStationHistory.entity.QGasStationHistory.gasStationHistory;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -50,6 +49,7 @@ public class CarTestCustomRepositoryImpl
 
         final List<CarTestDto> result =
                 queryCarTestDto()
+                        .where(carTest.id.in(coveringIndex))
                         .orderBy(
                                 getOrders(
                                         carTest,
@@ -71,6 +71,7 @@ public class CarTestCustomRepositoryImpl
                                 carTest,
                                 carTest.track,
                                 carTest.member.name,
+                                carTest.updateMember.name,
                                 carTest.member.department.name,
                                 carTest.carStock.car.name,
                                 carTest.carStock.stockNumber))

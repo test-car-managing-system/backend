@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,17 +59,28 @@ public class CarTestController {
     @PostMapping
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 시험 수행 이력 등록", description = "시험 수행 이력을 등록합니다.")
-    public CarTestResponse postCarTest(
+    public CarTestResponse register(
             @AuthMember Member member, @Valid @RequestBody CarTestRequest request) {
         final CarTest carTest = carTestService.register(member, request);
         return CarTestResponse.from(carTest);
     }
 
+    @PatchMapping("/{carTestId}")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[시험장 관리] 시험 수행 이력 수정", description = "시험 수행 이력을 수정합니다.")
+    public CarTestResponse update(
+            @AuthMember Member member,
+            @PathVariable Long carTestId,
+            @Valid @RequestBody CarTestRequest request) {
+        final CarTestDto carTestDto = carTestService.update(member, carTestId, request);
+        return CarTestResponse.from(carTestDto);
+    }
+
     @DeleteMapping("/{carTestId}")
     @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 시험 수행 이력 삭제", description = "시험 수행 이력을 삭제합니다.")
-    public CarTestResponse deleteCarTest(@PathVariable Long carTestId) {
-        final CarTest carTest = carTestService.deleteById(carTestId);
-        return CarTestResponse.from(carTest);
+    public Long delete(@AuthMember Member member, @PathVariable Long carTestId) {
+        carTestService.delete(member, carTestId);
+        return carTestId;
     }
 }
