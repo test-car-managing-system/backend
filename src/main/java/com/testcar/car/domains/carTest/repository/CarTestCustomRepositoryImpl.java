@@ -71,7 +71,7 @@ public class CarTestCustomRepositoryImpl
                                 carTest,
                                 carTest.track,
                                 carTest.member.name,
-                                gasStationHistory.member.department.name,
+                                carTest.member.department.name,
                                 carTest.carStock.car.name,
                                 carTest.carStock.stockNumber))
                 .from(carTest);
