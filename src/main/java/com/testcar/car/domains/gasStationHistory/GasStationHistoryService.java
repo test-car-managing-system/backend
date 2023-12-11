@@ -43,18 +43,44 @@ public class GasStationHistoryService {
     }
 
     /** 주유 이력을 등록합니다. */
-    public GasStationHistory register(RegisterGasStationHistoryRequest request) {
-        final Member member = memberService.findById(request.getMemberId());
-        final GasStation gasStation = gasStationService.findById(request.getGasStationId());
-        final CarStock carStock = carStockService.findById(request.getCarStockId());
+    public GasStationHistory register(Member member, RegisterGasStationHistoryRequest request) {
+        final GasStation gasStation = gasStationService.findByName(request.getGasStationName());
+        final CarStock carStock = carStockService.findByStockNumber(request.getStockNumber());
         final GasStationHistory gasStationHistory =
                 GasStationHistory.builder()
                         .member(member)
                         .gasStation(gasStation)
                         .carStock(carStock)
                         .amount(request.getAmount())
-                        .usedAt(request.getUsedAt())
+                        .usedAt(request.getUsedAt().atStartOfDay())
                         .build();
+        return gasStationHistoryRepository.save(gasStationHistory);
+    }
+
+    /** 주유 이력을 수정합니다. */
+    public GasStationHistory update(
+            Member member, Long gasStationHistoryId, RegisterGasStationHistoryRequest request) {
+        final GasStationHistoryDto gasStationHistoryDto = this.findById(gasStationHistoryId);
+        final GasStationHistory gasStationHistory = gasStationHistoryDto.getGasStationHistory();
+        if (!gasStationHistoryDto.getStockNumber().equals(request.getStockNumber())) {
+            final CarStock carStock = carStockService.findByStockNumber(request.getStockNumber());
+            gasStationHistory.updateCarStock(carStock);
+        }
+        if (!gasStationHistoryDto.getName().equals(request.getGasStationName())) {
+            final GasStation gasStation = gasStationService.findByName(request.getGasStationName());
+            gasStationHistory.updateGasStation(gasStation);
+        }
+        gasStationHistory.updateMemberBy(member);
+        gasStationHistory.update(request.getAmount(), request.getUsedAt().atStartOfDay());
+        return gasStationHistoryRepository.save(gasStationHistory);
+    }
+
+    /** 주유 이력을 삭제합니다. */
+    public GasStationHistory delete(Member member, Long gasStationHistoryId) {
+        final GasStationHistoryDto gasStationHistoryDto = this.findById(gasStationHistoryId);
+        final GasStationHistory gasStationHistory = gasStationHistoryDto.getGasStationHistory();
+        gasStationHistory.updateMemberBy(member);
+        gasStationHistory.delete();
         return gasStationHistoryRepository.save(gasStationHistory);
     }
 }

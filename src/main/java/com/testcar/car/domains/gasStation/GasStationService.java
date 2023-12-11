@@ -20,6 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class GasStationService {
     private final GasStationRepository gasStationRepository;
 
+    /** 주유소를 이름으로 조회합니다. */
+    public GasStation findByName(String name) {
+        return gasStationRepository
+                .findByNameAndDeletedFalse(name)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.GAS_STATION_NOT_FOUND));
+    }
+
     /** 등록된 모든 주유소를 조회합니다. */
     public List<GasStation> findAll() {
         return gasStationRepository.findAllByDeletedFalse();

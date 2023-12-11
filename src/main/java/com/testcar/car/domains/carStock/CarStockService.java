@@ -26,6 +26,13 @@ public class CarStockService {
     private final CarService carService;
     private final CarStockRepository carStockRepository;
 
+    /** 차량 재고를 재고 번호로 조회합니다. */
+    public CarStock findByStockNumber(String stockNumber) {
+        return carStockRepository
+                .findByStockNumberAndDeletedFalse(stockNumber)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.CAR_STOCK_NOT_FOUND));
+    }
+
     /** 차량 재고를 id로 조회합니다. */
     public CarStock findById(Long id) {
         return carStockRepository
