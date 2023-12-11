@@ -68,6 +68,7 @@ public class GasStationHistoryCustomRepositoryImpl
                                 GasStationHistoryDto.class,
                                 gasStationHistory,
                                 gasStationHistory.member.name,
+                                gasStationHistory.updateMember.name,
                                 gasStationHistory.carStock.car.name,
                                 gasStationHistory.carStock.stockNumber,
                                 gasStationHistory.member.department.name))

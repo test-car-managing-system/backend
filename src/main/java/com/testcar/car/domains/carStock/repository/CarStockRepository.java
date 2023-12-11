@@ -10,6 +10,8 @@ public interface CarStockRepository
         extends JpaRepository<CarStock, Long>, CarStockCustomRepository {
     Optional<CarStock> findByIdAndDeletedFalse(Long id);
 
+    Optional<CarStock> findByStockNumberAndDeletedFalse(String stockNumber);
+
     List<CarStock> findAllByIdInAndDeletedFalse(List<Long> ids);
 
     boolean existsByStockNumberAndDeletedFalse(String stockNumber);

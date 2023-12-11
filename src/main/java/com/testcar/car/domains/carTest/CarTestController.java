@@ -65,7 +65,7 @@ public class CarTestController {
     }
 
     @DeleteMapping("/{carTestId}")
-    @RoleAllowed(role = Role.ADMIN)
+    @RoleAllowed(role = Role.USER)
     @Operation(summary = "[시험장 관리] 시험 수행 이력 삭제", description = "시험 수행 이력을 삭제합니다.")
     public CarTestResponse deleteCarTest(@PathVariable Long carTestId) {
         final CarTest carTest = carTestService.deleteById(carTestId);

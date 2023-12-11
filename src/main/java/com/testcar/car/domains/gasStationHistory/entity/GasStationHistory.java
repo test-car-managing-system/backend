@@ -35,9 +35,14 @@ public class GasStationHistory extends BaseEntity {
     @JoinColumn(name = "memberId", nullable = false)
     private Member member;
 
+    // 수정인
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "updateMemberId", nullable = false)
+    private Member updateMember;
+
     // 주유소
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gasStationId", nullable = false)
+    @JoinColumn(name = "gasStationId", nullable = true)
     private GasStation gasStation;
 
     // 차량재고
@@ -61,8 +66,26 @@ public class GasStationHistory extends BaseEntity {
             Double amount,
             LocalDateTime usedAt) {
         this.member = member;
+        this.updateMember = member;
         this.gasStation = gasStation;
         this.carStock = carStock;
+        this.amount = amount;
+        this.usedAt = usedAt;
+    }
+
+    public void updateGasStation(GasStation gasStation) {
+        this.gasStation = gasStation;
+    }
+
+    public void updateCarStock(CarStock carStock) {
+        this.carStock = carStock;
+    }
+
+    public void updateMemberBy(Member updateMember) {
+        this.updateMember = updateMember;
+    }
+
+    public void update(Double amount, LocalDateTime usedAt) {
         this.amount = amount;
         this.usedAt = usedAt;
     }

@@ -46,7 +46,7 @@ public class GasStationController {
     }
 
     @PostMapping
-    @RoleAllowed(role = Role.USER)
+    @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[주유소 관리] 주유소 등록", description = "주유소를 등록합니다.")
     public GasStationResponse register(@Valid @RequestBody RegisterGasStationRequest request) {
         final GasStation gasStation = gasStationService.register(request);
@@ -54,7 +54,7 @@ public class GasStationController {
     }
 
     @PatchMapping("/{gasStationId}")
-    @RoleAllowed(role = Role.USER)
+    @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[주유소 관리] 주유소 수정", description = "주유소를 등록합니다.")
     public GasStationResponse update(
             @PathVariable Long gasStationId, @Valid @RequestBody UpdateGasStationRequest request) {
@@ -63,7 +63,7 @@ public class GasStationController {
     }
 
     @DeleteMapping
-    @RoleAllowed(role = Role.USER)
+    @RoleAllowed(role = Role.ADMIN)
     @Operation(summary = "[주유소 관리] 주유소 삭제", description = "주유소를 삭제합니다.")
     public List<Long> deleteAll(@Valid @RequestBody DeleteGasStationRequest request) {
         gasStationService.deleteAll(request);
