@@ -78,8 +78,8 @@ public class CarStockService {
     public List<CarStock> returnCarStocks(List<CarStock> carStocks) {
         carStocks.forEach(
                 carStock -> {
-                    carStock.updateStatus(StockStatus.AVAILABLE);
                     validateCarStockReserved(carStock);
+                    carStock.updateStatus(StockStatus.AVAILABLE);
                 });
         return carStockRepository.saveAll(carStocks);
     }
@@ -109,6 +109,7 @@ public class CarStockService {
         }
     }
 
+    /** 차량 재고가 예약 상태인지 검사합니다. */
     private void validateCarStockReserved(CarStock carStock) {
         if (carStock.getStatus() != StockStatus.RESERVED) {
             throw new BadRequestException(ErrorCode.CAR_STOCK_NOT_RESERVED);

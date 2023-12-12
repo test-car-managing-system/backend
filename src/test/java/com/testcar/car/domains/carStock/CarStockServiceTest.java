@@ -17,6 +17,7 @@ import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.car.CarService;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.carStock.entity.CarStock;
+import com.testcar.car.domains.carStock.entity.StockStatus;
 import com.testcar.car.domains.carStock.model.DeleteCarStockRequest;
 import com.testcar.car.domains.carStock.model.RegisterCarStockRequest;
 import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;
@@ -30,6 +31,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -223,6 +226,42 @@ public class CarStockServiceTest {
                 BadRequestException.class,
                 () -> {
                     carStockService.updateById(carStockId, request);
+                });
+        then(carStockRepository).shouldHaveNoMoreInteractions();
+    }
+
+    @Test
+    void 예약중인_차량재고를_모두_반납한다() {
+        // given
+        final CarStock carStock1 =
+                CarEntityFactory.createCarStockBuilder().status(StockStatus.RESERVED).build();
+        final CarStock carStock2 =
+                CarEntityFactory.createCarStockBuilder().status(StockStatus.RESERVED).build();
+        final List<CarStock> carStocks = List.of(carStock1, carStock2);
+
+        // when
+        final List<CarStock> returnedCarStocks = carStockService.returnCarStocks(carStocks);
+
+        // then
+        returnedCarStocks.forEach(
+                carStock -> assertEquals(StockStatus.AVAILABLE, carStock.getStatus()));
+        verify(carStockRepository).saveAll(carStocks);
+    }
+
+    @ParameterizedTest
+    @EnumSource(
+            value = StockStatus.class,
+            names = {"AVAILABLE", "UNAVAILABLE", "INSPECTION"})
+    void 예약중이지_않은_차량재고는_반납할수_없다(StockStatus status) {
+        // given
+        final CarStock carStock = CarEntityFactory.createCarStockBuilder().status(status).build();
+        final List<CarStock> carStocks = List.of(carStock);
+
+        // when, then
+        Assertions.assertThrows(
+                BadRequestException.class,
+                () -> {
+                    carStockService.returnCarStocks(carStocks);
                 });
         then(carStockRepository).shouldHaveNoMoreInteractions();
     }
