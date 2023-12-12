@@ -37,7 +37,7 @@ public class GasStationHistoryController {
 
     @GetMapping
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[주유소 관리] 주유 이력 조회", description = "주유 이력을 조건에 맞게 조회합니다.")
+    @Operation(summary = "[주유 이력 관리] 주유 이력 조회", description = "주유 이력을 조건에 맞게 조회합니다.")
     public PageResponse<GasStationHistoryResponse> getGasStationHistoriesByCondition(
             @ParameterObject @ModelAttribute GasStationHistoryFilterCondition condition,
             @ParameterObject Pageable pageable) {
@@ -48,7 +48,7 @@ public class GasStationHistoryController {
 
     @GetMapping("/{historyId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[주유소 관리] 주유 이력 상세 조회", description = "주유 이력 상세 정보를 id로 조회합니다.")
+    @Operation(summary = "[주유 이력 관리] 주유 이력 상세 조회", description = "주유 이력 상세 정보를 id로 조회합니다.")
     public GasStationHistoryResponse getGasStationHistoryById(@PathVariable Long historyId) {
         final GasStationHistoryDto dto = gasStationHistoryService.findById(historyId);
         return GasStationHistoryResponse.from(dto);
@@ -56,7 +56,7 @@ public class GasStationHistoryController {
 
     @PostMapping
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[주유소 관리] 주유 이력 등록", description = "주유 이력을 등록합니다.")
+    @Operation(summary = "[주유 이력 관리] 주유 이력 등록", description = "주유 이력을 등록합니다.")
     public GasStationHistoryResponse register(
             @AuthMember Member member,
             @Valid @RequestBody RegisterGasStationHistoryRequest request) {
@@ -67,7 +67,7 @@ public class GasStationHistoryController {
 
     @PatchMapping("/{gasStationHistoryId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[주유소 관리] 주유 이력 수정", description = "주유 이력을 수정합니다.")
+    @Operation(summary = "[주유 이력 관리] 주유 이력 수정", description = "주유 이력을 수정합니다.")
     public GasStationHistoryResponse update(
             @AuthMember Member member,
             @PathVariable Long gasStationHistoryId,
@@ -79,7 +79,7 @@ public class GasStationHistoryController {
 
     @DeleteMapping("/{gasStationHistoryId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[주유소 관리] 주유 이력 삭제", description = "주유 이력을 삭제합니다.")
+    @Operation(summary = "[주유 이력 관리] 주유 이력 삭제", description = "주유 이력을 삭제합니다.")
     public GasStationHistoryResponse delete(
             @AuthMember Member member, @PathVariable Long gasStationHistoryId) {
         final GasStationHistory gasStationHistory =

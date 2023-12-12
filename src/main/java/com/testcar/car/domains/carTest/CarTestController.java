@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "[시험장 관리] 시험 수행 이력", description = "차량 시험 수행 결과를 관리합니다.")
+@Tag(name = "[시험차량 관리]", description = "차량 시험 수행 결과를 관리합니다.")
 @RestController
 @RequestMapping("/cars/tests")
 @RequiredArgsConstructor
@@ -38,7 +38,7 @@ public class CarTestController {
     @GetMapping
     @RoleAllowed(role = Role.USER)
     @Operation(
-            summary = "[시험장 관리] 시험 수행 이력 조회 필터",
+            summary = "[시험 수행 이력] 시험 수행 이력 조회 필터",
             description = "조건에 맞는 모든 시험 수행 이력을 페이지네이션으로 조회합니다.")
     public PageResponse<CarTestResponse> getCarTestsByCondition(
             @ParameterObject @ModelAttribute CarTestFilterCondition condition,
@@ -50,7 +50,7 @@ public class CarTestController {
 
     @GetMapping("/{carTestId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험 수행 이력 상세", description = "시험 수행 이력을 id로 조회합니다.")
+    @Operation(summary = "[시험 수행 이력] 시험 수행 이력 상세", description = "시험 수행 이력을 id로 조회합니다.")
     public CarTestResponse getCarTestsByCondition(@PathVariable Long carTestId) {
         final CarTestDto carTest = carTestService.findById(carTestId);
         return CarTestResponse.from(carTest);
@@ -58,7 +58,7 @@ public class CarTestController {
 
     @PostMapping
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험 수행 이력 등록", description = "시험 수행 이력을 등록합니다.")
+    @Operation(summary = "[시험 수행 이력] 시험 수행 이력 등록", description = "시험 수행 이력을 등록합니다.")
     public CarTestResponse register(
             @AuthMember Member member, @Valid @RequestBody CarTestRequest request) {
         final CarTest carTest = carTestService.register(member, request);
@@ -67,7 +67,7 @@ public class CarTestController {
 
     @PatchMapping("/{carTestId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험 수행 이력 수정", description = "시험 수행 이력을 수정합니다.")
+    @Operation(summary = "[시험 수행 이력] 시험 수행 이력 수정", description = "시험 수행 이력을 수정합니다.")
     public CarTestResponse update(
             @AuthMember Member member,
             @PathVariable Long carTestId,
@@ -78,7 +78,7 @@ public class CarTestController {
 
     @DeleteMapping("/{carTestId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험 수행 이력 삭제", description = "시험 수행 이력을 삭제합니다.")
+    @Operation(summary = "[시험 수행 이력] 시험 수행 이력 삭제", description = "시험 수행 이력을 삭제합니다.")
     public Long delete(@AuthMember Member member, @PathVariable Long carTestId) {
         carTestService.delete(member, carTestId);
         return carTestId;

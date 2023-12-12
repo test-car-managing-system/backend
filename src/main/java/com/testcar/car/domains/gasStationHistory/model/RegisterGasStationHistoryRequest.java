@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 import lombok.Getter;
 
@@ -21,11 +22,12 @@ public class RegisterGasStationHistoryRequest {
     private String stockNumber;
 
     @NotNull(message = "주유량을 입력해주세요.")
+    @Positive(message = "주유량은 0보다 커야합니다.")
     @Schema(description = "주유량", example = "100.33")
     private Double amount;
 
-    @NotNull(message = "주유일자를 입력해주세요.")
     @DateFormat
+    @NotNull(message = "주유일자를 입력해주세요.")
     @Schema(description = "주유일자", example = "2021-01-01")
     private LocalDate usedAt;
 }

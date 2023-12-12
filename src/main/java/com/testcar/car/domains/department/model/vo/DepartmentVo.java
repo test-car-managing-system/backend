@@ -1,7 +1,7 @@
 package com.testcar.car.domains.department.model.vo;
 
 
-import com.testcar.car.domains.department.Department;
+import com.testcar.car.domains.department.entity.Department;
 import lombok.Builder;
 import lombok.Getter;
 

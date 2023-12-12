@@ -1,6 +1,7 @@
-package com.testcar.car.domains.department;
+package com.testcar.car.domains.department.repository;
 
 
+import com.testcar.car.domains.department.entity.Department;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

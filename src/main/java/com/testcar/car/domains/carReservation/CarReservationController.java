@@ -35,9 +35,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarReservationController {
     private final CarReservationService carReservationService;
 
+    @PostMapping("/reserve")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[대여] 시험 차량 대여", description = "시험 차량을 예약합니다.")
+    public CarReservationResponse postCarReservation(
+            @AuthMember Member member, @Valid @RequestBody CarReservationRequest request) {
+        final CarReservation carReservation = carReservationService.reserve(member, request);
+        return CarReservationResponse.from(carReservation);
+    }
+
     @GetMapping("/reservations")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험차량 관리] 시험차량 대여 이력", description = "조건에 맞는 시험차량 대여 이력을 모두 조회합니다.")
+    @Operation(summary = "[대여 이력] 시험차량 대여 이력", description = "조건에 맞는 시험차량 대여 이력을 모두 조회합니다.")
     public PageResponse<CarReservationResponse> getCarReservationsByCondition(
             @ParameterObject @ModelAttribute CarReservationFilterCondition condition,
             @ParameterObject Pageable pageable) {
@@ -46,18 +55,9 @@ public class CarReservationController {
         return PageResponse.from(carReservations.map(CarReservationResponse::from));
     }
 
-    @PostMapping("/reserve")
-    @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험차량 관리] 시험차량 대여", description = "시험 차량을 예약합니다.")
-    public CarReservationResponse postCarReservation(
-            @AuthMember Member member, @Valid @RequestBody CarReservationRequest request) {
-        final CarReservation carReservation = carReservationService.reserve(member, request);
-        return CarReservationResponse.from(carReservation);
-    }
-
     @PatchMapping("/return")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험차량 관리] 시험차량 반납", description = "시험 차량을 반납합니다.")
+    @Operation(summary = "[대여 이력] 시험차량 반납", description = "시험 차량을 반납합니다.")
     public List<CarReservationResponse> postCarReservation(
             @AuthMember Member member, @Valid @RequestBody ReturnCarReservationRequest request) {
         final List<CarReservation> carReservation =
