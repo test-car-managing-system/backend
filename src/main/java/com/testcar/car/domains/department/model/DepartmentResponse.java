@@ -1,7 +1,7 @@
 package com.testcar.car.domains.department.model;
 
 
-import com.testcar.car.domains.department.Department;
+import com.testcar.car.domains.department.entity.Department;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.testcar.car.domains.member.repository;
 
-import static com.testcar.car.domains.department.QDepartment.department;
+import static com.testcar.car.domains.department.entity.QDepartment.department;
 import static com.testcar.car.domains.member.QMember.member;
 
 import com.querydsl.core.types.dsl.BooleanExpression;

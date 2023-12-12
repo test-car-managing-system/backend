@@ -8,6 +8,7 @@ import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.TrackResponse;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "[시험장 관리]", description = "시험장 관리 API")
 @RestController
 @RequestMapping("/tracks")
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class TrackController {
 
     @GetMapping
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험장 조회", description = "시험장을 조건에 맞게 조회합니다.")
+    @Operation(summary = "[예약] 시험장 조회", description = "시험장을 조건에 맞게 조회합니다.")
     public List<TrackResponse> getTracksByCondition(
             @ParameterObject TrackFilterCondition condition) {
         final List<Track> tracks = trackService.findAllByCondition(condition);
@@ -38,7 +40,7 @@ public class TrackController {
 
     @GetMapping("/{trackId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험장 상세 정보", description = "시험장 상세 정보를 가져옵니다.")
+    @Operation(summary = "[예약] 시험장 상세 정보", description = "시험장 상세 정보를 가져옵니다.")
     public TrackResponse getTrackById(@PathVariable Long trackId) {
         final Track track = trackService.findById(trackId);
         return TrackResponse.from(track);

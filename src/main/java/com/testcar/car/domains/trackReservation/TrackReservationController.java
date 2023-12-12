@@ -38,7 +38,7 @@ public class TrackReservationController {
 
     @GetMapping("/reservations")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 내 시험장 예약 이력 조회", description = "나의 시험장 예약 이력을 조건에 맞게 조회합니다.")
+    @Operation(summary = "[예약 이력] 내 시험장 예약 이력 조회", description = "나의 시험장 예약 이력을 조건에 맞게 조회합니다.")
     public List<TrackReservationResponse> getTrackReservationsByCondition(
             @AuthMember Member member, @ParameterObject TrackReservationFilterCondition condition) {
         final List<TrackReservation> trackReservations =
@@ -48,7 +48,7 @@ public class TrackReservationController {
 
     @GetMapping("/reservations/{trackReservationId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 내 시험장 예약 이력 상세 조회", description = "시험장 예약 이력 상세 정보를 조회합니다.")
+    @Operation(summary = "[예약 이력] 내 시험장 예약 이력 상세 조회", description = "시험장 예약 이력 상세 정보를 조회합니다.")
     public TrackReservationDetailResponse getTrackReservationDetailById(
             @AuthMember Member member, @PathVariable Long trackReservationId) {
         final TrackReservation trackReservation =
@@ -58,7 +58,7 @@ public class TrackReservationController {
 
     @GetMapping("/{trackId}/reservations")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험장 예약 내역 조회", description = "해당 시험장의 해당 일자에 예약된 내역을 조회합니다.")
+    @Operation(summary = "[예약 이력] 시험장 예약 내역 조회", description = "해당 시험장의 해당 일자에 예약된 내역을 조회합니다.")
     public TrackReservationSlotResponse getTrackReservationsByTrackId(
             @PathVariable Long trackId, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         final Set<TrackReservationSlot> unavailableReservationSlots =
@@ -68,7 +68,7 @@ public class TrackReservationController {
 
     @PostMapping("/{trackId}/reserve")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험장 예약", description = "해당 시험장을 예약합니다.")
+    @Operation(summary = "[예약] 시험장 예약", description = "해당 시험장을 예약합니다.")
     public TrackReservationDetailResponse postTrackReservation(
             @AuthMember Member member,
             @PathVariable Long trackId,
@@ -80,7 +80,7 @@ public class TrackReservationController {
 
     @DeleteMapping("/reservations/{trackReservationId}/cancel")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험장 관리] 시험장 예약 취소", description = "해당 시험장을 예약을 취소합니다.")
+    @Operation(summary = "[예약 이력] 시험장 예약 취소", description = "해당 시험장을 예약을 취소합니다.")
     public TrackReservationDetailResponse postTrackReservation(
             @AuthMember Member member, @PathVariable Long trackReservationId) {
         final TrackReservation trackReservation =

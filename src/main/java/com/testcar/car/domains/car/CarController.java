@@ -6,7 +6,6 @@ import com.testcar.car.common.response.PageResponse;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.model.CarResponse;
 import com.testcar.car.domains.car.model.RegisterCarRequest;
-import com.testcar.car.domains.car.model.TestCarResponse;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;
 import com.testcar.car.domains.member.Role;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,29 +42,11 @@ public class CarController {
         return PageResponse.from(cars.map(CarResponse::from));
     }
 
-    @GetMapping("/test")
-    @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험차량 관리] 차량 조회 필터", description = "조건에 맞는 시험 차량을 페이지네이션으로 조회합니다.")
-    public PageResponse<TestCarResponse> getTestCarsByCondition(
-            @ParameterObject @ModelAttribute CarFilterCondition condition,
-            @ParameterObject Pageable pageable) {
-        final Page<Car> cars = carService.findAllWithStocksPageByCondition(condition, pageable);
-        return PageResponse.from(cars.map(TestCarResponse::from));
-    }
-
     @GetMapping("/{carId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[차량 관리] 사용자 상세 정보", description = "차량 상세 정보를 가져옵니다.")
+    @Operation(summary = "[차량 관리] 차량 상세 정보", description = "차량 상세 정보를 가져옵니다.")
     public CarResponse getCarById(@PathVariable Long carId) {
         final Car car = carService.findById(carId);
-        return CarResponse.from(car);
-    }
-
-    @PostMapping("/register")
-    @RoleAllowed(role = Role.ADMIN)
-    @Operation(summary = "[차량 관리] 차량 등록", description = "(관리자) 새로운 차량을 등록합니다.")
-    public CarResponse register(@Valid @RequestBody RegisterCarRequest request) {
-        final Car car = carService.register(request);
         return CarResponse.from(car);
     }
 
@@ -83,6 +64,14 @@ public class CarController {
     @Operation(summary = "[차량 관리] 차량 삭제", description = "(관리자) 차량을 삭제합니다.")
     public CarResponse withdraw(@PathVariable Long carId) {
         final Car car = carService.deleteById(carId);
+        return CarResponse.from(car);
+    }
+
+    @PostMapping("/register")
+    @RoleAllowed(role = Role.ADMIN)
+    @Operation(summary = "[차량 등록] 차량 등록", description = "(관리자) 새로운 차량을 등록합니다.")
+    public CarResponse register(@Valid @RequestBody RegisterCarRequest request) {
+        final Car car = carService.register(request);
         return CarResponse.from(car);
     }
 }

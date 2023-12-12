@@ -11,6 +11,7 @@ import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;
 import com.testcar.car.domains.carStock.model.vo.CarStockFilterCondition;
 import com.testcar.car.domains.member.Role;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "[차량 관리] ", description = "차량 재고 관리 API")
 @RestController
 @RequestMapping("/cars/stocks")
 @RequiredArgsConstructor

@@ -4,8 +4,10 @@ import static com.testcar.car.domains.department.exception.ErrorCode.DUPLICATED_
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
+import com.testcar.car.domains.department.entity.Department;
 import com.testcar.car.domains.department.exception.ErrorCode;
 import com.testcar.car.domains.department.model.CreateDepartmentRequest;
+import com.testcar.car.domains.department.repository.DepartmentRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

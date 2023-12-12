@@ -28,7 +28,7 @@ public class TestCarController {
 
     @GetMapping
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험차량 관리] 차량 조회 필터", description = "조건에 맞는 시험 차량을 페이지네이션으로 조회합니다.")
+    @Operation(summary = "[대여] 차량 조회 필터", description = "조건에 맞는 시험 차량을 페이지네이션으로 조회합니다.")
     public PageResponse<TestCarResponse> getTestCarsByCondition(
             @ParameterObject @ModelAttribute CarFilterCondition condition,
             @ParameterObject Pageable pageable) {
@@ -38,7 +38,7 @@ public class TestCarController {
 
     @GetMapping("/{carId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[시험차량 관리] 시험차량 상세 정보", description = "시험차량 상세 정보를 가져옵니다.")
+    @Operation(summary = "[대여] 시험차량 상세 정보", description = "대여할 시험 차량 상세 정보를 가져옵니다.")
     public TestCarResponse getCarById(@PathVariable Long carId) {
         final Car car = testCarService.findById(carId);
         return TestCarResponse.from(car);

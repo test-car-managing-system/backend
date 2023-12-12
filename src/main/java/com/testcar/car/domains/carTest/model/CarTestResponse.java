@@ -7,7 +7,7 @@ import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carTest.entity.CarTest;
 import com.testcar.car.domains.carTest.model.vo.CarTestDto;
-import com.testcar.car.domains.department.Department;
+import com.testcar.car.domains.department.entity.Department;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.track.Track;
 import io.swagger.v3.oas.annotations.media.Schema;

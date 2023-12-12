@@ -37,7 +37,7 @@ public class ExpenseController {
 
     @GetMapping
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[지출 관리] 지출 내역 조회", description = "지출 내역을 조건에 맞게 조회합니다.")
+    @Operation(summary = "[지출 내역 관리] 지출 내역 조회", description = "지출 내역을 조건에 맞게 조회합니다.")
     public PageResponse<ExpenseResponse> getExpensesByCondition(
             @ParameterObject @ModelAttribute ExpenseFilterCondition condition,
             @ParameterObject Pageable pageable) {
@@ -47,7 +47,7 @@ public class ExpenseController {
 
     @GetMapping("/{expenseId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[지출 관리]] 지출 이력 상세 조회", description = "지출 이력 상세 정보를 id로 조회합니다.")
+    @Operation(summary = "[지출 내역 관리] 지출 이력 조회", description = "지출 이력 상세 정보를 id로 조회합니다.")
     public ExpenseResponse getExpenseById(@PathVariable Long expenseId) {
         final ExpenseDto dto = expenseService.findById(expenseId);
         return ExpenseResponse.from(dto);
@@ -55,7 +55,7 @@ public class ExpenseController {
 
     @PostMapping
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[지출 관리] 지출 이력 등록", description = "지출 이력을 등록합니다.")
+    @Operation(summary = "[지출 내역 관리] 지출 이력 등록", description = "지출 이력을 등록합니다.")
     public ExpenseResponse register(
             @AuthMember Member member, @Valid @RequestBody RegisterExpenseRequest request) {
         final Expense expense = expenseService.register(member, request);
@@ -64,7 +64,7 @@ public class ExpenseController {
 
     @PatchMapping("/{expenseId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[지출 관리] 지출 이력 수정", description = "지출 이력을 수정합니다.")
+    @Operation(summary = "[지출 내역 관리] 지출 이력 수정", description = "지출 이력을 수정합니다.")
     public ExpenseResponse update(
             @AuthMember Member member,
             @PathVariable Long expenseId,
@@ -75,7 +75,7 @@ public class ExpenseController {
 
     @DeleteMapping("/{expenseId}")
     @RoleAllowed(role = Role.USER)
-    @Operation(summary = "[지출 관리] 지출 이력 삭제", description = "지출 이력을 삭제합니다.")
+    @Operation(summary = "[지출 내역 관리] 지출 이력 삭제", description = "지출 이력을 삭제합니다.")
     public Long delete(@AuthMember Member member, @PathVariable Long expenseId) {
         expenseService.delete(member, expenseId);
         return expenseId;
