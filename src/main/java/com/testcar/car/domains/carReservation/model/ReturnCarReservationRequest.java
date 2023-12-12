@@ -5,9 +5,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class ReturnCarReservationRequest {
     @NotNull(message = "차량 예약 ID 리스트를 입력해주세요.")
     @NotEmpty(message = "차량 예약 ID 리스트를 입력해주세요.")

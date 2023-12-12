@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
+@Builder
 public class RegisterCarRequest {
     @NotBlank(message = "차량명을 입력해주세요.")
     @Length(max = 20)
