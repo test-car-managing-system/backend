@@ -24,7 +24,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
             HttpMessageNotReadableException e) {
-        log.warn("HttpMessageNotReadableException. error message: request field error");
+        log.warn("HttpMessageNotReadableException. error message: request field error", e);
         final BadRequestException exception = new BadRequestException(BAD_REQUEST);
         final ErrorResponse response = ErrorResponse.from(exception);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -34,7 +34,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
             MissingServletRequestParameterException e) {
-        log.warn("MissingServletRequestParameterException. error message: request field error");
+        log.warn("MissingServletRequestParameterException. error message: request field error", e);
         final BadRequestException exception = new BadRequestException(BAD_REQUEST);
         final ErrorResponse response = ErrorResponse.from(exception);
         return new ResponseEntity<>(response, e.getStatusCode());
@@ -44,7 +44,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
-        log.warn("MethodArgumentNotValidException. error message: request field error");
+        log.warn("MethodArgumentNotValidException. error message: request field error", e);
         final BadRequestException exception = new BadRequestException(BAD_REQUEST);
         final ErrorResponse response = ErrorResponse.of(exception, e.getBindingResult());
         return new ResponseEntity<>(response, e.getStatusCode());
