@@ -22,11 +22,11 @@ public class CarReservationTest {
 
     @Test
     public void 차량_예약을_생성한다() {
-        // Given
+        // given
         final LocalDateTime startedAt = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
         final LocalDateTime expiredAt = LocalDateTime.of(2021, 1, 8, 0, 0, 0);
 
-        // When
+        // when
         final CarReservation carReservation =
                 CarReservation.builder()
                         .member(member)
@@ -35,7 +35,7 @@ public class CarReservationTest {
                         .expiredAt(expiredAt)
                         .status(ReservationStatus.RESERVED)
                         .build();
-        // Then
+        // then
         assertThat(carReservation.getMember()).isEqualTo(member);
         assertThat(carReservation.getCarStock()).isEqualTo(carStock);
         assertThat(carReservation.getStartedAt()).isEqualTo(startedAt);
@@ -45,13 +45,13 @@ public class CarReservationTest {
 
     @Test
     public void 예약했던_차량을_반납한다() {
-        // Given
+        // given
         final CarReservation carReservation = CarEntityFactory.createCarReservation();
 
-        // When
+        // when
         carReservation.updateReturn();
 
-        // Then
+        // then
         assertThat(carReservation.getStatus()).isEqualTo(ReservationStatus.RETURNED);
     }
 }

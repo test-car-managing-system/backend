@@ -19,6 +19,7 @@ public class Constant {
     /** Car */
     public static final String CAR_NAME = "아반떼";
 
+    public static final String ANOTHER_CAR_NAME = "소나타";
     public static final double CAR_DISPLACEMENT = 1.6;
     public static final Type CAR_TYPE = Type.SEDAN;
     public static final String CAR_STOCK_NUMBER = "123456789012";

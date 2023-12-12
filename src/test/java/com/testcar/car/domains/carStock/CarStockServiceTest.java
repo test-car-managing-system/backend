@@ -60,27 +60,27 @@ public class CarStockServiceTest {
 
     @Test
     void 차량_재고번호로_차량재고_엔티티를_가져온다() {
-        // Given
+        // given
         final String stockNumber = CAR_STOCK_NUMBER;
         when(carStockRepository.findByStockNumberAndDeletedFalse(stockNumber))
                 .thenReturn(Optional.of(carStock));
 
-        // When
+        // when
         CarStock result = carStockService.findByStockNumber(stockNumber);
 
-        // Then
+        // then
         assertEquals(carStock, result);
         verify(carStockRepository).findByStockNumberAndDeletedFalse(stockNumber);
     }
 
     @Test
     void 차량_재고번호가_존재하지_않으면_오류가_발생한다() {
-        // Given
+        // given
         final String stockNumber = CAR_STOCK_NUMBER;
         when(carStockRepository.findByStockNumberAndDeletedFalse(stockNumber))
                 .thenReturn(Optional.empty());
 
-        // When, Then
+        // when, then
         Assertions.assertThrows(
                 NotFoundException.class,
                 () -> {
@@ -90,24 +90,24 @@ public class CarStockServiceTest {
 
     @Test
     void 차량_재고ID로_차량재고_엔티티를_가져온다() {
-        // Given
+        // given
         when(carStockRepository.findByIdAndDeletedFalse(carStockId))
                 .thenReturn(Optional.of(carStock));
 
-        // When
+        // when
         CarStock result = carStockService.findById(carStockId);
 
-        // Then
+        // then
         assertEquals(carStock, result);
         verify(carStockRepository).findByIdAndDeletedFalse(carStockId);
     }
 
     @Test
     void 차량_재고_ID가_존재하지_않으면_오류가_발생한다() {
-        // Given
+        // given
         when(carStockRepository.findByIdAndDeletedFalse(carStockId)).thenReturn(Optional.empty());
 
-        // When, Then
+        // when, then
         Assertions.assertThrows(
                 NotFoundException.class,
                 () -> {
@@ -117,7 +117,7 @@ public class CarStockServiceTest {
 
     @Test
     void 차량_재고ID_리스트로_차량재고_리스트를_가져온다() {
-        // Given
+        // given
         final CarStock carStock1 = CarEntityFactory.createCarStock();
         final CarStock carStock2 = CarEntityFactory.createCarStock();
         final CarStock carStock3 = CarEntityFactory.createCarStock();
@@ -125,24 +125,24 @@ public class CarStockServiceTest {
         final List<Long> carStockIds = List.of(1L, 2L, 3L);
         when(carStockRepository.findAllByIdInAndDeletedFalse(carStockIds)).thenReturn(carStocks);
 
-        // When
+        // when
         List<CarStock> result = carStockService.findAllByIdIn(carStockIds);
 
-        // Then
+        // then
         assertEquals(carStocks, result);
         verify(carStockRepository).findAllByIdInAndDeletedFalse(carStockIds);
     }
 
     @Test
     void 차량_재고ID_리스트와_결과_개수가_일치하지_않으면_오류가_발생한다() {
-        // Given
+        // given
         final CarStock carStock1 = CarEntityFactory.createCarStock();
         final CarStock carStock2 = CarEntityFactory.createCarStock();
         final List<CarStock> fewerStocks = List.of(carStock1, carStock2);
         final List<Long> carStockIds = List.of(1L, 2L, 3L);
         when(carStockRepository.findAllByIdInAndDeletedFalse(carStockIds)).thenReturn(fewerStocks);
 
-        // When, Then
+        // when, then
         Assertions.assertThrows(
                 NotFoundException.class,
                 () -> {
@@ -152,22 +152,22 @@ public class CarStockServiceTest {
 
     @Test
     void 조건에_맞는_차량재고_페이지를_필터링하여_가져온다() {
-        // Given
+        // given
         CarStockFilterCondition condition = new CarStockFilterCondition();
         Pageable pageable = mock(Pageable.class);
         Page<CarStock> mockPage = mock(Page.class);
         when(carStockRepository.findAllPageByCondition(condition, pageable)).thenReturn(mockPage);
 
-        // When
+        // when
         Page<CarStock> result = carStockService.findAllPageByCondition(condition, pageable);
 
-        // Then
+        // then
         assertEquals(mockPage, result);
     }
 
     @Test
     void 차량재고를_등록한다() {
-        // Given
+        // given
         RegisterCarStockRequest request = CarStockRequestFactory.createRegisterCarStockRequest();
         given(carStockRepository.save(any(CarStock.class))).willReturn(carStock);
 
@@ -181,7 +181,7 @@ public class CarStockServiceTest {
 
     @Test
     void 이미_등록된_재고번호로는_등록할수_없다() {
-        // Given
+        // given
         RegisterCarStockRequest request = CarStockRequestFactory.createRegisterCarStockRequest();
         given(carStockRepository.existsByStockNumberAndDeletedFalse(request.getStockNumber()))
                 .willReturn(true);
@@ -197,7 +197,7 @@ public class CarStockServiceTest {
 
     @Test
     void 차량재고를_수정한다() {
-        // Given
+        // given
         UpdateCarStockRequest request = CarStockRequestFactory.createUpdateCarStockRequest();
         when(carStockRepository.findByIdAndDeletedFalse(carStockId))
                 .thenReturn(Optional.of(carStock));
@@ -214,7 +214,7 @@ public class CarStockServiceTest {
 
     @Test
     void 이미_등록된_재고번호로는_수정할수_없다() {
-        // Given
+        // given
         UpdateCarStockRequest request = CarStockRequestFactory.createUpdateCarStockRequest();
         when(carStockRepository.findByIdAndDeletedFalse(carStockId))
                 .thenReturn(Optional.of(carStock));

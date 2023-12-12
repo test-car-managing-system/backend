@@ -28,10 +28,10 @@ public class CarTestTest {
 
     @Test
     public void 시험_수행이력을_생성한다() {
-        // Given
+        // given
         final LocalDateTime performedAt = LocalDateTime.now();
 
-        // When
+        // when
         final CarTest newCarTest =
                 CarTest.builder()
                         .member(member)
@@ -40,7 +40,7 @@ public class CarTestTest {
                         .performedAt(performedAt)
                         .result("통과")
                         .build();
-        // Then
+        // then
         assertThat(newCarTest.getMember()).isEqualTo(member);
         assertThat(newCarTest.getCarStock()).isEqualTo(carStock);
         assertThat(newCarTest.getTrack()).isEqualTo(track);
@@ -50,15 +50,15 @@ public class CarTestTest {
 
     @Test
     public void 시험_수행이력의_정보를_변경한다() {
-        // Given
+        // given
         final LocalDateTime newPerformedAt = LocalDateTime.of(2021, 1, 2, 0, 0, 0);
         final String newStockNumber = "123456789013";
         final String newResult = "불합격";
 
-        // When
+        // when
         carTest.update(newPerformedAt, newStockNumber, newResult);
 
-        // Then
+        // then
         assertThat(carTest.getPerformedAt()).isEqualTo(newPerformedAt);
         assertThat(carTest.getResult()).isEqualTo(newStockNumber);
         assertThat(carTest.getMemo()).isEqualTo(newResult);
@@ -66,37 +66,37 @@ public class CarTestTest {
 
     @Test
     public void 시험_수행이력의_주행시험장을_변경한다() {
-        // Given
+        // given
         final Track newTrack = Track.builder().name("마포주행시험장").build();
 
-        // When
+        // when
         carTest.updateTrack(newTrack);
 
-        // Then
+        // then
         assertThat(carTest.getTrack()).isEqualTo(newTrack);
     }
 
     @Test
     public void 시험_수행이력의_차량재고를_변경한다() {
-        // Given
+        // given
         final CarStock newCarStock = CarEntityFactory.createCarStock();
 
-        // When
+        // when
         carTest.updateCarStock(newCarStock);
 
-        // Then
+        // then
         assertThat(carTest.getCarStock()).isEqualTo(newCarStock);
     }
 
     @Test
     public void 시험_수행이력의_수정인을_변경한다() {
-        // Given
+        // given
         final Member newMember = Member.builder().name("홍길순").build();
 
-        // When
+        // when
         carTest.updateMemberBy(newMember);
 
-        // Then
+        // then
         assertThat(carTest.getUpdateMember()).isEqualTo(newMember);
     }
 }

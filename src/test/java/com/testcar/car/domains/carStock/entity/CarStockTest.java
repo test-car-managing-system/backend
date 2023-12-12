@@ -19,14 +19,14 @@ public class CarStockTest {
 
     @Test
     public void 차량_재고를_생성한다() {
-        // Given
+        // given
         final String stockNumber = "123456789012";
         final StockStatus status = StockStatus.AVAILABLE;
 
-        // When
+        // when
         final CarStock newCarStock =
                 CarStock.builder().car(car).stockNumber(stockNumber).status(status).build();
-        // Then
+        // then
         assertThat(newCarStock.getCar()).isEqualTo(car);
         assertThat(newCarStock.getStockNumber()).isEqualTo(stockNumber);
         assertThat(newCarStock.getStatus()).isEqualTo(status);
@@ -34,25 +34,25 @@ public class CarStockTest {
 
     @Test
     public void 차량_재고의_재고번호를_변경한다() {
-        // Given
+        // given
         final String newStockNumber = "123456789013";
 
-        // When
+        // when
         carStock.updateStockNumber(newStockNumber);
 
-        // Then
+        // then
         assertThat(carStock.getStockNumber()).isEqualTo(newStockNumber);
     }
 
     @Test
     public void 차량_재고의_재고상태를_변경한다() {
-        // Given
+        // given
         final StockStatus newStatus = StockStatus.INSPECTION;
 
-        // When
+        // when
         carStock.updateStatus(newStatus);
 
-        // Then
+        // then
         assertThat(carStock.getStatus()).isEqualTo(newStatus);
     }
 }
