@@ -5,10 +5,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterTrackRequest {
     @NotBlank(message = "시험장명을 입력해주세요.")
     @Length(max = 20, message = "시험장명은 20자 이하로 입력해주세요.")

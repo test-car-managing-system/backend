@@ -4,11 +4,15 @@ package com.testcar.car.domains.carReservation.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CarReservationRequest {
     @NotNull(message = "차량재고 ID를 입력해주세요.")
     @Positive(message = "차량재고 ID는 0보다 커야합니다.")

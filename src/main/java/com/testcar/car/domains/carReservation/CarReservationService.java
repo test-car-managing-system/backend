@@ -64,6 +64,7 @@ public class CarReservationService {
                         .startedAt(now)
                         .expiredAt(expiredAt)
                         .build();
+        carStock.updateStatus(StockStatus.RESERVED);
         carStockRepository.save(carStock);
         return carReservationRepository.save(carReservation);
     }

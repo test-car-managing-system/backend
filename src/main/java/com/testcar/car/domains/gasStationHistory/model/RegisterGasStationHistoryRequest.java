@@ -8,9 +8,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterGasStationHistoryRequest {
     @NotBlank(message = "주유소 이름을 입력해주세요.")
     @Schema(description = "주유소 이름", example = "서산주유소A")
