@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 public class RegisterGasStationRequest {
-    @NotBlank
+    @NotBlank(message = "주유소명을 입력해주세요.")
     @Schema(description = "주유소명", example = "서산주유소A")
     private String name;
 }

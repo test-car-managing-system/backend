@@ -10,12 +10,12 @@ import lombok.Getter;
 
 @Getter
 public class UpdateCarStockRequest {
-    @NotBlank
-    @Pattern(regexp = "^[0-9]{12}$")
+    @NotBlank(message = "차량 재고번호를 입력해주세요.")
+    @Pattern(regexp = "^[0-9]{12}$", message = "차량 재고번호는 12자리 숫자만 가능합니다.")
     @Schema(description = "차량 재고번호", example = "2023010300001")
     private String stockNumber;
 
-    @NotNull
+    @NotNull(message = "차량 재고 상태를 입력해주세요.")
     @Schema(description = "재고 상태", example = "AVAILABLE", implementation = StockStatus.class)
     private StockStatus status;
 }

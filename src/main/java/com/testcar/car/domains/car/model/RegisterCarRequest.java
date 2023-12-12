@@ -11,17 +11,17 @@ import org.hibernate.validator.constraints.Length;
 
 @Getter
 public class RegisterCarRequest {
-    @NotBlank
+    @NotBlank(message = "차량명을 입력해주세요.")
     @Length(max = 20)
     @Schema(description = "차량명", example = "아반떼")
     private String name;
 
-    @NotNull
+    @NotNull(message = "차종을 입력해주세요.")
     @Schema(description = "차종", example = "SEDAN", implementation = Type.class)
     private Type type;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "배기량을 입력해주세요.")
+    @Positive(message = "배기량은 0보다 커야합니다.")
     @Schema(description = "배기량", example = "1.6")
     private Double displacement;
 }

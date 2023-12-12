@@ -18,8 +18,8 @@ public class RegisterExpenseRequest {
     @Schema(description = "재고번호", example = "123412341234")
     private String stockNumber;
 
-    @NotNull(message = "지출일자를 입력해주세요.")
     @DateFormat
+    @NotNull(message = "지출일자를 입력해주세요.")
     @Schema(description = "지출일자", example = "2021-01-01")
     private LocalDate usedAt;
 

@@ -10,7 +10,8 @@ import lombok.Getter;
 
 @Getter
 public class DeleteCarStockRequest {
-    @NotEmpty
+    @NotNull(message = "차량 재고 ID를 입력해주세요.")
+    @NotEmpty(message = "차량 재고 ID를 입력해주세요.")
     @Schema(description = "차량 재고 ID", example = "[1, 2, 3]")
     private List<@NotNull @Positive Long> ids;
 }
