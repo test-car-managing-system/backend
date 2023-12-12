@@ -2,6 +2,7 @@ package com.testcar.car.domains.carReservation;
 
 
 import com.testcar.car.common.exception.BadRequestException;
+import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.carReservation.entity.CarReservation;
 import com.testcar.car.domains.carReservation.entity.ReservationStatus;
 import com.testcar.car.domains.carReservation.exception.ErrorCode;
@@ -44,7 +45,7 @@ public class CarReservationService {
         final List<CarReservation> carReservations =
                 carReservationRepository.findAllWithCarStockByIdInAndMemberId(ids, member.getId());
         if (carReservations.size() != ids.size()) {
-            throw new BadRequestException(ErrorCode.CAR_RESERVATION_NOT_FOUND);
+            throw new NotFoundException(ErrorCode.CAR_RESERVATION_NOT_FOUND);
         }
         return carReservations;
     }
@@ -63,7 +64,6 @@ public class CarReservationService {
                         .startedAt(now)
                         .expiredAt(expiredAt)
                         .build();
-        carStock.updateStatus(StockStatus.RESERVED);
         carStockRepository.save(carStock);
         return carReservationRepository.save(carReservation);
     }
@@ -73,17 +73,24 @@ public class CarReservationService {
             Member member, ReturnCarReservationRequest request) {
         final List<CarReservation> carReservations =
                 this.findAllByMemberAndIds(member, request.getCarReservationIds());
-        carReservations.forEach(CarReservation::updateReturn);
-
+        carReservations.forEach(
+                carReservation -> {
+                    validateCarReservationReserved(carReservation);
+                    carReservation.updateReturn();
+                });
         final List<CarStock> carStocks =
                 carReservations.stream().map(CarReservation::getCarStock).toList();
-        carStocks.forEach(carStock -> carStock.updateStatus(StockStatus.AVAILABLE));
-
-        carStockRepository.saveAll(carStocks);
+        carStockService.returnCarStocks(carStocks);
         return carReservationRepository.saveAll(carReservations);
     }
 
-    public void validateCarStockAvailable(CarStock carStock) {
+    private void validateCarReservationReserved(CarReservation carReservation) {
+        if (carReservation.getStatus() != ReservationStatus.RESERVED) {
+            throw new BadRequestException(ErrorCode.CAR_RESERVATION_NOT_RESERVED);
+        }
+    }
+
+    private void validateCarStockAvailable(CarStock carStock) {
         if (carStock.getStatus() != StockStatus.AVAILABLE) {
             throw new BadRequestException(ErrorCode.CAR_STOCK_NOT_AVAILABLE);
         }

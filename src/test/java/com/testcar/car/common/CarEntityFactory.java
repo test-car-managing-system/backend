@@ -15,6 +15,7 @@ import com.testcar.car.domains.carReservation.entity.CarReservation.CarReservati
 import com.testcar.car.domains.carReservation.entity.ReservationStatus;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.entity.CarStock.CarStockBuilder;
+import com.testcar.car.domains.carStock.entity.StockStatus;
 import com.testcar.car.domains.carTest.entity.CarTest;
 import com.testcar.car.domains.carTest.entity.CarTest.CarTestBuilder;
 
@@ -34,7 +35,10 @@ public class CarEntityFactory {
     }
 
     public static CarStockBuilder createCarStockBuilder() {
-        return CarStock.builder().car(createCar()).stockNumber(CAR_STOCK_NUMBER);
+        return CarStock.builder()
+                .car(createCar())
+                .stockNumber(CAR_STOCK_NUMBER)
+                .status(StockStatus.AVAILABLE);
     }
 
     public static CarReservation createCarReservation() {

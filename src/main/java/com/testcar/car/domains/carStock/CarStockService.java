@@ -6,6 +6,7 @@ import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.car.CarService;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.carStock.entity.CarStock;
+import com.testcar.car.domains.carStock.entity.StockStatus;
 import com.testcar.car.domains.carStock.exception.ErrorCode;
 import com.testcar.car.domains.carStock.model.DeleteCarStockRequest;
 import com.testcar.car.domains.carStock.model.RegisterCarStockRequest;
@@ -73,6 +74,16 @@ public class CarStockService {
         return carStockRepository.save(carStock);
     }
 
+    /** 예약 중인 재고를 모두 반납합니다. */
+    public List<CarStock> returnCarStocks(List<CarStock> carStocks) {
+        carStocks.forEach(
+                carStock -> {
+                    carStock.updateStatus(StockStatus.AVAILABLE);
+                    validateCarStockReserved(carStock);
+                });
+        return carStockRepository.saveAll(carStocks);
+    }
+
     /** 재고를 삭제 처리 합니다. (soft delete) */
     public List<Long> deleteAll(DeleteCarStockRequest request) {
         final List<CarStock> stocks = this.findAllByIdIn(request.getIds());
@@ -95,6 +106,12 @@ public class CarStockService {
     private void validateStockNumberNotDuplicated(String stockNumber) {
         if (carStockRepository.existsByStockNumberAndDeletedFalse(stockNumber)) {
             throw new BadRequestException(ErrorCode.DUPLICATED_STOCK_NUMBER);
+        }
+    }
+
+    private void validateCarStockReserved(CarStock carStock) {
+        if (carStock.getStatus() != StockStatus.RESERVED) {
+            throw new BadRequestException(ErrorCode.CAR_STOCK_NOT_RESERVED);
         }
     }
 }
