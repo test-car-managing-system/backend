@@ -76,10 +76,8 @@ public class CarCustomRepositoryImpl implements CarCustomRepository, BaseQueryDs
                 jpaQueryFactory
                         .select(car.id)
                         .from(car)
-                        .leftJoin(car.carStocks, carStock)
                         .where(
                                 notDeleted(car),
-                                notDeleted(carStock),
                                 carNameContainsOrNull(condition.getName()),
                                 typeEqOrNull(condition.getType()),
                                 createdAtBetween(condition.getStartDate(), condition.getEndDate()))
