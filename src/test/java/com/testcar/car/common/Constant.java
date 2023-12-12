@@ -1,15 +1,16 @@
 package com.testcar.car.common;
 
+
 import com.testcar.car.domains.car.entity.Type;
 import com.testcar.car.domains.member.Role;
 import java.time.LocalDateTime;
 
 public class Constant {
-    private Constant() {
-    }
+    private Constant() {}
 
     /** Member */
     public static final String MEMBER_EMAIL = "test@test.com";
+
     public static final String MEMBER_PASSWORD = "1234abcd@";
     public static final String MEMBER_NAME = "홍길동";
     public static final Role MEMBER_ROLE = Role.ADMIN;
@@ -17,6 +18,7 @@ public class Constant {
 
     /** Car */
     public static final String CAR_NAME = "아반떼";
+
     public static final double CAR_DISPLACEMENT = 1.6;
     public static final Type CAR_TYPE = Type.SEDAN;
     public static final String CAR_STOCK_NUMBER = "123456789012";
@@ -26,11 +28,10 @@ public class Constant {
     public static final String CAR_TEST_RESULT = "통과";
 
     /** Track */
-
     public static final String TRACK_NAME = "서산주행시험장";
+
     public static final String ANOTHER_TRACK_NAME = "마포주행시험장";
     public static final String TRACK_LOCATION = "충청남도 서산시 부석면";
     public static final String TRACK_DESCRIPTION = "비탈길";
     public static final double TRACK_LENGTH = 12.6;
-
 }

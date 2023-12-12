@@ -74,10 +74,11 @@ public class CarStockService {
     }
 
     /** 재고를 삭제 처리 합니다. (soft delete) */
-    public List<CarStock> deleteAll(DeleteCarStockRequest request) {
+    public List<Long> deleteAll(DeleteCarStockRequest request) {
         final List<CarStock> stocks = this.findAllByIdIn(request.getIds());
         stocks.forEach(CarStock::delete);
-        return carStockRepository.saveAll(stocks);
+        carStockRepository.saveAll(stocks);
+        return request.getIds();
     }
 
     /** 영속되지 않은 재고 엔티티를 생성합니다. */

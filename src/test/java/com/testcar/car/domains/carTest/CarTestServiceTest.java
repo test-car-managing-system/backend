@@ -27,7 +27,6 @@ import com.testcar.car.domains.track.Track;
 import com.testcar.car.domains.track.TrackService;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,17 +37,13 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 public class CarTestServiceTest {
-    @Mock
-    private CarStockService carStockService;
+    @Mock private CarStockService carStockService;
 
-    @Mock
-    private TrackService trackService;
+    @Mock private TrackService trackService;
 
-    @Mock
-    private CarTestRepository carTestRepository;
+    @Mock private CarTestRepository carTestRepository;
 
-    @InjectMocks
-    private CarTestService carTestService;
+    @InjectMocks private CarTestService carTestService;
 
     private static Member member;
     private static CarStock carStock;
@@ -99,8 +94,7 @@ public class CarTestServiceTest {
         // Given
         CarTestRequest request = CarTestRequestFactory.createCarTestRequest();
         when(trackService.findByName(request.getTrackName())).thenReturn(track);
-        when(carStockService.findByStockNumber(request.getStockNumber()))
-                .thenReturn(carStock);
+        when(carStockService.findByStockNumber(request.getStockNumber())).thenReturn(carStock);
         given(carTestRepository.save(any(CarTest.class))).willReturn(carTestDto.getCarTest());
 
         // when

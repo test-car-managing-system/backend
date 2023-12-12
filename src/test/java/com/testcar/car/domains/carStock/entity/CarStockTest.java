@@ -25,11 +25,7 @@ public class CarStockTest {
 
         // When
         final CarStock newCarStock =
-                CarStock.builder()
-                        .car(car)
-                        .stockNumber(stockNumber)
-                        .status(status)
-                        .build();
+                CarStock.builder().car(car).stockNumber(stockNumber).status(status).build();
         // Then
         assertThat(newCarStock.getCar()).isEqualTo(car);
         assertThat(newCarStock.getStockNumber()).isEqualTo(stockNumber);

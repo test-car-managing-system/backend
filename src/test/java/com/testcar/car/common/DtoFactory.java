@@ -11,8 +11,7 @@ import com.testcar.car.domains.department.entity.Department;
 import com.testcar.car.domains.member.Member;
 
 public class DtoFactory {
-    private DtoFactory() {
-    }
+    private DtoFactory() {}
 
     public static CarTestDto createCarTestDto() {
         final Member member = MemberEntityFactory.createMember();

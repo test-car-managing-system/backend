@@ -19,8 +19,7 @@ import com.testcar.car.domains.carTest.entity.CarTest;
 import com.testcar.car.domains.carTest.entity.CarTest.CarTestBuilder;
 
 public class CarEntityFactory {
-    private CarEntityFactory() {
-    }
+    private CarEntityFactory() {}
 
     public static Car createCar() {
         return createCarBuilder().build();

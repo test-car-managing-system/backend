@@ -1,4 +1,3 @@
-
 package com.testcar.car.common;
 
 import static com.testcar.car.common.Constant.DEPARTMENT_NAME;
@@ -12,9 +11,7 @@ import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.member.Member.MemberBuilder;
 
 public class MemberEntityFactory {
-    private MemberEntityFactory() {
-    }
-
+    private MemberEntityFactory() {}
 
     public static Member createMember() {
         return createMemberBuilder().build();

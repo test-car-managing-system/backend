@@ -9,8 +9,7 @@ import com.testcar.car.domains.track.Track;
 import com.testcar.car.domains.track.Track.TrackBuilder;
 
 public class TrackEntityFactory {
-    private TrackEntityFactory() {
-    }
+    private TrackEntityFactory() {}
 
     public static Track createTrack() {
         return createTrackBuilder().build();

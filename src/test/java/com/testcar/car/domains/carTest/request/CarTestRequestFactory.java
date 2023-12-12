@@ -9,8 +9,7 @@ import com.testcar.car.domains.carTest.model.CarTestRequest;
 import java.time.LocalDate;
 
 public class CarTestRequestFactory {
-    private CarTestRequestFactory() {
-    }
+    private CarTestRequestFactory() {}
 
     public static CarTestRequest createCarTestRequest() {
         return CarTestRequest.builder()

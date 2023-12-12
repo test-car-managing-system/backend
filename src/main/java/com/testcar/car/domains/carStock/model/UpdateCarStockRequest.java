@@ -6,9 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class UpdateCarStockRequest {
     @NotBlank(message = "차량 재고번호를 입력해주세요.")
     @Pattern(regexp = "^[0-9]{12}$", message = "차량 재고번호는 12자리 숫자만 가능합니다.")
