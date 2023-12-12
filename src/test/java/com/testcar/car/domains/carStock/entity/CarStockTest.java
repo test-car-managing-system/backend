@@ -2,49 +2,43 @@ package com.testcar.car.domains.carStock.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.testcar.car.common.CarEntityFactory;
 import com.testcar.car.domains.car.entity.Car;
-import com.testcar.car.domains.car.entity.Type;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class CarStockTest {
-    private Car car;
-    private CarStock carStock;
+    private static Car car;
+    private static CarStock carStock;
 
-    @BeforeEach
-    public void setUp() {
-        car = Car.builder().name("아반떼").displacement(1.6).type(Type.SEDAN).build();
-        carStock = CarStock.builder().car(car).stockNumber("123456789012").status(StockStatus.AVAILABLE).build();
+    @BeforeAll
+    public static void setUp() {
+        car = CarEntityFactory.createCar();
+        carStock = CarEntityFactory.createCarStock();
     }
 
     @Test
-    public void createCarStockTest() {
+    public void 차량_재고를_생성한다() {
         // Given
         final String stockNumber = "123456789012";
         final StockStatus status = StockStatus.AVAILABLE;
 
         // When
-        final CarStock carStock =
+        final CarStock newCarStock =
                 CarStock.builder()
                         .car(car)
-                        .stockNumber("123456789012")
-                        .status(StockStatus.AVAILABLE)
+                        .stockNumber(stockNumber)
+                        .status(status)
                         .build();
         // Then
-        assertThat(carStock.getCar()).isEqualTo(car);
-        assertThat(carStock.getStockNumber()).isEqualTo(stockNumber);
-        assertThat(carStock.getStatus()).isEqualTo(status);
+        assertThat(newCarStock.getCar()).isEqualTo(car);
+        assertThat(newCarStock.getStockNumber()).isEqualTo(stockNumber);
+        assertThat(newCarStock.getStatus()).isEqualTo(status);
     }
 
     @Test
-    public void carStockUpdateStockNumberTest() {
+    public void 차량_재고의_재고번호를_변경한다() {
         // Given
-        final CarStock carStock =
-                CarStock.builder()
-                        .car(car)
-                        .stockNumber("123456789012")
-                        .status(StockStatus.AVAILABLE)
-                        .build();
         final String newStockNumber = "123456789013";
 
         // When
@@ -55,14 +49,8 @@ public class CarStockTest {
     }
 
     @Test
-    public void carStockUpdateStatusTest() {
+    public void 차량_재고의_재고상태를_변경한다() {
         // Given
-        final CarStock carStock =
-                CarStock.builder()
-                        .car(car)
-                        .stockNumber("123456789012")
-                        .status(StockStatus.AVAILABLE)
-                        .build();
         final StockStatus newStatus = StockStatus.INSPECTION;
 
         // When

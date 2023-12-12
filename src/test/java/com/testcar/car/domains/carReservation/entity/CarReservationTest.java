@@ -2,33 +2,30 @@ package com.testcar.car.domains.carReservation.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.testcar.car.common.CarEntityFactory;
+import com.testcar.car.common.MemberEntityFactory;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.entity.Type;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.entity.StockStatus;
 import com.testcar.car.domains.member.Member;
 import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CarReservationTest {
-    private Member member;
-    private CarStock carStock;
+    private static CarStock carStock;
+    private static Member member;
 
-    @BeforeEach
-    public void setUp() {
-        member = Member.builder().name("홍길동").build();
-        final Car car = Car.builder().name("아반떼").displacement(1.6).type(Type.SEDAN).build();
-        carStock =
-                CarStock.builder()
-                        .car(car)
-                        .stockNumber("123456789012")
-                        .status(StockStatus.AVAILABLE)
-                        .build();
+    @BeforeAll
+    public static void setUp() {
+        member = MemberEntityFactory.createMember();
+        carStock = CarEntityFactory.createCarStock();
     }
 
     @Test
-    public void createCarReservationTest() {
+    public void 차량_예약을_생성한다() {
         // Given
         final LocalDateTime startedAt = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
         final LocalDateTime expiredAt = LocalDateTime.of(2021, 1, 8, 0, 0, 0);
@@ -51,18 +48,9 @@ public class CarReservationTest {
     }
 
     @Test
-    public void carReservationReturnTest() {
+    public void 예약했던_차량을_반납한다() {
         // Given
-        final LocalDateTime startedAt = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
-        final LocalDateTime expiredAt = LocalDateTime.of(2021, 1, 8, 0, 0, 0);
-        final CarReservation carReservation =
-                CarReservation.builder()
-                        .member(member)
-                        .carStock(carStock)
-                        .startedAt(startedAt)
-                        .expiredAt(expiredAt)
-                        .status(ReservationStatus.RESERVED)
-                        .build();
+        final CarReservation carReservation = CarEntityFactory.createCarReservation();
 
         // When
         carReservation.updateReturn();

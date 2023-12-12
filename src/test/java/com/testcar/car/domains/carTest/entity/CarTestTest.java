@@ -2,6 +2,9 @@ package com.testcar.car.domains.carTest.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.testcar.car.common.CarEntityFactory;
+import com.testcar.car.common.MemberEntityFactory;
+import com.testcar.car.common.TrackEntityFactory;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.entity.Type;
 import com.testcar.car.domains.carStock.entity.CarStock;
@@ -20,28 +23,14 @@ public class CarTestTest {
 
     @BeforeEach
     public void setUp() {
-        final LocalDateTime performedAt = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
-        member = Member.builder().name("홍길동").build();
-        final Car car = Car.builder().name("아반떼").displacement(1.6).type(Type.SEDAN).build();
-        carStock =
-                CarStock.builder()
-                        .car(car)
-                        .stockNumber("123456789012")
-                        .status(StockStatus.AVAILABLE)
-                        .build();
-        track = Track.builder().name("시험장").build();
-        carTest =
-                CarTest.builder()
-                        .member(member)
-                        .carStock(carStock)
-                        .track(track)
-                        .performedAt(performedAt)
-                        .result("통과")
-                        .build();
+        member = MemberEntityFactory.createMember();
+        carStock = CarEntityFactory.createCarStock();
+        track = TrackEntityFactory.createTrack();
+        carTest = CarEntityFactory.createCarTest();
     }
 
     @Test
-    public void createCarTestTest() {
+    public void 시험_수행이력을_생성한다() {
         // Given
         final LocalDateTime performedAt = LocalDateTime.now();
 
@@ -63,7 +52,7 @@ public class CarTestTest {
     }
 
     @Test
-    public void carTestUpdateTest() {
+    public void 시험_수행이력의_정보를_변경한다() {
         // Given
         final LocalDateTime newPerformedAt = LocalDateTime.of(2021, 1, 2, 0, 0, 0);
         final String newStockNumber = "123456789013";
@@ -79,9 +68,9 @@ public class CarTestTest {
     }
 
     @Test
-    public void carTestUpdateTrackTest() {
+    public void 시험_수행이력의_주행시험장을_변경한다() {
         // Given
-        final Track newTrack = Track.builder().name("시험장2").build();
+        final Track newTrack = Track.builder().name("마포주행시험장").build();
 
         // When
         carTest.updateTrack(newTrack);
@@ -91,14 +80,9 @@ public class CarTestTest {
     }
 
     @Test
-    public void carTestUpdateStockTest() {
+    public void 시험_수행이력의_차량재고를_변경한다() {
         // Given
-        final CarStock newCarStock =
-                CarStock.builder()
-                        .car(carStock.getCar())
-                        .stockNumber("123456789013")
-                        .status(StockStatus.AVAILABLE)
-                        .build();
+        final CarStock newCarStock = CarEntityFactory.createCarStock();
 
         // When
         carTest.updateCarStock(newCarStock);
@@ -108,7 +92,7 @@ public class CarTestTest {
     }
 
     @Test
-    public void carTestUpdateMemberTest() {
+    public void 시험_수행이력의_수정인을_변경한다() {
         // Given
         final Member newMember = Member.builder().name("홍길순").build();
 
