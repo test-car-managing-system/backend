@@ -9,10 +9,12 @@ import org.junit.jupiter.api.Test;
 
 public class CarStockTest {
     private Car car;
+    private CarStock carStock;
 
     @BeforeEach
     public void setUp() {
         car = Car.builder().name("아반떼").displacement(1.6).type(Type.SEDAN).build();
+        carStock = CarStock.builder().car(car).stockNumber("123456789012").status(StockStatus.AVAILABLE).build();
     }
 
     @Test
@@ -35,7 +37,7 @@ public class CarStockTest {
     }
 
     @Test
-    public void carStockUpdateTest() {
+    public void carStockUpdateStockNumberTest() {
         // Given
         final CarStock carStock =
                 CarStock.builder()
@@ -43,19 +45,30 @@ public class CarStockTest {
                         .stockNumber("123456789012")
                         .status(StockStatus.AVAILABLE)
                         .build();
-
-        final CarStock updatedCarStock =
-                CarStock.builder()
-                        .stockNumber("123456789013")
-                        .status(StockStatus.INSPECTION)
-                        .build();
+        final String newStockNumber = "123456789013";
 
         // When
-        carStock.updateStockNumber(updatedCarStock.getStockNumber());
-        carStock.updateStatus(updatedCarStock.getStatus());
+        carStock.updateStockNumber(newStockNumber);
 
         // Then
-        assertThat(carStock.getStockNumber()).isEqualTo(updatedCarStock.getStockNumber());
-        assertThat(carStock.getStatus()).isEqualTo(updatedCarStock.getStatus());
+        assertThat(carStock.getStockNumber()).isEqualTo(newStockNumber);
+    }
+
+    @Test
+    public void carStockUpdateStatusTest() {
+        // Given
+        final CarStock carStock =
+                CarStock.builder()
+                        .car(car)
+                        .stockNumber("123456789012")
+                        .status(StockStatus.AVAILABLE)
+                        .build();
+        final StockStatus newStatus = StockStatus.INSPECTION;
+
+        // When
+        carStock.updateStatus(newStatus);
+
+        // Then
+        assertThat(carStock.getStatus()).isEqualTo(newStatus);
     }
 }
