@@ -51,4 +51,6 @@ public class Constant {
 
     /** Gas Station */
     public static final String GAS_STATION_NAME = "서산주유소A";
+
+    public static final String ANOTHER_GAS_STATION_NAME = "아무주유소B";
 }
