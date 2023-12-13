@@ -75,5 +75,6 @@ public class TestCarServiceTest {
 
         // then
         assertEquals(mockPage, result);
+        verify(carRepository).findAllWithStocksPageByCondition(condition, pageable);
     }
 }

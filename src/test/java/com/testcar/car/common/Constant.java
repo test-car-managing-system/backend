@@ -17,10 +17,12 @@ public class Constant {
     public static final LocalDateTime YESTERDAY = NOW.minusDays(1L);
 
     /** Member */
-    public static final String MEMBER_EMAIL = "test@test.com";
-
-    public static final String MEMBER_PASSWORD = "1234abcd@";
     public static final String MEMBER_NAME = "홍길동";
+
+    public static final String ANOTHER_MEMBER_NAME = "동길홍";
+    public static final String MEMBER_EMAIL = "test@test.com";
+    public static final String ANOTHER_MEMBER_EMAIL = "car@car.com";
+    public static final String MEMBER_PASSWORD = "1234abcd@";
     public static final Role MEMBER_ROLE = Role.ADMIN;
     public static final String DEPARTMENT_NAME = "모비스시스템팀";
 

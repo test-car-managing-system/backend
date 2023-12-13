@@ -79,6 +79,7 @@ public class CarReservationServiceTest {
 
         // then
         assertEquals(mockPage, result);
+        verify(carReservationRepository).findAllPageByCondition(condition, pageable);
     }
 
     @Test

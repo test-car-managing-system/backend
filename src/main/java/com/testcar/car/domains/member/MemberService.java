@@ -11,6 +11,7 @@ import com.testcar.car.domains.member.model.RegisterMemberRequest;
 import com.testcar.car.domains.member.model.UpdateMemberRequest;
 import com.testcar.car.domains.member.model.vo.MemberFilterCondition;
 import com.testcar.car.domains.member.repository.MemberRepository;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,7 +57,7 @@ public class MemberService {
 
     /** 계정을 삭제 처리 합니다. (soft delete) */
     public Member deleteById(Member member, Long memberId) {
-        if (member.getId() == memberId) {
+        if (Objects.equals(member.getId(), memberId)) {
             throw new BadRequestException(ErrorCode.CANNOT_DELETE_MYSELF);
         }
         final Member deleteMember = this.findById(memberId);
