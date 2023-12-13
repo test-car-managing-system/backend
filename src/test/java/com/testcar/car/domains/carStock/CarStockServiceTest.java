@@ -163,6 +163,7 @@ public class CarStockServiceTest {
 
         // then
         assertEquals(mockPage, result);
+        verify(carStockRepository).findAllPageByCondition(condition, pageable);
     }
 
     @Test

@@ -83,6 +83,7 @@ public class CarServiceTest {
 
         // then
         assertEquals(mockPage, result);
+        verify(carRepository).findAllPageByCondition(condition, pageable);
     }
 
     @Test
