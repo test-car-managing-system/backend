@@ -1,5 +1,8 @@
 package com.testcar.car.domains.car.entity;
 
+import static com.testcar.car.common.Constant.ANOTHER_CAR_NAME;
+import static com.testcar.car.common.Constant.CAR_DISPLACEMENT;
+import static com.testcar.car.common.Constant.CAR_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.testcar.car.common.CarEntityFactory;
@@ -9,8 +12,8 @@ public class CarTest {
     @Test
     public void 차량을_생성한다() {
         // given
-        final String name = "아반떼";
-        final Double displacement = 1.6;
+        final String name = CAR_NAME;
+        final Double displacement = CAR_DISPLACEMENT;
         final Type type = Type.SEDAN;
 
         // when
@@ -27,7 +30,7 @@ public class CarTest {
         // given
         final Car car = CarEntityFactory.createCar();
         final Car updatedCar =
-                Car.builder().name("소나타").displacement(1600.0).type(Type.SEDAN).build();
+                Car.builder().name(ANOTHER_CAR_NAME).displacement(1600.0).type(Type.SEDAN).build();
 
         // when
         car.update(updatedCar);

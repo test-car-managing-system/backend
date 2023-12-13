@@ -48,4 +48,7 @@ public class Constant {
     public static final LocalDate TRACK_RESERVATION_DATE = TOMORROW.toLocalDate();
     public static final LocalDateTime TRACK_RESERVATION_SLOT_STARTED_AT = TOMORROW.withHour(11);
     public static final LocalDateTime TRACK_RESERVATION_SLOT_EXPIRED_AT = TOMORROW.withHour(12);
+
+    /** Gas Station */
+    public static final String GAS_STATION_NAME = "서산주유소A";
 }
