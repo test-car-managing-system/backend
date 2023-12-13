@@ -39,29 +39,33 @@ public class TrackReservationSlotService {
         this.validateReservationSlots(request.getDate(), request.getReservationSlots());
         final List<ReservationSlotVo> slots = request.getReservationSlots();
 
-        // 이미 존재하는 슬롯과 비교하여 일치하면 금지한다.
-        final Set<TrackReservationSlot> existSlots =
-                trackReservationSlotRepository.findAllByTrackIdAndDate(
-                        track.getId(), request.getDate());
-        Map<LocalDateTime, TrackReservationSlot> existSlotMap =
-                existSlots.stream()
-                        .collect(
-                                Collectors.toMap(
-                                        TrackReservationSlot::getStartedAt, Function.identity()));
-        slots.forEach(
-                slot -> {
-                    if (existSlotMap.containsKey(slot.getStartedAt())
-                            && existSlotMap
-                                    .get(slot.getStartedAt())
-                                    .getExpiredAt()
-                                    .equals(slot.getExpiredAt())) {
-                        throw new BadRequestException(ALREADY_RESERVED_SLOT);
-                    }
-                });
+        final Map<LocalDateTime, TrackReservationSlot> existSlotMap =
+                this.findAllExistedSlotMap(track.getId(), request.getDate());
+        slots.forEach(slot -> this.validateSlotNotDuplicated(slot, existSlotMap));
 
         final List<TrackReservationSlot> reservations =
                 slots.stream().map(slot -> createEntity(track, trackReservation, slot)).toList();
         return trackReservationSlotRepository.saveAll(reservations);
+    }
+
+    /** 예약하려는 시간과 DB에 존재하는 예약 시간 슬롯 Map 을 비교하여 중복을 검증한다 */
+    private Map<LocalDateTime, TrackReservationSlot> findAllExistedSlotMap(
+            Long trackId, LocalDate date) {
+        final Set<TrackReservationSlot> existedSlots =
+                trackReservationSlotRepository.findAllByTrackIdAndDate(trackId, date);
+        return existedSlots.stream()
+                .collect(Collectors.toMap(TrackReservationSlot::getStartedAt, Function.identity()));
+    }
+
+    private void validateSlotNotDuplicated(
+            ReservationSlotVo slot, Map<LocalDateTime, TrackReservationSlot> existSlotMap) {
+        if (existSlotMap.containsKey(slot.getStartedAt())
+                && existSlotMap
+                        .get(slot.getStartedAt())
+                        .getExpiredAt()
+                        .equals(slot.getExpiredAt())) {
+            throw new BadRequestException(ALREADY_RESERVED_SLOT);
+        }
     }
 
     /** 해당 예약 건의 슬롯을 모두 삭제(취소) 합니다. */
