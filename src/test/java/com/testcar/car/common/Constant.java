@@ -29,10 +29,10 @@ public class Constant {
     public static final String CAR_TEST_RESULT = "통과";
 
     /** Track */
-    public static final String TRACK_NAME = "서산주행시험장";
+    public static final String TRACK_NAME = "고속주행로";
 
-    public static final String ANOTHER_TRACK_NAME = "마포주행시험장";
-    public static final String TRACK_LOCATION = "충청남도 서산시 부석면";
+    public static final String ANOTHER_TRACK_NAME = "경사로";
+    public static final String TRACK_LOCATION = "서산주행시험장";
     public static final String TRACK_DESCRIPTION = "비탈길";
-    public static final double TRACK_LENGTH = 12.6;
+    public static final double TRACK_LENGTH = 1230.6;
 }

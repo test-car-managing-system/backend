@@ -50,10 +50,10 @@ public class GasStationHistoryCustomRepositoryImpl
 
         final List<GasStationHistoryDto> result =
                 queryGasStationHistoryDto()
+                        .where(gasStationHistory.id.in(coveringIndex))
                         .orderBy(
                                 gasStationHistory.usedAt.desc(),
                                 gasStationHistory.gasStation.name.asc())
-                        .where(gasStationHistory.id.in(coveringIndex))
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
                         .fetch();
