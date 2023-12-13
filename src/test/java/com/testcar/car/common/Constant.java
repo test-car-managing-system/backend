@@ -53,4 +53,6 @@ public class Constant {
     public static final String GAS_STATION_NAME = "서산주유소A";
 
     public static final String ANOTHER_GAS_STATION_NAME = "아무주유소B";
+    public static final double GAS_STATION_HISTORY_AMOUNT = 100.22;
+    public static final double ANOTHER_GAS_STATION_HISTORY_AMOUNT = 9999.22;
 }
