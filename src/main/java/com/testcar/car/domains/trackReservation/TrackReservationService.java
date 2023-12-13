@@ -50,17 +50,18 @@ public class TrackReservationService {
     /** 해당 시험장을 예약합니다. */
     public TrackReservation reserve(Member member, Long trackId, TrackReservationRequest request) {
         final Track track = trackService.findById(trackId);
-        final TrackReservation trackReservation = this.createEntity(member, track);
-        trackReservationRepository.save(trackReservation);
+        final TrackReservation trackReservation =
+                trackReservationRepository.save(this.createEntity(member, track));
         trackReservationSlotService.reserve(track, trackReservation, request);
         return trackReservation;
     }
 
+    /** 시험장 예약을 취소하거나 반납한다 */
     public TrackReservation cancel(Member member, Long trackReservationId) {
         final TrackReservation trackReservation =
                 this.findByMemberAndId(member, trackReservationId);
 
-        if (trackReservation.getStatus() == ReservationStatus.CANCELED) {
+        if (!trackReservation.isCancelable()) {
             throw new BadRequestException(RESERVATION_ALREADY_CANCELED);
         }
         trackReservation.cancel();

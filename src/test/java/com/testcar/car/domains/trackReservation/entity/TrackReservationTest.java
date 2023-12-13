@@ -7,6 +7,8 @@ import com.testcar.car.common.TrackEntityFactory;
 import com.testcar.car.domains.member.Member;
 import com.testcar.car.domains.track.Track;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 public class TrackReservationTest {
     @Test
@@ -36,5 +38,37 @@ public class TrackReservationTest {
 
         // then
         assertThat(trackReservation.getStatus()).isEqualTo(ReservationStatus.CANCELED);
+    }
+
+    @ParameterizedTest
+    @EnumSource(
+            value = ReservationStatus.class,
+            names = {"RESERVED", "USING"})
+    public void 시험장을_취소할수_있는지_확인한다(ReservationStatus status) {
+        // given
+        final TrackReservation trackReservation =
+                TrackEntityFactory.createTrackReservationBuilder().status(status).build();
+
+        // when
+        final boolean isCancelable = trackReservation.isCancelable();
+
+        // then
+        assertThat(isCancelable).isTrue();
+    }
+
+    @ParameterizedTest
+    @EnumSource(
+            value = ReservationStatus.class,
+            names = {"CANCELED", "COMPLETED"})
+    public void 시험장을_취소할수_없는지_확인한다(ReservationStatus status) {
+        // given
+        final TrackReservation trackReservation =
+                TrackEntityFactory.createTrackReservationBuilder().status(status).build();
+
+        // when
+        final boolean isCancelable = trackReservation.isCancelable();
+
+        // then
+        assertThat(isCancelable).isFalse();
     }
 }

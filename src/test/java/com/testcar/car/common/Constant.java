@@ -3,10 +3,18 @@ package com.testcar.car.common;
 
 import com.testcar.car.domains.car.entity.Type;
 import com.testcar.car.domains.member.Role;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Constant {
     private Constant() {}
+
+    /** Date */
+    public static final LocalDateTime NOW =
+            LocalDateTime.now().withHour(12).withMinute(0).withSecond(0).withNano(0);
+
+    public static final LocalDateTime TOMORROW = NOW.plusDays(1L);
+    public static final LocalDateTime YESTERDAY = NOW.minusDays(1L);
 
     /** Member */
     public static final String MEMBER_EMAIL = "test@test.com";
@@ -24,8 +32,8 @@ public class Constant {
     public static final Type CAR_TYPE = Type.SEDAN;
     public static final String CAR_STOCK_NUMBER = "123456789012";
     public static final String ANOTHER_CAR_STOCK_NUMBER = "987654321098";
-    public static final LocalDateTime STARTED_AT = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
-    public static final LocalDateTime EXPIRED_AT = LocalDateTime.of(2021, 1, 8, 0, 0, 0);
+    public static final LocalDateTime STARTED_AT = NOW;
+    public static final LocalDateTime EXPIRED_AT = NOW.plusDays(7L);
     public static final String CAR_TEST_RESULT = "통과";
 
     /** Track */
@@ -35,4 +43,7 @@ public class Constant {
     public static final String TRACK_LOCATION = "서산주행시험장";
     public static final String TRACK_DESCRIPTION = "비탈길";
     public static final double TRACK_LENGTH = 1230.6;
+    public static final LocalDate TRACK_RESERVATION_DATE = TOMORROW.toLocalDate();
+    public static final LocalDateTime TRACK_RESERVATION_SLOT_STARTED_AT = TOMORROW.withHour(11);
+    public static final LocalDateTime TRACK_RESERVATION_SLOT_EXPIRED_AT = TOMORROW.withHour(12);
 }
