@@ -21,6 +21,15 @@ public class TrackRequestFactory {
                 .build();
     }
 
+    public static RegisterTrackRequest createRegisterTrackRequest(String name) {
+        return RegisterTrackRequest.builder()
+                .name(name)
+                .location(TRACK_LOCATION)
+                .description(TRACK_DESCRIPTION)
+                .length(TRACK_LENGTH)
+                .build();
+    }
+
     public static DeleteTrackRequest createDeleteTrackRequest(List<Long> ids) {
         return DeleteTrackRequest.builder().ids(ids).build();
     }
