@@ -19,6 +19,10 @@ public class GasStationRequestFactory {
         return UpdateGasStationRequest.builder().name(ANOTHER_GAS_STATION_NAME).build();
     }
 
+    public static UpdateGasStationRequest createUpdateGasStationRequest(String name) {
+        return UpdateGasStationRequest.builder().name(name).build();
+    }
+
     public static DeleteGasStationRequest createDeleteGasStationRequest(List<Long> ids) {
         return DeleteGasStationRequest.builder().ids(ids).build();
     }
