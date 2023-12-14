@@ -21,7 +21,7 @@ import com.testcar.car.domains.expense.model.dto.ExpenseDto;
 import com.testcar.car.domains.expense.model.vo.ExpenseFilterCondition;
 import com.testcar.car.domains.expense.repository.ExpenseRepository;
 import com.testcar.car.domains.expense.request.ExpenseRequestFactory;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

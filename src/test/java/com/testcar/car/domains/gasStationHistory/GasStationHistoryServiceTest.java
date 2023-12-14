@@ -25,7 +25,7 @@ import com.testcar.car.domains.gasStationHistory.model.dto.GasStationHistoryDto;
 import com.testcar.car.domains.gasStationHistory.model.vo.GasStationHistoryFilterCondition;
 import com.testcar.car.domains.gasStationHistory.repository.GasStationHistoryRepository;
 import com.testcar.car.domains.gasStationHistory.request.GasStationHistoryRequestFactory;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

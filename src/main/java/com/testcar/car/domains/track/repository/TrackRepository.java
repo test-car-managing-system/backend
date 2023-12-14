@@ -1,7 +1,7 @@
 package com.testcar.car.domains.track.repository;
 
 
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

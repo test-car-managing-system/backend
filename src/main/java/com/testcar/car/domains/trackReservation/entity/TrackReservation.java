@@ -2,8 +2,8 @@ package com.testcar.car.domains.trackReservation.entity;
 
 
 import com.testcar.car.common.entity.BaseEntity;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.track.entity.Track;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

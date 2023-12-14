@@ -1,4 +1,4 @@
-package com.testcar.car.domains.track;
+package com.testcar.car.domains.track.entity;
 
 
 import com.testcar.car.common.entity.BaseEntity;

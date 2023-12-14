@@ -10,7 +10,7 @@ import com.testcar.car.domains.expense.model.RegisterExpenseRequest;
 import com.testcar.car.domains.expense.model.dto.ExpenseDto;
 import com.testcar.car.domains.expense.model.vo.ExpenseFilterCondition;
 import com.testcar.car.domains.expense.repository.ExpenseRepository;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

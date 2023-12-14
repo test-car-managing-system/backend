@@ -9,8 +9,8 @@ import com.testcar.car.domains.gasStationHistory.model.GasStationHistoryResponse
 import com.testcar.car.domains.gasStationHistory.model.RegisterGasStationHistoryRequest;
 import com.testcar.car.domains.gasStationHistory.model.dto.GasStationHistoryDto;
 import com.testcar.car.domains.gasStationHistory.model.vo.GasStationHistoryFilterCondition;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

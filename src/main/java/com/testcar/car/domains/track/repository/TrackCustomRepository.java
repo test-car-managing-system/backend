@@ -1,7 +1,7 @@
 package com.testcar.car.domains.track.repository;
 
 
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
 import java.util.List;
 

@@ -12,7 +12,7 @@ import com.testcar.car.domains.gasStationHistory.model.RegisterGasStationHistory
 import com.testcar.car.domains.gasStationHistory.model.dto.GasStationHistoryDto;
 import com.testcar.car.domains.gasStationHistory.model.vo.GasStationHistoryFilterCondition;
 import com.testcar.car.domains.gasStationHistory.repository.GasStationHistoryRepository;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -7,7 +7,7 @@ import com.testcar.car.domains.gasStation.model.DeleteGasStationRequest;
 import com.testcar.car.domains.gasStation.model.GasStationResponse;
 import com.testcar.car.domains.gasStation.model.RegisterGasStationRequest;
 import com.testcar.car.domains.gasStation.model.UpdateGasStationRequest;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

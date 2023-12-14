@@ -5,7 +5,7 @@ import static com.testcar.car.domains.member.exception.ErrorCode.MEMBER_NOT_FOUN
 import com.testcar.car.common.annotation.AuthMember;
 import com.testcar.car.common.auth.JwtService;
 import com.testcar.car.common.exception.NotFoundException;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import com.testcar.car.domains.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

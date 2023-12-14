@@ -8,8 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.testcar.car.common.MemberEntityFactory;
 import com.testcar.car.domains.department.entity.Department;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.Role;
 import org.junit.jupiter.api.Test;
 
 public class MemberTest {

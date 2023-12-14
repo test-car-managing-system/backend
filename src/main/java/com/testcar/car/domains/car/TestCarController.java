@@ -6,7 +6,7 @@ import com.testcar.car.common.response.PageResponse;
 import com.testcar.car.domains.car.entity.Car;
 import com.testcar.car.domains.car.model.TestCarResponse;
 import com.testcar.car.domains.car.model.vo.CarFilterCondition;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

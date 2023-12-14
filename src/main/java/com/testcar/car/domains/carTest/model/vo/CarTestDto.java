@@ -3,7 +3,7 @@ package com.testcar.car.domains.carTest.model.vo;
 
 import com.querydsl.core.annotations.QueryProjection;
 import com.testcar.car.domains.carTest.entity.CarTest;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import lombok.Getter;
 
 @Getter

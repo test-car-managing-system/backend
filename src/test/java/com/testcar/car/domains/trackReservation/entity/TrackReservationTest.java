@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.testcar.car.common.MemberEntityFactory;
 import com.testcar.car.common.TrackEntityFactory;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.track.entity.Track;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

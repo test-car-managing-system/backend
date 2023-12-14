@@ -1,7 +1,7 @@
 package com.testcar.car.domains.trackReservation.model;
 
 
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;

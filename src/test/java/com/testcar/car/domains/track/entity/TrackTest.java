@@ -7,7 +7,6 @@ import static com.testcar.car.common.Constant.TRACK_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.testcar.car.common.TrackEntityFactory;
-import com.testcar.car.domains.track.Track;
 import org.junit.jupiter.api.Test;
 
 public class TrackTest {

@@ -4,7 +4,7 @@ package com.testcar.car.domains.carTest.model;
 import com.testcar.car.common.annotation.DateFormat;
 import com.testcar.car.domains.carTest.entity.CarTest;
 import com.testcar.car.domains.carTest.model.vo.CarTestDto;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Builder;

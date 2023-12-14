@@ -2,7 +2,7 @@ package com.testcar.car.common;
 
 
 import com.testcar.car.domains.car.entity.Type;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

@@ -1,11 +1,11 @@
 package com.testcar.car.domains.track.repository;
 
-import static com.testcar.car.domains.track.QTrack.track;
+import static com.testcar.car.domains.track.entity.QTrack.track;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.testcar.car.common.entity.BaseQueryDslRepository;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

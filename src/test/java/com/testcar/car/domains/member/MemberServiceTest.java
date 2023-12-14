@@ -15,6 +15,7 @@ import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.department.DepartmentService;
 import com.testcar.car.domains.department.entity.Department;
+import com.testcar.car.domains.member.entity.Member;
 import com.testcar.car.domains.member.model.RegisterMemberRequest;
 import com.testcar.car.domains.member.model.UpdateMemberRequest;
 import com.testcar.car.domains.member.model.vo.MemberFilterCondition;

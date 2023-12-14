@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.testcar.car.common.CarEntityFactory;
 import com.testcar.car.common.MemberEntityFactory;
 import com.testcar.car.domains.carStock.entity.CarStock;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

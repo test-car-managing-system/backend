@@ -1,7 +1,7 @@
 package com.testcar.car.domains.member.repository;
 
 
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

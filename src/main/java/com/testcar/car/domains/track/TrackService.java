@@ -3,6 +3,7 @@ package com.testcar.car.domains.track;
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
+import com.testcar.car.domains.track.entity.Track;
 import com.testcar.car.domains.track.exception.ErrorCode;
 import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;

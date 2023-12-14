@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import com.testcar.car.common.TrackEntityFactory;
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
+import com.testcar.car.domains.track.entity.Track;
 import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;

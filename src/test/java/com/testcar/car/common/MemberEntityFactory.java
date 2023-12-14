@@ -7,8 +7,8 @@ import static com.testcar.car.common.Constant.MEMBER_PASSWORD;
 import static com.testcar.car.common.Constant.MEMBER_ROLE;
 
 import com.testcar.car.domains.department.entity.Department;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.Member.MemberBuilder;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.member.entity.Member.MemberBuilder;
 
 public class MemberEntityFactory {
     private MemberEntityFactory() {}

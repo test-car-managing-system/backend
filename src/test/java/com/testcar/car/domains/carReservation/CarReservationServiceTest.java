@@ -27,7 +27,7 @@ import com.testcar.car.domains.carStock.CarStockService;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carStock.entity.StockStatus;
 import com.testcar.car.domains.carStock.repository.CarStockRepository;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

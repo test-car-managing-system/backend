@@ -1,13 +1,13 @@
 package com.testcar.car.domains.member.repository;
 
 import static com.testcar.car.domains.department.entity.QDepartment.department;
-import static com.testcar.car.domains.member.QMember.member;
+import static com.testcar.car.domains.member.entity.QMember.member;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.testcar.car.common.entity.BaseQueryDslRepository;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.member.entity.Role;
 import com.testcar.car.domains.member.model.vo.MemberFilterCondition;
 import java.util.List;
 import java.util.Optional;

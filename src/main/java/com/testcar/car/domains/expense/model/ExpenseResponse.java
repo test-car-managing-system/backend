@@ -8,7 +8,7 @@ import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.department.entity.Department;
 import com.testcar.car.domains.expense.entity.Expense;
 import com.testcar.car.domains.expense.model.dto.ExpenseDto;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package com.testcar.car.domains.trackReservation.repository;
 
-import static com.testcar.car.domains.track.QTrack.track;
+import static com.testcar.car.domains.track.entity.QTrack.track;
 import static com.testcar.car.domains.trackReservation.entity.QTrackReservation.trackReservation;
 import static com.testcar.car.domains.trackReservation.entity.QTrackReservationSlot.trackReservationSlot;
 

@@ -24,7 +24,7 @@ import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;
 import com.testcar.car.domains.carStock.model.vo.CarStockFilterCondition;
 import com.testcar.car.domains.carStock.repository.CarStockRepository;
 import com.testcar.car.domains.carStock.request.CarStockRequestFactory;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;

@@ -10,7 +10,7 @@ import com.testcar.car.common.CarEntityFactory;
 import com.testcar.car.common.ExpenseEntityFactory;
 import com.testcar.car.common.MemberEntityFactory;
 import com.testcar.car.domains.carStock.entity.CarStock;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 

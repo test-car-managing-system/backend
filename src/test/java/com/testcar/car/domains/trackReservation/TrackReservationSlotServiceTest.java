@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 import com.testcar.car.common.TrackEntityFactory;
 import com.testcar.car.common.exception.BadRequestException;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import com.testcar.car.domains.track.request.TrackRequestFactory;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
