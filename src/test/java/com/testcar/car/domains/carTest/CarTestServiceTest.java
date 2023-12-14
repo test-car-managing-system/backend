@@ -58,7 +58,7 @@ public class CarTestServiceTest {
         carStock = CarEntityFactory.createCarStock();
         track = TrackEntityFactory.createTrack();
         carTest = CarEntityFactory.createCarTest();
-        carTestDto = DtoFactory.createCarTestDto();
+        carTestDto = DtoFactory.createCarTestDto(carTest);
     }
 
     @Test

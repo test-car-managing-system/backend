@@ -65,7 +65,7 @@ public class GasStationHistoryServiceTest {
         gasStation = GasStationEntityFactory.createGasStation();
         anotherGasStation = GasStationEntityFactory.createAnotherGasStation();
         gasStationHistory = GasStationEntityFactory.createGasStationHistory();
-        gasStationHistoryDto = DtoFactory.createGasStationHistoryDto();
+        gasStationHistoryDto = DtoFactory.createGasStationHistoryDto(gasStationHistory);
     }
 
     @Test
