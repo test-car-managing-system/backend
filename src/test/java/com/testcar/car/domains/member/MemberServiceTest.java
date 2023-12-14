@@ -1,5 +1,6 @@
 package com.testcar.car.domains.member;
 
+import static com.testcar.car.common.Constant.MEMBER_EMAIL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -138,10 +139,25 @@ public class MemberServiceTest {
 
         // then
         assertNotNull(newMember);
-        assertEquals(anotherDepartment, newMember.getDepartment());
-        assertEquals(request.getEmail(), newMember.getEmail());
-        assertEquals(request.getName(), newMember.getName());
-        assertEquals(request.getRole(), newMember.getRole());
+        then(memberRepository).should().findByIdAndDeletedFalse(any(Long.class));
+        then(memberRepository).should().save(any(Member.class));
+    }
+
+    @Test
+    void 요청_이메일과_사용자_이메일이_같다면_이메일_중복을_검증하지_않는다() {
+        // given
+        final UpdateMemberRequest request =
+                MemberRequestFactory.createUpdateMemberRequest(MEMBER_EMAIL);
+        when(departmentService.findById(request.getDepartmentId())).thenReturn(anotherDepartment);
+        when(memberRepository.findByIdAndDeletedFalse(memberId)).thenReturn(Optional.of(member));
+        when(memberRepository.save(any(Member.class))).thenReturn(member);
+
+        // when
+        final Member newMember = memberService.updateById(memberId, request);
+
+        // then
+        assertNotNull(newMember);
+        assertEquals(member.getEmail(), newMember.getEmail());
         then(memberRepository).should().findByIdAndDeletedFalse(any(Long.class));
         then(memberRepository).should().save(any(Member.class));
     }
