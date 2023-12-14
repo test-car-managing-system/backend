@@ -32,6 +32,15 @@ public class MemberRequestFactory {
                 .build();
     }
 
+    public static UpdateMemberRequest createUpdateMemberRequest(String email) {
+        return UpdateMemberRequest.builder()
+                .departmentId(2L)
+                .name(ANOTHER_MEMBER_NAME)
+                .email(email)
+                .role(Role.ADMIN)
+                .build();
+    }
+
     public static UpdateMemberRequest createInvalidUpdateMemberRequest() {
         return UpdateMemberRequest.builder()
                 .departmentId(2L)

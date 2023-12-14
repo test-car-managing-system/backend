@@ -20,7 +20,7 @@ import com.testcar.car.domains.gasStation.request.GasStationRequestFactory;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,12 +32,12 @@ public class GasStationServiceTest {
     @Mock private GasStationRepository gasStationRepository;
     @InjectMocks private GasStationService gasStationService;
 
-    private static GasStation gasStation;
+    private GasStation gasStation;
     private static final Long gasStationId = 1L;
     private static final String gasStationName = GAS_STATION_NAME;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         gasStation = GasStationEntityFactory.createGasStation();
     }
 
@@ -175,6 +175,25 @@ public class GasStationServiceTest {
         assertEquals(gasStation, result);
         verify(gasStationRepository).findByIdAndDeletedFalse(gasStationId);
         verify(gasStationRepository).existsByNameAndDeletedFalse(request.getName());
+        verify(gasStationRepository).save(any(GasStation.class));
+    }
+
+    @Test
+    void 요청_주유소명과_현재_주유소명이_같다면_이름_중복을_검증하지_않는다() {
+        // given
+        final UpdateGasStationRequest request =
+                GasStationRequestFactory.createUpdateGasStationRequest(GAS_STATION_NAME);
+        when(gasStationRepository.findByIdAndDeletedFalse(gasStationId))
+                .thenReturn(Optional.of(gasStation));
+        when(gasStationRepository.save(any(GasStation.class))).thenReturn(gasStation);
+
+        // when
+        final GasStation result = gasStationService.update(gasStationId, request);
+
+        // then
+        assertEquals(gasStation, result);
+        assertEquals(gasStation.getName(), result.getName());
+        verify(gasStationRepository).findByIdAndDeletedFalse(gasStationId);
         verify(gasStationRepository).save(any(GasStation.class));
     }
 

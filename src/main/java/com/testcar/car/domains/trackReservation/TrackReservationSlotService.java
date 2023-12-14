@@ -13,10 +13,9 @@ import com.testcar.car.domains.trackReservation.model.vo.ReservationSlotVo;
 import com.testcar.car.domains.trackReservation.repository.TrackReservationSlotRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,33 +36,32 @@ public class TrackReservationSlotService {
     public List<TrackReservationSlot> reserve(
             Track track, TrackReservation trackReservation, TrackReservationRequest request) {
         this.validateReservationSlots(request.getDate(), request.getReservationSlots());
-        final List<ReservationSlotVo> slots = request.getReservationSlots();
 
-        final Map<LocalDateTime, TrackReservationSlot> existSlotMap =
-                this.findAllExistedSlotMap(track.getId(), request.getDate());
-        slots.forEach(slot -> this.validateSlotNotDuplicated(slot, existSlotMap));
-
-        final List<TrackReservationSlot> reservations =
-                slots.stream().map(slot -> createEntity(track, trackReservation, slot)).toList();
-        return trackReservationSlotRepository.saveAll(reservations);
-    }
-
-    /** 예약하려는 시간과 DB에 존재하는 예약 시간 슬롯 Map 을 비교하여 중복을 검증한다 */
-    private Map<LocalDateTime, TrackReservationSlot> findAllExistedSlotMap(
-            Long trackId, LocalDate date) {
         final Set<TrackReservationSlot> existedSlots =
-                trackReservationSlotRepository.findAllByTrackIdAndDate(trackId, date);
-        return existedSlots.stream()
-                .collect(Collectors.toMap(TrackReservationSlot::getStartedAt, Function.identity()));
+                trackReservationSlotRepository.findAllByTrackIdAndDate(
+                        track.getId(), request.getDate());
+        validateSlotNotDuplicated(existedSlots, request.getReservationSlots());
+
+        final Set<TrackReservationSlot> newReservationSlots =
+                request.getReservationSlots().stream()
+                        .map(slot -> createEntity(track, trackReservation, slot))
+                        .collect(Collectors.toSet());
+        return trackReservationSlotRepository.saveAll(newReservationSlots);
     }
 
+    /** 예약하려는 시간과 DB에 존재하는 예약 시간 슬롯을 비교하여 중복을 검증한다 */
     private void validateSlotNotDuplicated(
-            ReservationSlotVo slot, Map<LocalDateTime, TrackReservationSlot> existSlotMap) {
-        if (existSlotMap.containsKey(slot.getStartedAt())
-                && existSlotMap
-                        .get(slot.getStartedAt())
-                        .getExpiredAt()
-                        .equals(slot.getExpiredAt())) {
+            Set<TrackReservationSlot> slots1, List<ReservationSlotVo> slots2) {
+        final Set<ReservationSlotVo> slots1Set =
+                slots1.stream()
+                        .map(
+                                slot ->
+                                        ReservationSlotVo.builder()
+                                                .startedAt(slot.getStartedAt())
+                                                .expiredAt(slot.getExpiredAt())
+                                                .build())
+                        .collect(Collectors.toSet());
+        if (!Collections.disjoint(slots1Set, slots2)) {
             throw new BadRequestException(ALREADY_RESERVED_SLOT);
         }
     }
@@ -89,6 +87,8 @@ public class TrackReservationSlotService {
         final LocalDateTime expiredAt = slot.getExpiredAt();
 
         validateAfterNow(startedAt);
+        validateTimeNotNull(startedAt);
+        validateTimeNotNull(expiredAt);
         validateTimeAfter(startedAt, expiredAt);
 
         if (!startedAt.toLocalDate().equals(date)) {
@@ -103,10 +103,13 @@ public class TrackReservationSlotService {
         }
     }
 
-    private void validateTimeAfter(LocalDateTime startedAt, LocalDateTime expiredAt) {
-        if (startedAt == null || expiredAt == null) {
+    private void validateTimeNotNull(LocalDateTime time) {
+        if (time == null) {
             throw new BadRequestException(EMPTY_RESERVATION_SLOT);
         }
+    }
+
+    private void validateTimeAfter(LocalDateTime startedAt, LocalDateTime expiredAt) {
         if (expiredAt.isBefore(startedAt)) {
             throw new BadRequestException(INVALID_RESERVATION_SLOT);
         }

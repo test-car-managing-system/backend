@@ -47,7 +47,7 @@ public class ExpenseService {
                         .amount(request.getAmount())
                         .usedAt(request.getUsedAt())
                         .build();
-        if (request.getStockNumber() != null && !request.getStockNumber().isBlank()) {
+        if (request.getStockNumber() != null) {
             final CarStock carStock = carStockService.findByStockNumber(request.getStockNumber());
             expense.updateCarStock(carStock);
         }
@@ -62,8 +62,8 @@ public class ExpenseService {
 
         if (updateStockNumber == null) {
             expense.updateCarStock(null);
-        } else if (!Objects.equals(expenseDto.getStockNumber(), request.getStockNumber())) {
-            final CarStock carStock = carStockService.findByStockNumber(request.getStockNumber());
+        } else if (!Objects.equals(expenseDto.getStockNumber(), updateStockNumber)) {
+            final CarStock carStock = carStockService.findByStockNumber(updateStockNumber);
             expense.updateCarStock(carStock);
         }
         expense.updateMemberBy(member);

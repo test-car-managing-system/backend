@@ -44,8 +44,8 @@ public class CarService {
         if (!car.getName().equals(request.getName())) {
             validateNameNotDuplicated(request.getName());
         }
-        final Car updateMember = createEntity(request);
-        car.update(updateMember);
+        final Car updateCar = createEntity(request);
+        car.update(updateCar);
         return carRepository.save(car);
     }
 

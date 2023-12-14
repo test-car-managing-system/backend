@@ -1,7 +1,5 @@
 package com.testcar.car.domains.carTest.request;
 
-import static com.testcar.car.common.Constant.ANOTHER_CAR_STOCK_NUMBER;
-import static com.testcar.car.common.Constant.ANOTHER_TRACK_NAME;
 import static com.testcar.car.common.Constant.CAR_STOCK_NUMBER;
 import static com.testcar.car.common.Constant.TRACK_NAME;
 
@@ -21,10 +19,10 @@ public class CarTestRequestFactory {
                 .build();
     }
 
-    public static CarTestRequest createAnotherCarTestRequest() {
+    public static CarTestRequest createCarTestRequest(String trackName, String stockNumber) {
         return CarTestRequest.builder()
-                .trackName(ANOTHER_TRACK_NAME)
-                .stockNumber(ANOTHER_CAR_STOCK_NUMBER)
+                .trackName(trackName)
+                .stockNumber(stockNumber)
                 .performedAt(LocalDate.now())
                 .result("이상없음")
                 .memo("타이어 정비가 필요해보임")

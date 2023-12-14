@@ -1,5 +1,7 @@
 package com.testcar.car.common;
 
+import static com.testcar.car.common.Constant.ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT;
+import static com.testcar.car.common.Constant.ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT;
 import static com.testcar.car.common.Constant.TRACK_DESCRIPTION;
 import static com.testcar.car.common.Constant.TRACK_LENGTH;
 import static com.testcar.car.common.Constant.TRACK_LOCATION;
@@ -54,13 +56,27 @@ public class TrackEntityFactory {
                 .build();
     }
 
+    public static TrackReservationSlot createAnotherTrackReservationSlot(
+            TrackReservation trackReservation) {
+        return createTrackReservationSlotBuilder()
+                .trackReservation(trackReservation)
+                .startedAt(ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT)
+                .expiredAt(ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT)
+                .build();
+    }
+
     public static TrackReservationSlot.TrackReservationSlotBuilder
             createTrackReservationSlotBuilder() {
         return TrackReservationSlot.builder().trackReservation(createTrackReservation());
     }
 
-    public static Set<TrackReservationSlot> createTrackReservationSlotSet() {
-        final TrackReservation trackReservation = createTrackReservation();
+    public static Set<TrackReservationSlot> createTrackReservationSlotSet(
+            TrackReservation trackReservation) {
         return Set.of(createTrackReservationSlot(trackReservation));
+    }
+
+    public static Set<TrackReservationSlot> createAnotherTrackReservationSlotSet(
+            TrackReservation trackReservation) {
+        return Set.of(createAnotherTrackReservationSlot(trackReservation));
     }
 }

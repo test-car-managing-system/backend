@@ -52,11 +52,8 @@ public class TrackReservationServiceTest {
         member = MemberEntityFactory.createMember();
         track = TrackEntityFactory.createTrack();
         trackReservation = TrackEntityFactory.createTrackReservation();
-        trackReservations =
-                List.of(
-                        TrackEntityFactory.createTrackReservation(),
-                        TrackEntityFactory.createTrackReservation());
-        trackReservationSlots = TrackEntityFactory.createTrackReservationSlotSet();
+        trackReservations = List.of(trackReservation);
+        trackReservationSlots = TrackEntityFactory.createTrackReservationSlotSet(trackReservation);
     }
 
     @Test
