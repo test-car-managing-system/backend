@@ -13,7 +13,6 @@ import com.testcar.car.domains.gasStationHistory.model.dto.GasStationHistoryDto;
 import com.testcar.car.domains.gasStationHistory.model.vo.GasStationHistoryFilterCondition;
 import com.testcar.car.domains.gasStationHistory.repository.GasStationHistoryRepository;
 import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class GasStationHistoryService {
-    private final MemberService memberService;
     private final CarStockService carStockService;
     private final GasStationService gasStationService;
     private final GasStationHistoryRepository gasStationHistoryRepository;
@@ -62,6 +60,7 @@ public class GasStationHistoryService {
             Member member, Long gasStationHistoryId, RegisterGasStationHistoryRequest request) {
         final GasStationHistoryDto gasStationHistoryDto = this.findById(gasStationHistoryId);
         final GasStationHistory gasStationHistory = gasStationHistoryDto.getGasStationHistory();
+
         if (!gasStationHistoryDto.getStockNumber().equals(request.getStockNumber())) {
             final CarStock carStock = carStockService.findByStockNumber(request.getStockNumber());
             gasStationHistory.updateCarStock(carStock);
