@@ -2,7 +2,8 @@ package com.testcar.car.domains.track;
 
 
 import com.testcar.car.common.annotation.RoleAllowed;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
+import com.testcar.car.domains.track.entity.Track;
 import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.TrackResponse;

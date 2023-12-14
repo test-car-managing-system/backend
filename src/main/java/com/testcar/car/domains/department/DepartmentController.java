@@ -5,7 +5,7 @@ import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.domains.department.entity.Department;
 import com.testcar.car.domains.department.model.CreateDepartmentRequest;
 import com.testcar.car.domains.department.model.DepartmentResponse;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

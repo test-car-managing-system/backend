@@ -6,7 +6,7 @@ import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.common.exception.UnauthorizedException;
 import com.testcar.car.domains.auth.model.LoginRequest;
 import com.testcar.car.domains.auth.util.PasswordEncoder;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import com.testcar.car.domains.member.exception.ErrorCode;
 import com.testcar.car.domains.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

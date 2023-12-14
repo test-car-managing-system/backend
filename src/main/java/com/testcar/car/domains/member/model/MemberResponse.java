@@ -3,8 +3,8 @@ package com.testcar.car.domains.member.model;
 
 import com.testcar.car.common.annotation.DateTimeFormat;
 import com.testcar.car.domains.department.model.vo.DepartmentVo;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

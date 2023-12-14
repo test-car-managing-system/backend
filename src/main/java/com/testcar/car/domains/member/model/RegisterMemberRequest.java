@@ -2,7 +2,7 @@ package com.testcar.car.domains.member.model;
 
 
 import com.testcar.car.common.annotation.Password;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

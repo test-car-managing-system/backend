@@ -1,7 +1,7 @@
 package com.testcar.car.common.annotation;
 
 
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -12,7 +12,7 @@ import com.testcar.car.domains.expense.entity.Expense;
 import com.testcar.car.domains.expense.model.dto.ExpenseDto;
 import com.testcar.car.domains.gasStationHistory.entity.GasStationHistory;
 import com.testcar.car.domains.gasStationHistory.model.dto.GasStationHistoryDto;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 
 public class DtoFactory {
     private DtoFactory() {}

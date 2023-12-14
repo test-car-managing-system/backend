@@ -9,7 +9,7 @@ import com.testcar.car.domains.carStock.model.DeleteCarStockRequest;
 import com.testcar.car.domains.carStock.model.RegisterCarStockRequest;
 import com.testcar.car.domains.carStock.model.UpdateCarStockRequest;
 import com.testcar.car.domains.carStock.model.vo.CarStockFilterCondition;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

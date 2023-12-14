@@ -4,6 +4,8 @@ package com.testcar.car.domains.member;
 import com.testcar.car.common.annotation.AuthMember;
 import com.testcar.car.common.annotation.RoleAllowed;
 import com.testcar.car.common.response.PageResponse;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.member.entity.Role;
 import com.testcar.car.domains.member.model.MemberResponse;
 import com.testcar.car.domains.member.model.RegisterMemberRequest;
 import com.testcar.car.domains.member.model.UpdateMemberRequest;

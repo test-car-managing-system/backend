@@ -1,7 +1,7 @@
 package com.testcar.car.domains.member.model.vo;
 
 
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

@@ -3,7 +3,7 @@ package com.testcar.car.domains.carReservation.entity;
 
 import com.testcar.car.common.entity.BaseEntity;
 import com.testcar.car.domains.carStock.entity.CarStock;
-import com.testcar.car.domains.member.Member;
+import com.testcar.car.domains.member.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

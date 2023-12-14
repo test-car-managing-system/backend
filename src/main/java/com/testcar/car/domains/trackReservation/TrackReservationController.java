@@ -3,8 +3,8 @@ package com.testcar.car.domains.trackReservation;
 
 import com.testcar.car.common.annotation.AuthMember;
 import com.testcar.car.common.annotation.RoleAllowed;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.member.entity.Role;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.TrackReservationDetailResponse;

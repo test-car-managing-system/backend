@@ -5,9 +5,9 @@ import static com.testcar.car.domains.trackReservation.exception.ErrorCode.TRACK
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.member.entity.Member;
 import com.testcar.car.domains.track.TrackService;
+import com.testcar.car.domains.track.entity.Track;
 import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;

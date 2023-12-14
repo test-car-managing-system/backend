@@ -1,7 +1,7 @@
 package com.testcar.car.domains.track.model;
 
 
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

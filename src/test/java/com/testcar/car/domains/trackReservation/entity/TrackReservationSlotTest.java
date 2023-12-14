@@ -3,7 +3,7 @@ package com.testcar.car.domains.trackReservation.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.testcar.car.common.TrackEntityFactory;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.track.entity.Track;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 

@@ -6,7 +6,7 @@ import static com.testcar.car.common.Constant.MEMBER_EMAIL;
 import static com.testcar.car.common.Constant.MEMBER_NAME;
 import static com.testcar.car.common.Constant.MEMBER_PASSWORD;
 
-import com.testcar.car.domains.member.Role;
+import com.testcar.car.domains.member.entity.Role;
 import com.testcar.car.domains.member.model.RegisterMemberRequest;
 import com.testcar.car.domains.member.model.UpdateMemberRequest;
 

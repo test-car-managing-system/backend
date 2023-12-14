@@ -7,8 +7,8 @@ import static com.testcar.car.common.Constant.TRACK_NAME;
 import static com.testcar.car.common.Constant.TRACK_RESERVATION_SLOT_EXPIRED_AT;
 import static com.testcar.car.common.Constant.TRACK_RESERVATION_SLOT_STARTED_AT;
 
-import com.testcar.car.domains.track.Track;
-import com.testcar.car.domains.track.Track.TrackBuilder;
+import com.testcar.car.domains.track.entity.Track;
+import com.testcar.car.domains.track.entity.Track.TrackBuilder;
 import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation.TrackReservationBuilder;

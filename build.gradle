@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.2.0'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'com.diffplug.spotless' version '6.11.0'
+	id 'jacoco'
 }
 
 group = 'com.testcar'
@@ -70,6 +71,7 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy 'jacocoTestReport'
 }
 
 spotless {
@@ -96,4 +98,40 @@ tasks.withType(JavaCompile) {
 
 clean.doLast {
 	file(querydslDir).deleteDir()
+}
+
+jacoco {
+	toolVersion = '0.8.11'
+}
+
+jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		html.required = true
+		csv.required = true
+		xml.required = false
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(
+				files(classDirectories.files.collect {
+					fileTree(dir: it, excludes: [
+							'**/*Application*',
+							'**/*Exception*',
+							'**/*Controller*',
+							'**/entity/*Status*',
+							'**/entity/*Type*',
+							'**/entity/*Role*',
+							'**/model/**',
+							'**/exception/**',
+							'**/repository/**',
+							'**/util/**',
+							'**/config/**',
+							'**/common/**',
+							'**/Q*.class',
+							'**/*$Enum.class',
+					])
+				})
+		)
+	}
 }

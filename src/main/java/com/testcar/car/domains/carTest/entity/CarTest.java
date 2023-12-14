@@ -3,8 +3,8 @@ package com.testcar.car.domains.carTest.entity;
 
 import com.testcar.car.common.entity.BaseEntity;
 import com.testcar.car.domains.carStock.entity.CarStock;
-import com.testcar.car.domains.member.Member;
-import com.testcar.car.domains.track.Track;
+import com.testcar.car.domains.member.entity.Member;
+import com.testcar.car.domains.track.entity.Track;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
