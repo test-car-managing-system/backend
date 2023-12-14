@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExpenseService {
     private final CarStockService carStockService;
     private final ExpenseRepository expenseRepository;
+
     /** 조건에 맞는 지출 이력을 모두 조회합니다. */
     public Page<ExpenseDto> findAllByCondition(
             ExpenseFilterCondition condition, Pageable pageable) {
@@ -31,9 +32,9 @@ public class ExpenseService {
     }
 
     /** 지출 이력을 id로 조회합니다. */
-    public ExpenseDto findById(Long id) {
+    public ExpenseDto findById(Long expenseId) {
         return expenseRepository
-                .findDetailById(id)
+                .findDetailById(expenseId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.EXPENSE_NOT_FOUND));
     }
 
@@ -54,10 +55,14 @@ public class ExpenseService {
     }
 
     /** 지출 이력을 수정합니다. */
-    public Expense update(Member member, Long id, RegisterExpenseRequest request) {
-        final ExpenseDto expenseDto = this.findById(id);
+    public Expense update(Member member, Long expenseId, RegisterExpenseRequest request) {
+        final ExpenseDto expenseDto = this.findById(expenseId);
         final Expense expense = expenseDto.getExpense();
-        if (!Objects.equals(expenseDto.getStockNumber(), request.getStockNumber())) {
+        final String updateStockNumber = request.getStockNumber();
+
+        if (updateStockNumber == null) {
+            expense.updateCarStock(null);
+        } else if (!Objects.equals(expenseDto.getStockNumber(), request.getStockNumber())) {
             final CarStock carStock = carStockService.findByStockNumber(request.getStockNumber());
             expense.updateCarStock(carStock);
         }
@@ -67,8 +72,8 @@ public class ExpenseService {
     }
 
     /** 지출 이력을 삭제합니다. */
-    public Expense delete(Member member, Long gasStationHistoryId) {
-        final ExpenseDto expenseDto = this.findById(gasStationHistoryId);
+    public Expense delete(Member member, Long expenseId) {
+        final ExpenseDto expenseDto = this.findById(expenseId);
         final Expense expense = expenseDto.getExpense();
         expense.updateMemberBy(member);
         expense.delete();

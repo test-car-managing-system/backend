@@ -55,4 +55,10 @@ public class Constant {
     public static final String ANOTHER_GAS_STATION_NAME = "아무주유소B";
     public static final double GAS_STATION_HISTORY_AMOUNT = 100.22;
     public static final double ANOTHER_GAS_STATION_HISTORY_AMOUNT = 9999.22;
+
+    /** Expense */
+    public static final String EXPENSE_DESCRIPTION = "유류비";
+
+    public static final long EXPENSE_AMOUNT = 100000L;
+    public static final LocalDate EXPENSE_DATE = NOW.toLocalDate();
 }

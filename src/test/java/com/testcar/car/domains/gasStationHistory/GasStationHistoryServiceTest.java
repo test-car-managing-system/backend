@@ -3,6 +3,7 @@ package com.testcar.car.domains.gasStationHistory;
 import static com.testcar.car.common.Constant.ANOTHER_CAR_STOCK_NUMBER;
 import static com.testcar.car.common.Constant.GAS_STATION_NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -227,6 +228,7 @@ public class GasStationHistoryServiceTest {
 
         // then
         assertEquals(gasStationHistory, result);
+        assertTrue(result.getDeleted());
         verify(gasStationHistoryRepository).findDetailById(gasStationHistoryId);
         verify(gasStationHistoryRepository).save(any(GasStationHistory.class));
     }
