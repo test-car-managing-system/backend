@@ -4,7 +4,6 @@ import static com.testcar.car.common.Constant.DAY_AFTER_TOMORROW;
 import static com.testcar.car.common.Constant.TOMORROW;
 import static com.testcar.car.common.Constant.TRACK_RESERVATION_DATE;
 import static com.testcar.car.common.Constant.YESTERDAY;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -95,14 +94,17 @@ public class TrackReservationSlotServiceTest {
         // given
         final List<TrackReservationSlot> anotherTrackReservationSlot =
                 List.of(TrackEntityFactory.createAnotherTrackReservationSlot(trackReservation));
-        final TrackReservationRequest request = TrackRequestFactory.createAnotherTrackReservationRequest();
+        final TrackReservationRequest request =
+                TrackRequestFactory.createAnotherTrackReservationRequest();
         when(trackReservationSlotRepository.findAllByTrackIdAndDate(
                         track.getId(), request.getDate()))
                 .thenReturn(trackReservationSlots);
-        when(trackReservationSlotRepository.saveAll(anyCollection())).thenReturn(anotherTrackReservationSlot);
+        when(trackReservationSlotRepository.saveAll(anyCollection()))
+                .thenReturn(anotherTrackReservationSlot);
 
         // when
-        List<TrackReservationSlot> reserve = trackReservationSlotService.reserve(track, trackReservation, request);
+        List<TrackReservationSlot> reserve =
+                trackReservationSlotService.reserve(track, trackReservation, request);
 
         // then
         verify(trackReservationSlotRepository).saveAll(anyCollection());

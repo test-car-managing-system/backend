@@ -52,7 +52,8 @@ public class TrackRequestFactory {
     private static List<ReservationSlotVo> createAnotherReservationSlotVoList() {
         return List.of(
                 createReservationSlotVo(
-                        ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT, ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT));
+                        ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT,
+                        ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT));
     }
 
     public static TrackReservationRequest createTrackReservationRequest() {
