@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,15 +47,19 @@ public class CarStockServiceTest {
 
     @InjectMocks private CarStockService carStockService;
 
+    private CarStock carStock;
     private static Member member;
     private static Car car;
-    private static CarStock carStock;
     private static final Long carStockId = 1L;
 
     @BeforeAll
     public static void setUp() {
         member = MemberEntityFactory.createMember();
         car = CarEntityFactory.createCar();
+    }
+
+    @BeforeEach
+    public void setUpEach() {
         carStock = CarEntityFactory.createCarStock();
     }
 
@@ -197,7 +202,25 @@ public class CarStockServiceTest {
     }
 
     @Test
-    void 차량재고를_수정한다() {
+    void 차량_재고_수정시_현재_재고번호와_바꾸려는_재고번호가_다르면_중복을_검사한다() {
+        // given
+        UpdateCarStockRequest request =
+                CarStockRequestFactory.createUpdateCarStockRequest(CAR_STOCK_NUMBER);
+        when(carStockRepository.findByIdAndDeletedFalse(carStockId))
+                .thenReturn(Optional.of(carStock));
+        given(carStockRepository.save(any(CarStock.class))).willReturn(carStock);
+
+        // when
+        CarStock newCarStock = carStockService.updateById(carStockId, request);
+
+        // then
+        assertNotNull(newCarStock);
+        verify(carStockRepository).findByIdAndDeletedFalse(carStockId);
+        then(carStockRepository).should().save(any(CarStock.class));
+    }
+
+    @Test
+    void 차량_재고_수정시_현재_재고번호와_바꾸려는_재고번호가_같으면_중복을_검사하지_않는다() {
         // given
         UpdateCarStockRequest request = CarStockRequestFactory.createUpdateCarStockRequest();
         when(carStockRepository.findByIdAndDeletedFalse(carStockId))
@@ -208,9 +231,9 @@ public class CarStockServiceTest {
         CarStock newCarStock = carStockService.updateById(carStockId, request);
 
         // then
+        assertNotNull(newCarStock);
         verify(carStockRepository).findByIdAndDeletedFalse(carStockId);
         then(carStockRepository).should().save(any(CarStock.class));
-        assertNotNull(newCarStock);
     }
 
     @Test

@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @Builder
+@EqualsAndHashCode
 public class ReservationSlotVo {
     @DateTimeFormat
     @NotNull(message = "예약 시간을 입력해주세요.")

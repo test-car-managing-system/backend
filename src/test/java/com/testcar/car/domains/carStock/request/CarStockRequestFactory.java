@@ -20,6 +20,13 @@ public class CarStockRequestFactory {
                 .build();
     }
 
+    public static UpdateCarStockRequest createUpdateCarStockRequest(String name) {
+        return UpdateCarStockRequest.builder()
+                .stockNumber(name)
+                .status(StockStatus.AVAILABLE)
+                .build();
+    }
+
     public static UpdateCarStockRequest createUpdateCarStockRequest() {
         return UpdateCarStockRequest.builder()
                 .stockNumber(ANOTHER_CAR_STOCK_NUMBER)

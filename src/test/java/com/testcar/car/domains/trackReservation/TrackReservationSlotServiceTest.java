@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -39,17 +40,22 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class TrackReservationSlotServiceTest {
     @Mock private TrackReservationSlotRepository trackReservationSlotRepository;
     @InjectMocks private TrackReservationSlotService trackReservationSlotService;
-
-    private static Track track;
-    private static TrackReservation trackReservation;
-    private static Set<TrackReservationSlot> trackReservationSlots;
-    private static Set<TrackReservationSlot> anotherTrackReservationSlots;
+    @Mock private static Track track;
+    @Mock private static TrackReservation trackReservation;
+    private Set<TrackReservationSlot> trackReservationSlots;
+    private Set<TrackReservationSlot> anotherTrackReservationSlots;
+    private static final Long trackId = 1L;
     private static final Long trackReservationId = 1L;
 
     @BeforeAll
     public static void setUp() {
         track = TrackEntityFactory.createTrack();
         trackReservation = TrackEntityFactory.createTrackReservation();
+        trackReservation = TrackEntityFactory.createTrackReservation();
+    }
+
+    @BeforeEach
+    public void setUpEach() {
         trackReservationSlots = TrackEntityFactory.createTrackReservationSlotSet(trackReservation);
         anotherTrackReservationSlots =
                 TrackEntityFactory.createAnotherTrackReservationSlotSet(trackReservation);
@@ -72,7 +78,7 @@ public class TrackReservationSlotServiceTest {
     }
 
     @Test
-    void 시험장_정보로_해당_시험장의_예약_슬롯을_할당하고_DB에_저장한다() {
+    void 시험장_정보로_시험장의_예약_슬롯이_존재하지_않으면_시간_중복검사_없이_DB에_저장한다() {
         // given
         final List<TrackReservationSlot> slots =
                 List.of(TrackEntityFactory.createTrackReservationSlot());
@@ -90,23 +96,23 @@ public class TrackReservationSlotServiceTest {
     }
 
     @Test
-    void 시험장_정보로_해당_시험장의_예약_슬롯을_비교하고_겹치는_시간이_없다면_DB에_저장한다() {
+    void 시험장_정보로_해당_시험장의_예약_슬롯이_존재하면_시간_중복을_검사하여_DB에_저장한다() {
         // given
-        final List<TrackReservationSlot> anotherTrackReservationSlot =
+        final List<TrackReservationSlot> slots =
                 List.of(TrackEntityFactory.createAnotherTrackReservationSlot(trackReservation));
         final TrackReservationRequest request =
                 TrackRequestFactory.createAnotherTrackReservationRequest();
-        when(trackReservationSlotRepository.findAllByTrackIdAndDate(
-                        track.getId(), request.getDate()))
+        when(trackReservationSlotRepository.findAllByTrackIdAndDate(trackId, request.getDate()))
                 .thenReturn(trackReservationSlots);
-        when(trackReservationSlotRepository.saveAll(anyCollection()))
-                .thenReturn(anotherTrackReservationSlot);
+        when(trackReservationSlotRepository.saveAll(anyCollection())).thenReturn(slots);
+        when(track.getId()).thenReturn(trackId);
 
         // when
-        List<TrackReservationSlot> reserve =
-                trackReservationSlotService.reserve(track, trackReservation, request);
+        trackReservationSlotService.reserve(track, trackReservation, request);
 
         // then
+        verify(trackReservationSlotRepository)
+                .findAllByTrackIdAndDate(trackReservationId, request.getDate());
         verify(trackReservationSlotRepository).saveAll(anyCollection());
     }
 
