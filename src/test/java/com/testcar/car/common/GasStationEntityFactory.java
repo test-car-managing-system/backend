@@ -1,5 +1,6 @@
 package com.testcar.car.common;
 
+import static com.testcar.car.common.Constant.ANOTHER_GAS_STATION_NAME;
 import static com.testcar.car.common.Constant.GAS_STATION_HISTORY_AMOUNT;
 import static com.testcar.car.common.Constant.GAS_STATION_NAME;
 import static com.testcar.car.common.Constant.NOW;
@@ -12,6 +13,10 @@ public class GasStationEntityFactory {
 
     public static GasStation createGasStation() {
         return GasStation.builder().name(GAS_STATION_NAME).build();
+    }
+
+    public static GasStation createAnotherGasStation() {
+        return GasStation.builder().name(ANOTHER_GAS_STATION_NAME).build();
     }
 
     public static GasStationHistory createGasStationHistory() {

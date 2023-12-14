@@ -4,7 +4,7 @@ import static com.testcar.car.common.Constant.ANOTHER_GAS_STATION_HISTORY_AMOUNT
 import static com.testcar.car.common.Constant.GAS_STATION_HISTORY_AMOUNT;
 import static com.testcar.car.common.Constant.NOW;
 import static com.testcar.car.common.Constant.YESTERDAY;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.testcar.car.common.CarEntityFactory;
@@ -38,11 +38,11 @@ public class GasStationHistoryTest {
 
         // then
         assertNotNull(gasStationHistory);
-        assertThat(gasStationHistory.getMember()).isEqualTo(member);
-        assertThat(gasStationHistory.getGasStation()).isEqualTo(gasStation);
-        assertThat(gasStationHistory.getCarStock()).isEqualTo(carStock);
-        assertThat(gasStationHistory.getAmount()).isEqualTo(amount);
-        assertThat(gasStationHistory.getUsedAt()).isEqualTo(usedAt);
+        assertEquals(gasStationHistory.getMember(), member);
+        assertEquals(gasStationHistory.getGasStation(), gasStation);
+        assertEquals(gasStationHistory.getCarStock(), carStock);
+        assertEquals(gasStationHistory.getAmount(), amount);
+        assertEquals(gasStationHistory.getUsedAt(), usedAt);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GasStationHistoryTest {
         gasStationHistory.updateGasStation(gasStation);
 
         // then
-        assertThat(gasStationHistory.getGasStation()).isEqualTo(gasStation);
+        assertEquals(gasStationHistory.getGasStation(), gasStation);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class GasStationHistoryTest {
         gasStationHistory.updateCarStock(carStock);
 
         // then
-        assertThat(gasStationHistory.getCarStock()).isEqualTo(carStock);
+        assertEquals(gasStationHistory.getCarStock(), carStock);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class GasStationHistoryTest {
         gasStationHistory.updateMemberBy(updateMember);
 
         // then
-        assertThat(gasStationHistory.getUpdateMember()).isEqualTo(updateMember);
+        assertEquals(gasStationHistory.getUpdateMember(), updateMember);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class GasStationHistoryTest {
         gasStationHistory.update(amount, usedAt);
 
         // then
-        assertThat(gasStationHistory.getAmount()).isEqualTo(amount);
-        assertThat(gasStationHistory.getUsedAt()).isEqualTo(usedAt);
+        assertEquals(gasStationHistory.getAmount(), amount);
+        assertEquals(gasStationHistory.getUsedAt(), usedAt);
     }
 }
