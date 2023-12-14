@@ -1,17 +1,21 @@
 package com.testcar.car.domains.track.request;
 
-import static com.testcar.car.common.Constant.TOMORROW;
+import static com.testcar.car.common.Constant.ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT;
+import static com.testcar.car.common.Constant.ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT;
 import static com.testcar.car.common.Constant.TRACK_DESCRIPTION;
 import static com.testcar.car.common.Constant.TRACK_LENGTH;
 import static com.testcar.car.common.Constant.TRACK_LOCATION;
 import static com.testcar.car.common.Constant.TRACK_NAME;
 import static com.testcar.car.common.Constant.TRACK_RESERVATION_DATE;
-import static com.testcar.car.common.Constant.YESTERDAY;
+import static com.testcar.car.common.Constant.TRACK_RESERVATION_SLOT_EXPIRED_AT;
+import static com.testcar.car.common.Constant.TRACK_RESERVATION_SLOT_STARTED_AT;
 
 import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.trackReservation.model.TrackReservationRequest;
 import com.testcar.car.domains.trackReservation.model.vo.ReservationSlotVo;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TrackRequestFactory {
@@ -40,7 +44,15 @@ public class TrackRequestFactory {
     }
 
     private static List<ReservationSlotVo> createReservationSlotVoList() {
-        return List.of(createReservationSlotVo(11), createReservationSlotVo(12));
+        return List.of(
+                createReservationSlotVo(
+                        TRACK_RESERVATION_SLOT_STARTED_AT, TRACK_RESERVATION_SLOT_EXPIRED_AT));
+    }
+
+    private static List<ReservationSlotVo> createAnotherReservationSlotVoList() {
+        return List.of(
+                createReservationSlotVo(
+                        ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT, ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT));
     }
 
     public static TrackReservationRequest createTrackReservationRequest() {
@@ -50,22 +62,28 @@ public class TrackRequestFactory {
                 .build();
     }
 
-    public static TrackReservationRequest createInvalidTrackReservationRequest() {
+    public static TrackReservationRequest createAnotherTrackReservationRequest() {
         return TrackReservationRequest.builder()
                 .date(TRACK_RESERVATION_DATE)
-                .reservationSlots(
-                        List.of(
-                                ReservationSlotVo.builder()
-                                        .startedAt(YESTERDAY.withHour(12))
-                                        .expiredAt(YESTERDAY.withHour(13))
-                                        .build()))
+                .reservationSlots(createAnotherReservationSlotVoList())
                 .build();
     }
 
-    private static ReservationSlotVo createReservationSlotVo(int hour) {
+    public static TrackReservationRequest createTrackReservationRequest(
+            LocalDate date, List<ReservationSlotVo> slots) {
+        return TrackReservationRequest.builder().date(date).reservationSlots(slots).build();
+    }
+
+    public static ReservationSlotVo createReservationSlotVo(
+            LocalDate date, int startHour, int endHour) {
         return ReservationSlotVo.builder()
-                .startedAt(TOMORROW.withHour(hour))
-                .expiredAt(TOMORROW.withHour(hour + 1))
+                .startedAt(date.atStartOfDay().withHour(startHour))
+                .expiredAt(date.atStartOfDay().withHour(endHour))
                 .build();
+    }
+
+    public static ReservationSlotVo createReservationSlotVo(
+            LocalDateTime start, LocalDateTime end) {
+        return ReservationSlotVo.builder().startedAt(start).expiredAt(end).build();
     }
 }

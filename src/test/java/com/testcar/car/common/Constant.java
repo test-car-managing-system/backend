@@ -14,6 +14,7 @@ public class Constant {
             LocalDateTime.now().withHour(12).withMinute(0).withSecond(0).withNano(0);
 
     public static final LocalDateTime TOMORROW = NOW.plusDays(1L);
+    public static final LocalDateTime DAY_AFTER_TOMORROW = NOW.plusDays(2L);
     public static final LocalDateTime YESTERDAY = NOW.minusDays(1L);
 
     /** Member */
@@ -48,7 +49,11 @@ public class Constant {
     public static final double TRACK_LENGTH = 1230.6;
     public static final LocalDate TRACK_RESERVATION_DATE = TOMORROW.toLocalDate();
     public static final LocalDateTime TRACK_RESERVATION_SLOT_STARTED_AT = TOMORROW.withHour(11);
+    public static final LocalDateTime ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT =
+            TOMORROW.withHour(12);
     public static final LocalDateTime TRACK_RESERVATION_SLOT_EXPIRED_AT = TOMORROW.withHour(12);
+    public static final LocalDateTime ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT =
+            TOMORROW.withHour(13);
 
     /** Gas Station */
     public static final String GAS_STATION_NAME = "서산주유소A";

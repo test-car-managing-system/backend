@@ -13,6 +13,7 @@ import com.testcar.car.domains.department.entity.Department;
 import com.testcar.car.domains.department.model.CreateDepartmentRequest;
 import com.testcar.car.domains.department.repository.DepartmentRepository;
 import com.testcar.car.domains.department.request.DepartmentRequestFactory;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,6 +49,21 @@ public class DepartmentServiceTest {
         assertNotNull(result);
         assertEquals(department, result);
         then(departmentRepository).should().findByIdAndDeletedFalse(departmentId);
+    }
+
+    @Test
+    void 부서_엔티티를_전부_가져온다() {
+        // given
+        final List<Department> departments = List.of(department);
+        when(departmentRepository.findAllByDeletedFalse()).thenReturn(departments);
+
+        // when
+        final List<Department> result = departmentService.findAll();
+
+        // then
+        assertNotNull(result);
+        assertEquals(departments, result);
+        then(departmentRepository).should().findAllByDeletedFalse();
     }
 
     @Test

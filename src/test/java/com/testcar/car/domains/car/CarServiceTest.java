@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import com.testcar.car.common.CarEntityFactory;
@@ -22,6 +24,7 @@ import com.testcar.car.domains.car.request.CarRequestFactory;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,8 +42,8 @@ public class CarServiceTest {
     private static Car car;
     private static final Long carId = 1L;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         car = CarEntityFactory.createCar();
     }
 
@@ -101,7 +104,24 @@ public class CarServiceTest {
     }
 
     @Test
-    void 차량정보를_수정한다() {
+    void 차량이름이_다를_경우_차량정보를_함께_수정한다() {
+        // given
+        RegisterCarRequest request = CarRequestFactory.createRegisterCarRequest(ANOTHER_CAR_NAME);
+        when(carRepository.findByIdAndDeletedFalse(carId)).thenReturn(Optional.of(car));
+        when(carRepository.existsByNameAndDeletedFalse(request.getName())).thenReturn(false);
+        given(carRepository.save(any(Car.class))).willReturn(car);
+
+        // when
+        Car newCar = carService.updateById(carId, request);
+
+        // then
+        assertNotNull(newCar);
+        verify(carRepository).findByIdAndDeletedFalse(carId);
+        then(carRepository).should().save(any(Car.class));
+    }
+
+    @Test
+    void 차량이름이_같을_경우_나머지_정보만_수정한다() {
         // given
         RegisterCarRequest request = CarRequestFactory.createRegisterCarRequest();
         when(carRepository.findByIdAndDeletedFalse(carId)).thenReturn(Optional.of(car));
@@ -111,9 +131,9 @@ public class CarServiceTest {
         Car newCar = carService.updateById(carId, request);
 
         // then
+        assertNotNull(newCar);
         verify(carRepository).findByIdAndDeletedFalse(carId);
         then(carRepository).should().save(any(Car.class));
-        assertNotNull(newCar);
     }
 
     @Test
@@ -123,7 +143,7 @@ public class CarServiceTest {
         when(carRepository.findByIdAndDeletedFalse(carId)).thenReturn(Optional.of(car));
         when(carRepository.existsByNameAndDeletedFalse(request.getName())).thenReturn(true);
 
-        // when
+        // when, then
         Assertions.assertThrows(
                 BadRequestException.class,
                 () -> {
@@ -142,9 +162,9 @@ public class CarServiceTest {
         Car deletedCar = carService.deleteById(carId);
 
         // then
-        verify(carRepository).findByIdAndDeletedFalse(carId);
-        then(carRepository).should().save(any(Car.class));
         assertNotNull(deletedCar);
         assertTrue(deletedCar.getDeleted());
+        verify(carRepository).findByIdAndDeletedFalse(carId);
+        then(carRepository).should().save(any(Car.class));
     }
 }

@@ -59,11 +59,8 @@ public class TrackReservationSlotService {
 
     private void validateSlotNotDuplicated(
             ReservationSlotVo slot, Map<LocalDateTime, TrackReservationSlot> existSlotMap) {
-        if (existSlotMap.containsKey(slot.getStartedAt())
-                && existSlotMap
-                        .get(slot.getStartedAt())
-                        .getExpiredAt()
-                        .equals(slot.getExpiredAt())) {
+        final TrackReservationSlot existSlot = existSlotMap.get(slot.getStartedAt());
+        if (existSlot != null && existSlot.getExpiredAt().equals(slot.getExpiredAt())) {
             throw new BadRequestException(ALREADY_RESERVED_SLOT);
         }
     }
@@ -89,6 +86,8 @@ public class TrackReservationSlotService {
         final LocalDateTime expiredAt = slot.getExpiredAt();
 
         validateAfterNow(startedAt);
+        validateTimeNotNull(startedAt);
+        validateTimeNotNull(expiredAt);
         validateTimeAfter(startedAt, expiredAt);
 
         if (!startedAt.toLocalDate().equals(date)) {
@@ -103,10 +102,13 @@ public class TrackReservationSlotService {
         }
     }
 
-    private void validateTimeAfter(LocalDateTime startedAt, LocalDateTime expiredAt) {
-        if (startedAt == null || expiredAt == null) {
+    private void validateTimeNotNull(LocalDateTime time) {
+        if (time == null) {
             throw new BadRequestException(EMPTY_RESERVATION_SLOT);
         }
+    }
+
+    private void validateTimeAfter(LocalDateTime startedAt, LocalDateTime expiredAt) {
         if (expiredAt.isBefore(startedAt)) {
             throw new BadRequestException(INVALID_RESERVATION_SLOT);
         }
