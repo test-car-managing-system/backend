@@ -172,7 +172,7 @@ public class TrackServiceTest {
     }
 
     @Test
-    void 시험장_정보를_수정한다() {
+    void 시험장_이름과_바꾸려는_이름이_다르면_시험장명_중복검사와_함께_정보를_수정한다() {
         // given
         final RegisterTrackRequest request =
                 TrackRequestFactory.createRegisterTrackRequest(ANOTHER_TRACK_NAME);
@@ -187,6 +187,23 @@ public class TrackServiceTest {
         assertEquals(track, result);
         verify(trackRepository).findByIdAndDeletedFalse(trackId);
         verify(trackRepository).existsByNameAndDeletedFalse(request.getName());
+        verify(trackRepository).save(any(Track.class));
+    }
+
+    @Test
+    void 시험장_이름과_바꾸려는_이름이_같으면_중복검사를_하지않고_정보를_수정한다() {
+        // given
+        final RegisterTrackRequest request =
+                TrackRequestFactory.createRegisterTrackRequest(TRACK_NAME);
+        when(trackRepository.findByIdAndDeletedFalse(trackId)).thenReturn(Optional.of(track));
+        when(trackRepository.save(any(Track.class))).thenReturn(track);
+
+        // when
+        final Track result = trackService.updateById(trackId, request);
+
+        // then
+        assertEquals(track, result);
+        verify(trackRepository).findByIdAndDeletedFalse(trackId);
         verify(trackRepository).save(any(Track.class));
     }
 
