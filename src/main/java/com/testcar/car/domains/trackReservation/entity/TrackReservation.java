@@ -63,7 +63,11 @@ public class TrackReservation extends BaseEntity {
         this.status = ReservationStatus.CANCELED;
     }
 
+    public void completed() {
+        this.status = ReservationStatus.COMPLETED;
+    }
+
     public boolean isCancelable() {
-        return this.status == ReservationStatus.RESERVED || this.status == ReservationStatus.USING;
+        return this.status == ReservationStatus.RESERVED;
     }
 }
