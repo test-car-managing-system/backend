@@ -14,4 +14,6 @@ public interface TrackReservationCustomRepository {
             Long memberId, TrackReservationFilterCondition condition);
 
     List<TrackReservation> findAllBySlotExpiredAtAndStatusReserved(LocalDateTime expiredAt);
+
+    List<TrackReservation> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 }

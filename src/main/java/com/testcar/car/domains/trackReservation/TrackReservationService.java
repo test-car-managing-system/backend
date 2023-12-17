@@ -2,6 +2,8 @@ package com.testcar.car.domains.trackReservation;
 
 import static com.testcar.car.domains.trackReservation.exception.ErrorCode.RESERVATION_ALREADY_CANCELED;
 import static com.testcar.car.domains.trackReservation.exception.ErrorCode.TRACK_RESERVATION_NOT_FOUND;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
@@ -12,11 +14,15 @@ import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.TrackReservationRequest;
+import com.testcar.car.domains.trackReservation.model.vo.TrackReservationCountVo;
 import com.testcar.car.domains.trackReservation.model.vo.TrackReservationFilterCondition;
 import com.testcar.car.domains.trackReservation.repository.TrackReservationRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +46,24 @@ public class TrackReservationService {
     public List<TrackReservation> findAllByMemberAndCondition(
             Member member, TrackReservationFilterCondition condition) {
         return trackReservationRepository.findAllByMemberIdAndCondition(member.getId(), condition);
+    }
+
+    /** 최근 7일간 가장 많이 대여된 시험장 5개를 가져옵니다. */
+    public List<TrackReservationCountVo> findAllByLast7DaysRank() {
+        final LocalDateTime now = LocalDateTime.now();
+        final LocalDateTime weekAgo = now.minusDays(7);
+        List<TrackReservation> reservations =
+                trackReservationRepository.findAllByCreatedAtBetween(weekAgo, now);
+        final Map<String, Long> countMap =
+                reservations.stream()
+                        .map(reservation -> reservation.getTrack().getName())
+                        .collect(groupingBy(Function.identity(), counting()));
+
+        return countMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(5)
+                .map(TrackReservationCountVo::from)
+                .toList();
     }
 
     /** 시험장의 해당 일자 예약 정보를 모두 조회합니다. */

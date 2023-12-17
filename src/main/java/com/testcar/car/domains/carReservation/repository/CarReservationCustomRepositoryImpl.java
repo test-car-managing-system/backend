@@ -86,6 +86,21 @@ public class CarReservationCustomRepositoryImpl
                 .fetch();
     }
 
+    @Override
+    public List<CarReservationDto> findAllByCreatedAtBetween(
+            LocalDateTime start, LocalDateTime end) {
+        return jpaQueryFactory
+                .select(
+                        Projections.constructor(
+                                CarReservationDto.class,
+                                carReservation,
+                                carReservation.carStock.car.name,
+                                carReservation.carStock.stockNumber))
+                .from(carReservation)
+                .where(notDeleted(carReservation), carReservation.createdAt.between(start, end))
+                .fetch();
+    }
+
     private BooleanExpression carNameContainsOrNull(String name) {
         return name == null ? null : carReservation.carStock.car.name.contains(name);
     }

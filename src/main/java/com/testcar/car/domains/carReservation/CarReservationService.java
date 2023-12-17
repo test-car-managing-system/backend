@@ -1,5 +1,7 @@
 package com.testcar.car.domains.carReservation;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
@@ -9,6 +11,7 @@ import com.testcar.car.domains.carReservation.exception.ErrorCode;
 import com.testcar.car.domains.carReservation.model.CarReservationRequest;
 import com.testcar.car.domains.carReservation.model.ReturnCarReservationRequest;
 import com.testcar.car.domains.carReservation.model.dto.CarReservationDto;
+import com.testcar.car.domains.carReservation.model.vo.CarReservationCountVo;
 import com.testcar.car.domains.carReservation.model.vo.CarReservationFilterCondition;
 import com.testcar.car.domains.carReservation.repository.CarReservationRepository;
 import com.testcar.car.domains.carStock.CarStockService;
@@ -18,6 +21,8 @@ import com.testcar.car.domains.carStock.repository.CarStockRepository;
 import com.testcar.car.domains.member.entity.Member;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +53,24 @@ public class CarReservationService {
             throw new NotFoundException(ErrorCode.CAR_RESERVATION_NOT_FOUND);
         }
         return carReservations;
+    }
+
+    /** 일주일 이내 대여된 차량 예약 순위를 조회합니다. */
+    public List<CarReservationCountVo> findAllByLast7DaysRank() {
+        final LocalDateTime now = LocalDateTime.now();
+        final LocalDateTime weekAgo = now.minusDays(7);
+        List<CarReservationDto> reservations =
+                carReservationRepository.findAllByCreatedAtBetween(weekAgo, now);
+        final Map<String, Long> countMap =
+                reservations.stream()
+                        .map(CarReservationDto::getCarName)
+                        .collect(groupingBy(Function.identity(), counting()));
+
+        return countMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(5)
+                .map(CarReservationCountVo::from)
+                .toList();
     }
 
     /** 시험차량을 예약합니다. */
