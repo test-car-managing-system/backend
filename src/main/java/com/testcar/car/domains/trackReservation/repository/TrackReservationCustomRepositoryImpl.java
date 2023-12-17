@@ -56,6 +56,22 @@ public class TrackReservationCustomRepositoryImpl
                 .fetch();
     }
 
+    /** 슬롯의 expiredAt 이 같으면서 RESERVED 상태인 모든 예약을 가져옴 */
+    @Override
+    public List<TrackReservation> findAllBySlotExpiredAtAndStatusReserved(LocalDateTime expiredAt) {
+        return jpaQueryFactory
+                .selectFrom(trackReservation)
+                .leftJoin(trackReservation.track, track)
+                .fetchJoin()
+                .leftJoin(trackReservation.trackReservationSlots, trackReservationSlot)
+                .fetchJoin()
+                .where(
+                        notDeleted(trackReservation),
+                        trackReservation.trackReservationSlots.any().expiredAt.eq(expiredAt),
+                        (trackReservation.status.eq(ReservationStatus.RESERVED)))
+                .fetch();
+    }
+
     private BooleanExpression trackNameContainsOrNull(String name) {
         return (name == null) ? null : track.name.contains(name);
     }
@@ -76,13 +92,11 @@ public class TrackReservationCustomRepositoryImpl
                 .status
                 .when(ReservationStatus.RESERVED)
                 .then(1)
-                .when(ReservationStatus.USING)
+                .when(ReservationStatus.COMPLETED)
                 .then(2)
                 .when(ReservationStatus.CANCELED)
                 .then(3)
-                .when(ReservationStatus.COMPLETED)
-                .then(4)
-                .otherwise(5)
+                .otherwise(4)
                 .asc();
     }
 }

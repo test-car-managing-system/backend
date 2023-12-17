@@ -43,7 +43,7 @@ public class TrackReservationTest {
     @ParameterizedTest
     @EnumSource(
             value = ReservationStatus.class,
-            names = {"RESERVED", "USING"})
+            names = {"RESERVED"})
     public void 시험장을_취소할수_있는지_확인한다(ReservationStatus status) {
         // given
         final TrackReservation trackReservation =

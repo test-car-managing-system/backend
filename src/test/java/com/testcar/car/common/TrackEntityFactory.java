@@ -15,6 +15,7 @@ import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation.TrackReservationBuilder;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class TrackEntityFactory {
@@ -56,6 +57,15 @@ public class TrackEntityFactory {
                 .build();
     }
 
+    public static TrackReservationSlot createTrackReservationSlot(
+            TrackReservation trackReservation, LocalDateTime expiredAt) {
+        return createTrackReservationSlotBuilder()
+                .trackReservation(trackReservation)
+                .startedAt(expiredAt.minusHours(1L))
+                .expiredAt(expiredAt)
+                .build();
+    }
+
     public static TrackReservationSlot createAnotherTrackReservationSlot(
             TrackReservation trackReservation) {
         return createTrackReservationSlotBuilder()
@@ -73,6 +83,11 @@ public class TrackEntityFactory {
     public static Set<TrackReservationSlot> createTrackReservationSlotSet(
             TrackReservation trackReservation) {
         return Set.of(createTrackReservationSlot(trackReservation));
+    }
+
+    public static Set<TrackReservationSlot> createTrackReservationSlotSet(
+            TrackReservation trackReservation, LocalDateTime expiredAt) {
+        return Set.of(createTrackReservationSlot(trackReservation, expiredAt));
     }
 
     public static Set<TrackReservationSlot> createAnotherTrackReservationSlotSet(

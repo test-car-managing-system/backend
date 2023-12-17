@@ -139,7 +139,7 @@ public class TrackReservationServiceTest {
     @ParameterizedTest
     @EnumSource(
             value = ReservationStatus.class,
-            names = {"RESERVED", "USING"})
+            names = {"RESERVED"})
     void 시험장_예약을_취소_또는_반납한다(ReservationStatus status) {
         // given
         final TrackReservation cancelableTrackReservation =
