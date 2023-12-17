@@ -16,4 +16,6 @@ public interface CarReservationCustomRepository {
     List<CarReservation> findAllWithCarStockByIdInAndMemberId(List<Long> ids, Long memberId);
 
     List<CarReservation> findAllByExpiredAtAndStatusReserved(LocalDateTime expiredAt);
+
+    List<CarReservationDto> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 }
