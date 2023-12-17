@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/** 시험장 예약에 대한 스케쥴링을 진행하는 서비스 */
+/** 시험장 예약에 대한 스케쥴링 설정 */
 @Service
 @Transactional
 @RequiredArgsConstructor

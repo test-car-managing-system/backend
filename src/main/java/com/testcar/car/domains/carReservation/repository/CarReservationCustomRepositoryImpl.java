@@ -12,6 +12,7 @@ import com.testcar.car.domains.carReservation.entity.CarReservation;
 import com.testcar.car.domains.carReservation.entity.ReservationStatus;
 import com.testcar.car.domains.carReservation.model.dto.CarReservationDto;
 import com.testcar.car.domains.carReservation.model.vo.CarReservationFilterCondition;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -69,6 +70,19 @@ public class CarReservationCustomRepositoryImpl
                         notDeleted(carReservation),
                         carReservation.id.in(ids),
                         carReservation.member.id.eq(memberId))
+                .fetch();
+    }
+
+    @Override
+    public List<CarReservation> findAllByExpiredAtAndStatusReserved(LocalDateTime expiredAt) {
+        return jpaQueryFactory
+                .selectFrom(carReservation)
+                .leftJoin(carReservation.carStock, carStock)
+                .fetchJoin()
+                .where(
+                        notDeleted(carReservation),
+                        carReservation.expiredAt.eq(expiredAt),
+                        carReservation.status.eq(ReservationStatus.RESERVED))
                 .fetch();
     }
 
