@@ -29,7 +29,7 @@ public class TrackReservationSchedulerService {
 
         trackReservations.stream()
                 .filter(trackReservation -> isLastSlotExpiredAtEquals(trackReservation, now))
-                .forEach(TrackReservation::cancel);
+                .forEach(TrackReservation::completed);
         trackReservationRepository.saveAll(trackReservations);
     }
 

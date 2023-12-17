@@ -11,7 +11,7 @@ public class Constant {
 
     /** Date */
     public static final LocalDateTime NOW =
-            LocalDateTime.now().withHour(12).withMinute(0).withSecond(0).withNano(0);
+            LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 
     public static final LocalDateTime TOMORROW = NOW.plusDays(1L);
     public static final LocalDateTime DAY_AFTER_TOMORROW = NOW.plusDays(2L);
