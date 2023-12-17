@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.testcar.car.common.CarEntityFactory;
+import com.testcar.car.common.DtoFactory;
 import com.testcar.car.common.MemberEntityFactory;
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
@@ -20,6 +21,7 @@ import com.testcar.car.domains.carReservation.entity.ReservationStatus;
 import com.testcar.car.domains.carReservation.model.CarReservationRequest;
 import com.testcar.car.domains.carReservation.model.ReturnCarReservationRequest;
 import com.testcar.car.domains.carReservation.model.dto.CarReservationDto;
+import com.testcar.car.domains.carReservation.model.vo.CarReservationCountVo;
 import com.testcar.car.domains.carReservation.model.vo.CarReservationFilterCondition;
 import com.testcar.car.domains.carReservation.repository.CarReservationRepository;
 import com.testcar.car.domains.carReservation.request.CarReservationRequestFactory;
@@ -61,7 +63,7 @@ public class CarReservationServiceTest {
         carReservations =
                 List.of(
                         CarEntityFactory.createCarReservation(),
-                        CarEntityFactory.createCarReservation());
+                        CarEntityFactory.createAnotherCarReservation());
     }
 
     @Test
@@ -80,6 +82,26 @@ public class CarReservationServiceTest {
         // then
         assertEquals(mockPage, result);
         verify(carReservationRepository).findAllPageByCondition(condition, pageable);
+    }
+
+    @Test
+    void 시험장_예약순위_리스트를_가져온다() {
+        // given
+        List<CarReservationDto> mockReservations =
+                List.of(
+                        DtoFactory.createCarReservationDto(carReservations.get(0)),
+                        DtoFactory.createCarReservationDto(carReservations.get(1)),
+                        DtoFactory.createCarReservationDto(carReservations.get(1)));
+        when(carReservationRepository.findAllByCreatedAtBetween(any(), any()))
+                .thenReturn(mockReservations);
+
+        // when
+        final List<CarReservationCountVo> result = carReservationService.findAllByLast7DaysRank();
+
+        // then
+        assertEquals(result.size(), 2L); // 같은 종류의 시험장은 묶여야 한다.
+        assertEquals(result.get(0).getCount(), 2L); // 묶인 시험장의 개수가 많을수록 먼저 나와야 한다.
+        verify(carReservationRepository).findAllByCreatedAtBetween(any(), any());
     }
 
     @Test

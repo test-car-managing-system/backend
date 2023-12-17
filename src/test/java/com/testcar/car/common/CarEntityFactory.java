@@ -1,5 +1,6 @@
 package com.testcar.car.common;
 
+import static com.testcar.car.common.Constant.ANOTHER_CAR_NAME;
 import static com.testcar.car.common.Constant.CAR_DISPLACEMENT;
 import static com.testcar.car.common.Constant.CAR_NAME;
 import static com.testcar.car.common.Constant.CAR_STOCK_NUMBER;
@@ -26,12 +27,20 @@ public class CarEntityFactory {
         return createCarBuilder().build();
     }
 
+    public static Car createAnotherCar() {
+        return createCarBuilder().name(ANOTHER_CAR_NAME).build();
+    }
+
     public static CarBuilder createCarBuilder() {
         return Car.builder().name(CAR_NAME).displacement(CAR_DISPLACEMENT).type(CAR_TYPE);
     }
 
     public static CarStock createCarStock() {
         return createCarStockBuilder().build();
+    }
+
+    public static CarStock createAnotherCarStock() {
+        return createCarStockBuilder().car(createAnotherCar()).build();
     }
 
     public static CarStockBuilder createCarStockBuilder() {
@@ -43,6 +52,10 @@ public class CarEntityFactory {
 
     public static CarReservation createCarReservation() {
         return createCarReservationBuilder().build();
+    }
+
+    public static CarReservation createAnotherCarReservation() {
+        return createCarReservationBuilder().carStock(createAnotherCarStock()).build();
     }
 
     public static CarReservationBuilder createCarReservationBuilder() {

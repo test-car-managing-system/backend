@@ -17,6 +17,7 @@ import com.testcar.car.domains.trackReservation.entity.ReservationStatus;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.TrackReservationRequest;
+import com.testcar.car.domains.trackReservation.model.vo.TrackReservationCountVo;
 import com.testcar.car.domains.trackReservation.model.vo.TrackReservationFilterCondition;
 import com.testcar.car.domains.trackReservation.repository.TrackReservationRepository;
 import java.time.LocalDate;
@@ -99,6 +100,28 @@ public class TrackReservationServiceTest {
         // then
         assertEquals(trackReservations, result);
         verify(trackReservationRepository).findAllByMemberIdAndCondition(member.getId(), condition);
+    }
+
+    @Test
+    void 시험장_예약순위_리스트를_가져온다() {
+        // given
+        List<TrackReservation> mockReservations =
+                List.of(
+                        TrackEntityFactory.createAnotherTrackReservation(),
+                        TrackEntityFactory.createTrackReservation(),
+                        TrackEntityFactory.createTrackReservation(),
+                        TrackEntityFactory.createTrackReservation());
+        when(trackReservationRepository.findAllByCreatedAtBetween(any(), any()))
+                .thenReturn(mockReservations);
+
+        // when
+        final List<TrackReservationCountVo> result =
+                trackReservationService.findAllByLast7DaysRank();
+
+        // then
+        assertEquals(result.size(), 2L); // 같은 종류의 시험장은 묶여야 한다.
+        assertEquals(result.get(0).getCount(), 3L); // 묶인 시험장의 개수가 많을수록 먼저 나와야 한다.
+        verify(trackReservationRepository).findAllByCreatedAtBetween(any(), any());
     }
 
     @Test

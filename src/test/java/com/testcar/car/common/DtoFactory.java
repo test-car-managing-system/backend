@@ -4,6 +4,8 @@ import static com.testcar.car.common.CarEntityFactory.createCarStock;
 import static com.testcar.car.common.TrackEntityFactory.createTrack;
 
 import com.testcar.car.domains.car.entity.Car;
+import com.testcar.car.domains.carReservation.entity.CarReservation;
+import com.testcar.car.domains.carReservation.model.dto.CarReservationDto;
 import com.testcar.car.domains.carStock.entity.CarStock;
 import com.testcar.car.domains.carTest.entity.CarTest;
 import com.testcar.car.domains.carTest.model.vo.CarTestDto;
@@ -16,6 +18,12 @@ import com.testcar.car.domains.member.entity.Member;
 
 public class DtoFactory {
     private DtoFactory() {}
+
+    public static CarReservationDto createCarReservationDto(CarReservation carReservation) {
+        final CarStock carStock = carReservation.getCarStock();
+        final Car car = carStock.getCar();
+        return new CarReservationDto(carReservation, car.getName(), carStock.getStockNumber());
+    }
 
     public static CarTestDto createCarTestDto(CarTest carTest) {
         final Member member = MemberEntityFactory.createMember();

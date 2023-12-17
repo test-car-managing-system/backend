@@ -1,5 +1,6 @@
 package com.testcar.car.common;
 
+import static com.testcar.car.common.Constant.ANOTHER_TRACK_NAME;
 import static com.testcar.car.common.Constant.ANOTHER_TRACK_RESERVATION_SLOT_EXPIRED_AT;
 import static com.testcar.car.common.Constant.ANOTHER_TRACK_RESERVATION_SLOT_STARTED_AT;
 import static com.testcar.car.common.Constant.TRACK_DESCRIPTION;
@@ -35,6 +36,12 @@ public class TrackEntityFactory {
 
     public static TrackReservation createTrackReservation() {
         return createTrackReservationBuilder().build();
+    }
+
+    public static TrackReservation createAnotherTrackReservation() {
+        return createTrackReservationBuilder()
+                .track(createTrackBuilder().name(ANOTHER_TRACK_NAME).build())
+                .build();
     }
 
     public static TrackReservationBuilder createTrackReservationBuilder() {
