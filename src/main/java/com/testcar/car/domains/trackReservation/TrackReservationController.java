@@ -8,9 +8,11 @@ import com.testcar.car.domains.member.entity.Role;
 import com.testcar.car.domains.trackReservation.entity.TrackReservation;
 import com.testcar.car.domains.trackReservation.entity.TrackReservationSlot;
 import com.testcar.car.domains.trackReservation.model.TrackReservationDetailResponse;
+import com.testcar.car.domains.trackReservation.model.TrackReservationRankingResponse;
 import com.testcar.car.domains.trackReservation.model.TrackReservationRequest;
 import com.testcar.car.domains.trackReservation.model.TrackReservationResponse;
 import com.testcar.car.domains.trackReservation.model.TrackReservationSlotResponse;
+import com.testcar.car.domains.trackReservation.model.vo.TrackReservationCountVo;
 import com.testcar.car.domains.trackReservation.model.vo.TrackReservationFilterCondition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,6 +46,15 @@ public class TrackReservationController {
         final List<TrackReservation> trackReservations =
                 trackReservationService.findAllByMemberAndCondition(member, condition);
         return trackReservations.stream().map(TrackReservationResponse::from).toList();
+    }
+
+    @GetMapping("/reservations/rank")
+    @RoleAllowed(role = Role.USER)
+    @Operation(summary = "[예약 이력] 시험장 전체 예약 순위", description = "대여된 시험장 순위를 5개 가져옵니다.")
+    public List<TrackReservationRankingResponse> getTrackReservationsRank() {
+        final List<TrackReservationCountVo> trackReservations =
+                trackReservationService.findAllByLast7DaysRank();
+        return trackReservations.stream().map(TrackReservationRankingResponse::from).toList();
     }
 
     @GetMapping("/reservations/{trackReservationId}")

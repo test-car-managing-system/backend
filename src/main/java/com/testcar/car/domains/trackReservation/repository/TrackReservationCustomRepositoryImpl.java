@@ -72,6 +72,17 @@ public class TrackReservationCustomRepositoryImpl
                 .fetch();
     }
 
+    @Override
+    public List<TrackReservation> findAllByCreatedAtBetween(
+            LocalDateTime start, LocalDateTime end) {
+        return jpaQueryFactory
+                .selectFrom(trackReservation)
+                .leftJoin(trackReservation.track, track)
+                .fetchJoin()
+                .where(notDeleted(trackReservation), trackReservation.createdAt.between(start, end))
+                .fetch();
+    }
+
     private BooleanExpression trackNameContainsOrNull(String name) {
         return (name == null) ? null : track.name.contains(name);
     }
