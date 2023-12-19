@@ -1,4 +1,4 @@
-package com.testcar.car.config;
+package com.testcar.car.common.config;
 
 
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;

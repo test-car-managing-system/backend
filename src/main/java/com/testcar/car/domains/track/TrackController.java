@@ -8,6 +8,8 @@ import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.TrackResponse;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
+import com.testcar.car.infra.kakao.KakaoGeocodingService;
+import com.testcar.car.infra.kakao.model.KakaoGeocodingResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "[시험장 관리]", description = "시험장 관리 API")
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TrackController {
     private final TrackService trackService;
+    private final KakaoGeocodingService kakaoGeocodingService;
 
     @GetMapping
     @RoleAllowed(role = Role.USER)
@@ -69,5 +73,10 @@ public class TrackController {
     @Operation(summary = "[시험장 관리] 시험장 삭제", description = "(관리자) 시험장을 삭제합니다.")
     public List<Long> delete(@RequestBody DeleteTrackRequest request) {
         return trackService.deleteAll(request);
+    }
+
+    @GetMapping("/geo")
+    public KakaoGeocodingResponse getKakaoGeocoding(@RequestParam String address) {
+        return kakaoGeocodingService.geocoding(address);
     }
 }

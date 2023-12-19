@@ -1,4 +1,4 @@
-package com.testcar.car.config;
+package com.testcar.car.common.config;
 
 import static com.testcar.car.common.exception.ErrorCode.BAD_REQUEST;
 import static com.testcar.car.common.exception.ErrorCode.INTERNAL_SERVER_ERROR;
