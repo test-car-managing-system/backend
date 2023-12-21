@@ -32,3 +32,6 @@ jwt:
 
 kakao:
   api-key: ${KAKAO_API_KEY:1234}
+
+weather:
+  api-key: ${WEATHER_API_KEY:1234}

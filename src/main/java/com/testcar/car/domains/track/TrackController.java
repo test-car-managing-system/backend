@@ -10,6 +10,9 @@ import com.testcar.car.domains.track.model.TrackResponse;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
 import com.testcar.car.infra.kakao.KakaoGeocodingService;
 import com.testcar.car.infra.kakao.model.KakaoGeocodingResponse;
+import com.testcar.car.infra.weather.WeatherService;
+import com.testcar.car.infra.weather.model.WeatherRequest;
+import com.testcar.car.infra.weather.model.WeatherResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -18,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrackController {
     private final TrackService trackService;
     private final KakaoGeocodingService kakaoGeocodingService;
+    private final WeatherService weatherService;
 
     @GetMapping
     @RoleAllowed(role = Role.USER)
@@ -78,5 +83,10 @@ public class TrackController {
     @GetMapping("/geo")
     public KakaoGeocodingResponse getKakaoGeocoding(@RequestParam String address) {
         return kakaoGeocodingService.geocoding(address);
+    }
+
+    @GetMapping("/weather")
+    public WeatherResponse getWeather(@ParameterObject @ModelAttribute WeatherRequest request) {
+        return weatherService.getWeatherForecast(request);
     }
 }

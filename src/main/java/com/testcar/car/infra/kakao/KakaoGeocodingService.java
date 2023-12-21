@@ -3,7 +3,6 @@ package com.testcar.car.infra.kakao;
 
 import com.testcar.car.common.util.RestTemplateHandler;
 import com.testcar.car.infra.kakao.model.KakaoGeocodingResponse;
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -22,11 +21,11 @@ public class KakaoGeocodingService {
         final HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "KakaoAK " + apiKey);
 
-        final URI uri =
+        final String url =
                 UriComponentsBuilder.fromHttpUrl(KAKAO_GEOCODING_URL)
                         .queryParam("query", address)
                         .build()
-                        .toUri();
-        return restTemplateHandler.get(uri, headers, KakaoGeocodingResponse.class);
+                        .toUriString();
+        return restTemplateHandler.get(url, headers, KakaoGeocodingResponse.class);
     }
 }
