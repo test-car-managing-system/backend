@@ -9,11 +9,6 @@ import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
 import com.testcar.car.domains.track.repository.TrackRepository;
-import com.testcar.car.infra.kakao.KakaoGeocodingService;
-import com.testcar.car.infra.kakao.model.KakaoGeocodingResponse;
-import com.testcar.car.infra.weather.WeatherService;
-import com.testcar.car.infra.weather.model.WeatherRequest;
-import com.testcar.car.infra.weather.model.WeatherResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TrackService {
     private final TrackRepository trackRepository;
-    private final KakaoGeocodingService kakaoGeocodingService;
-    private final WeatherService weatherService;
 
     /** 시험장을 id로 조회합니다. */
     public Track findById(Long id) {
@@ -61,8 +54,6 @@ public class TrackService {
     public Track register(RegisterTrackRequest request) {
         validateNameNotDuplicated(request.getName());
         Track track = createEntity(request);
-        updateGeoLocationIfExists(track);
-        updateWeatherIfGeoLocationExists(track);
         return trackRepository.save(track);
     }
 
@@ -74,8 +65,6 @@ public class TrackService {
         }
         final Track updateTrack = this.createEntity(request);
         track.update(updateTrack);
-        updateGeoLocationIfExists(track);
-        updateWeatherIfGeoLocationExists(track);
         return trackRepository.save(track);
     }
 
@@ -100,38 +89,6 @@ public class TrackService {
     private void validateNameNotDuplicated(String name) {
         if (trackRepository.existsByNameAndDeletedFalse(name)) {
             throw new BadRequestException(ErrorCode.DUPLICATED_TRACK_NAME);
-        }
-    }
-
-    /** 시험장 위치를 기반으로 좌표를 가져옵니다 */
-    public void updateWeatherIfGeoLocationExists(Track track) {
-        final Double latitude = track.getLatitude();
-        final Double longitude = track.getLongitude();
-        if (latitude == null || longitude == null) {
-            track.updateWeather(null, null);
-            return;
-        }
-
-        try {
-            final WeatherRequest request =
-                    new WeatherRequest(latitude.intValue(), longitude.intValue());
-            final WeatherResponse response = weatherService.getWeatherForecast(request);
-            track.updateWeather(response.getWeather(), response.getTemperature());
-        } catch (Exception e) {
-            track.updateWeather(null, null);
-            log.error("시험장 위치를 기반으로 날씨를 가져오는데 실패했습니다.", e);
-        }
-    }
-
-    /** 시험장 위치를 기반으로 좌표를 가져옵니다 */
-    private void updateGeoLocationIfExists(Track track) {
-        try {
-            final KakaoGeocodingResponse response =
-                    kakaoGeocodingService.geocoding(track.getLocation());
-            track.updateGeoLocation(response.getX(), response.getY());
-        } catch (Exception e) {
-            track.updateGeoLocation(null, null);
-            log.error("시험장 위치를 기반으로 좌표를 가져오는데 실패했습니다.", e);
         }
     }
 }

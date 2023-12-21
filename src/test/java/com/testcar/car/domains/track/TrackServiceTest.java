@@ -30,7 +30,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class TrackServiceTest {
     @Mock private TrackRepository trackRepository;
-
     @InjectMocks private TrackService trackService;
 
     private static Track track;
