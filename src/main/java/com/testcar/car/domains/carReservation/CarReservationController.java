@@ -42,7 +42,8 @@ public class CarReservationController {
     @Operation(summary = "[대여] 시험 차량 대여", description = "시험 차량을 예약합니다.")
     public CarReservationResponse postCarReservation(
             @AuthMember Member member, @Valid @RequestBody CarReservationRequest request) {
-        final CarReservation carReservation = carReservationService.reserve(member, request);
+        final CarReservation carReservation =
+                carReservationService.reserve(member, request.getCarStockId());
         return CarReservationResponse.from(carReservation);
     }
 

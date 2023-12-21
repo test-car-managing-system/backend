@@ -147,7 +147,8 @@ public class CarReservationServiceTest {
         when(carStockService.findById(request.getCarStockId())).thenReturn(carStock);
 
         // when
-        CarReservation newCarReservation = carReservationService.reserve(member, request);
+        CarReservation newCarReservation =
+                carReservationService.reserve(member, request.getCarStockId());
 
         // then
         then(carReservationRepository).should().save(any(CarReservation.class));
@@ -168,7 +169,7 @@ public class CarReservationServiceTest {
         Assertions.assertThrows(
                 BadRequestException.class,
                 () -> {
-                    carReservationService.reserve(member, request);
+                    carReservationService.reserve(member, request.getCarStockId());
                 });
         then(carStockService).should().findById(any(Long.class));
         then(carReservationRepository).shouldHaveNoMoreInteractions();
