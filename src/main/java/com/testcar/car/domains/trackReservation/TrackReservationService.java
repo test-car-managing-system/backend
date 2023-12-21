@@ -5,6 +5,8 @@ import static com.testcar.car.domains.trackReservation.exception.ErrorCode.TRACK
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
+import com.testcar.car.common.annotation.DistributedLock;
+import com.testcar.car.common.database.DistributedLockType;
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.member.entity.Member;
@@ -72,6 +74,7 @@ public class TrackReservationService {
     }
 
     /** 해당 시험장을 예약합니다. */
+    @DistributedLock(type = DistributedLockType.TRACK, identifier = "trackId")
     public TrackReservation reserve(Member member, Long trackId, TrackReservationRequest request) {
         final Track track = trackService.findById(trackId);
         final TrackReservation trackReservation =

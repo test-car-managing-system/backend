@@ -3,12 +3,13 @@ package com.testcar.car.domains.carReservation;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
+import com.testcar.car.common.annotation.DistributedLock;
+import com.testcar.car.common.database.DistributedLockType;
 import com.testcar.car.common.exception.BadRequestException;
 import com.testcar.car.common.exception.NotFoundException;
 import com.testcar.car.domains.carReservation.entity.CarReservation;
 import com.testcar.car.domains.carReservation.entity.ReservationStatus;
 import com.testcar.car.domains.carReservation.exception.ErrorCode;
-import com.testcar.car.domains.carReservation.model.CarReservationRequest;
 import com.testcar.car.domains.carReservation.model.ReturnCarReservationRequest;
 import com.testcar.car.domains.carReservation.model.dto.CarReservationDto;
 import com.testcar.car.domains.carReservation.model.vo.CarReservationCountVo;
@@ -74,8 +75,9 @@ public class CarReservationService {
     }
 
     /** 시험차량을 예약합니다. */
-    public CarReservation reserve(Member member, CarReservationRequest request) {
-        final CarStock carStock = carStockService.findById(request.getCarStockId());
+    @DistributedLock(type = DistributedLockType.TRACK, identifier = "carStockId")
+    public CarReservation reserve(Member member, Long carStockId) {
+        final CarStock carStock = carStockService.findById(carStockId);
         validateCarStockAvailable(carStock);
         final LocalDateTime now = LocalDateTime.now();
         final LocalDateTime expiredAt = now.toLocalDate().plusDays(RESERVATION_DATE).atStartOfDay();
