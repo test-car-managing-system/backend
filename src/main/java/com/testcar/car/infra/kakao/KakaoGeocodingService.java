@@ -2,6 +2,7 @@ package com.testcar.car.infra.kakao;
 
 
 import com.testcar.car.common.util.RestTemplateHandler;
+import com.testcar.car.infra.kakao.model.KakaoGeocodingApiResponse;
 import com.testcar.car.infra.kakao.model.KakaoGeocodingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,8 @@ public class KakaoGeocodingService {
                         .queryParam("query", address)
                         .build()
                         .toUriString();
-        return restTemplateHandler.get(url, headers, KakaoGeocodingResponse.class);
+        final KakaoGeocodingApiResponse response =
+                restTemplateHandler.get(url, headers, KakaoGeocodingApiResponse.class);
+        return KakaoGeocodingResponse.from(response);
     }
 }

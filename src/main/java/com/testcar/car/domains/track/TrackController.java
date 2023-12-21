@@ -9,10 +9,7 @@ import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.TrackResponse;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
 import com.testcar.car.infra.kakao.KakaoGeocodingService;
-import com.testcar.car.infra.kakao.model.KakaoGeocodingResponse;
 import com.testcar.car.infra.weather.WeatherService;
-import com.testcar.car.infra.weather.model.WeatherRequest;
-import com.testcar.car.infra.weather.model.WeatherResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -21,13 +18,11 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "[시험장 관리]", description = "시험장 관리 API")
@@ -78,15 +73,5 @@ public class TrackController {
     @Operation(summary = "[시험장 관리] 시험장 삭제", description = "(관리자) 시험장을 삭제합니다.")
     public List<Long> delete(@RequestBody DeleteTrackRequest request) {
         return trackService.deleteAll(request);
-    }
-
-    @GetMapping("/geo")
-    public KakaoGeocodingResponse getKakaoGeocoding(@RequestParam String address) {
-        return kakaoGeocodingService.geocoding(address);
-    }
-
-    @GetMapping("/weather")
-    public WeatherResponse getWeather(@ParameterObject @ModelAttribute WeatherRequest request) {
-        return weatherService.getWeatherForecast(request);
     }
 }
