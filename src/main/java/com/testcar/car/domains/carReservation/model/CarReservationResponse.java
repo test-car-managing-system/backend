@@ -5,7 +5,6 @@ import com.testcar.car.common.annotation.DateFormat;
 import com.testcar.car.domains.carReservation.entity.CarReservation;
 import com.testcar.car.domains.carReservation.entity.ReservationStatus;
 import com.testcar.car.domains.carReservation.model.dto.CarReservationDto;
-import com.testcar.car.domains.carStock.entity.CarStock;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -46,12 +45,10 @@ public class CarReservationResponse {
     }
 
     public static CarReservationResponse from(CarReservation carReservation) {
-        final CarStock carStock = carReservation.getCarStock();
-
         return CarReservationResponse.builder()
                 .id(carReservation.getId())
-                .name(carStock.getCar().getName())
-                .stockNumber(carStock.getStockNumber())
+                .name(carReservation.getCarStock().getCar().getName())
+                .stockNumber(carReservation.getCarStock().getStockNumber())
                 .startedAt(carReservation.getStartedAt())
                 .expiredAt(carReservation.getExpiredAt())
                 .status(carReservation.getStatus())

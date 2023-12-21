@@ -44,6 +44,8 @@ public class CarReservationController {
             @AuthMember Member member, @Valid @RequestBody CarReservationRequest request) {
         final CarReservation carReservation =
                 carReservationService.reserve(member, request.getCarStockId());
+
+        System.out.println("carReservation = " + carReservation);
         return CarReservationResponse.from(carReservation);
     }
 

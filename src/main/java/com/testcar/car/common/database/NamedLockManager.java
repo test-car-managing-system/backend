@@ -22,7 +22,7 @@ public class NamedLockManager implements LockManager {
     private static final String RELEASE_LOCK = "SELECT RELEASE_LOCK(?)";
     private static final String NULL_EXCEPTION = "잘못된 인자입니다.";
     private static final String EMPTY_EXCEPTION = "잘못된 키값입니다.";
-    private static final int TIMEOUT_SECONDS = 10;
+    private static final int TIMEOUT_SECONDS = 5;
     private final DataSource dataSource;
 
     @Transactional(propagation = Propagation.NEVER)
@@ -34,27 +34,26 @@ public class NamedLockManager implements LockManager {
             } finally {
                 releaseLock(connection, userLockName);
             }
-        } catch (SQLException | RuntimeException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    private void getLock(Connection connection, String userLockName) {
-
+    private void getLock(Connection connection, String lockName) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCK)) {
-            preparedStatement.setString(1, userLockName);
+            preparedStatement.setString(1, lockName);
             preparedStatement.setInt(2, TIMEOUT_SECONDS);
 
             validateLockStatement(preparedStatement);
         } catch (SQLException e) {
-            log.error("releaseLock Error", e);
+            log.error("getLock Error", e);
             throw new InvalidLockException(e.getMessage(), e);
         }
     }
 
-    private void releaseLock(Connection connection, String userLockName) {
+    private void releaseLock(Connection connection, String lockName) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(RELEASE_LOCK)) {
-            preparedStatement.setString(1, userLockName);
+            preparedStatement.setString(1, lockName);
 
             validateLockStatement(preparedStatement);
         } catch (SQLException e) {
