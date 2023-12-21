@@ -72,14 +72,15 @@ public class GasStationServiceTest {
     @Test
     void 등록된_모든_주유소를_DB에서_조회한다() {
         // given
-        when(gasStationRepository.findAllByDeletedFalse()).thenReturn(List.of(gasStation));
+        when(gasStationRepository.findAllByDeletedFalseOrderByCreatedAtDesc())
+                .thenReturn(List.of(gasStation));
 
         // when
         final List<GasStation> result = gasStationService.findAll();
 
         // then
         assertEquals(List.of(gasStation), result);
-        verify(gasStationRepository).findAllByDeletedFalse();
+        verify(gasStationRepository).findAllByDeletedFalseOrderByCreatedAtDesc();
     }
 
     @Test

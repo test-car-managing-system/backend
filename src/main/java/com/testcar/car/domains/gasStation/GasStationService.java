@@ -29,7 +29,7 @@ public class GasStationService {
 
     /** 등록된 모든 주유소를 조회합니다. */
     public List<GasStation> findAll() {
-        return gasStationRepository.findAllByDeletedFalse();
+        return gasStationRepository.findAllByDeletedFalseOrderByCreatedAtDesc();
     }
 
     /** 주유소를 id로 조회합니다. */

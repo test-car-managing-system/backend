@@ -11,7 +11,7 @@ public interface GasStationRepository extends JpaRepository<GasStation, Long> {
 
     Optional<GasStation> findByNameAndDeletedFalse(String name);
 
-    List<GasStation> findAllByDeletedFalse();
+    List<GasStation> findAllByDeletedFalseOrderByCreatedAtDesc();
 
     List<GasStation> findAllByIdInAndDeletedFalse(List<Long> ids);
 

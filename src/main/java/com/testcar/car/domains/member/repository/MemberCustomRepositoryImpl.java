@@ -44,6 +44,7 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository, BaseQ
                         .leftJoin(member.department, department)
                         .fetchJoin()
                         .where(member.id.in(coveringIndex))
+                        .orderBy(member.name.asc(), member.createdAt.desc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
                         .fetch();
