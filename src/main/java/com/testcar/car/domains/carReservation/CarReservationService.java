@@ -75,10 +75,12 @@ public class CarReservationService {
     }
 
     /** 시험차량을 예약합니다. */
-    @DistributedLock(type = DistributedLockType.TRACK, identifier = "carStockId")
+    @DistributedLock(type = DistributedLockType.CAR, identifier = "carStockId")
     public CarReservation reserve(Member member, Long carStockId) {
         final CarStock carStock = carStockService.findById(carStockId);
         validateCarStockAvailable(carStock);
+        carStock.updateStatus(StockStatus.RESERVED);
+        carStockRepository.save(carStock);
         final LocalDateTime now = LocalDateTime.now();
         final LocalDateTime expiredAt = now.toLocalDate().plusDays(RESERVATION_DATE).atStartOfDay();
         final CarReservation carReservation =
@@ -89,8 +91,6 @@ public class CarReservationService {
                         .startedAt(now)
                         .expiredAt(expiredAt)
                         .build();
-        carStock.updateStatus(StockStatus.RESERVED);
-        carStockRepository.save(carStock);
         return carReservationRepository.save(carReservation);
     }
 

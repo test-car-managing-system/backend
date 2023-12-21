@@ -5,6 +5,7 @@ import com.testcar.car.common.annotation.DistributedLock;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,22 +22,24 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @SuppressWarnings("unchecked")
-@Order(Ordered.HIGHEST_PRECEDENCE + 1)
+@Order(Ordered.LOWEST_PRECEDENCE - 1)
 public class DistributedLockAop {
     private final LockManager lockManager;
 
     @Around("@annotation(distributedLock)")
-    public void lock(ProceedingJoinPoint joinPoint, DistributedLock distributedLock) {
+    public Object lock(ProceedingJoinPoint joinPoint, DistributedLock distributedLock) {
         final String key = createDynamicKey(joinPoint, distributedLock);
-        lockManager.lock(
-                key,
-                () -> {
-                    try {
-                        return joinPoint.proceed();
-                    } catch (Throwable throwable) {
-                        throw new InvalidLockException("Lock Error", throwable);
-                    }
-                });
+        return lockManager.lock(key, () -> proceed(joinPoint));
+    }
+
+    @SneakyThrows
+    private Object proceed(ProceedingJoinPoint joinPoint) {
+        try {
+            return joinPoint.proceed();
+        } catch (Throwable e) {
+            log.error("Error during proceeding joinPoint", e);
+            throw e;
+        }
     }
 
     private String createDynamicKey(
