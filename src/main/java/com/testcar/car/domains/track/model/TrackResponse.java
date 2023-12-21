@@ -24,6 +24,12 @@ public class TrackResponse {
     @Schema(description = "위도", example = "37.123123")
     private Double latitude;
 
+    @Schema(description = "시험장 날씨", example = "맑음")
+    private String weather;
+
+    @Schema(description = "기온", example = "10")
+    private Integer temperature;
+
     @Schema(description = "시험장 특성", example = "평지")
     private String description;
 
@@ -37,6 +43,8 @@ public class TrackResponse {
                 .location(track.getLocation())
                 .longitude(track.getLongitude())
                 .latitude(track.getLatitude())
+                .weather(track.getWeather())
+                .temperature(track.getTemperature())
                 .description(track.getDescription())
                 .length(track.getLength())
                 .build();

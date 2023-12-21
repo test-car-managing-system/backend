@@ -13,5 +13,7 @@ public interface TrackRepository extends JpaRepository<Track, Long>, TrackCustom
 
     List<Track> findAllByIdInAndDeletedFalse(List<Long> ids);
 
+    List<Track> findAllByDeletedFalse();
+
     boolean existsByNameAndDeletedFalse(String name);
 }

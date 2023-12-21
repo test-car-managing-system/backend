@@ -8,6 +8,8 @@ import com.testcar.car.domains.track.model.DeleteTrackRequest;
 import com.testcar.car.domains.track.model.RegisterTrackRequest;
 import com.testcar.car.domains.track.model.TrackResponse;
 import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
+import com.testcar.car.infra.kakao.KakaoGeocodingService;
+import com.testcar.car.infra.weather.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TrackController {
     private final TrackService trackService;
+    private final KakaoGeocodingService kakaoGeocodingService;
+    private final WeatherService weatherService;
 
     @GetMapping
     @RoleAllowed(role = Role.USER)

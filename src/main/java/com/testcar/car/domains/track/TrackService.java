@@ -11,9 +11,11 @@ import com.testcar.car.domains.track.model.vo.TrackFilterCondition;
 import com.testcar.car.domains.track.repository.TrackRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -51,8 +53,8 @@ public class TrackService {
     /** 새로운 시험장을 등록합니다. */
     public Track register(RegisterTrackRequest request) {
         validateNameNotDuplicated(request.getName());
-        final Track car = createEntity(request);
-        return trackRepository.save(car);
+        Track track = createEntity(request);
+        return trackRepository.save(track);
     }
 
     /** 시험장 정보를 업데이트 합니다. */

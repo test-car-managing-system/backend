@@ -41,6 +41,12 @@ public class Track extends BaseEntity {
     // 경도
     @Column private Double longitude;
 
+    // 현재 날씨
+    @Column private String weather;
+
+    // 현재 온도
+    @Column private Integer temperature;
+
     // 시험장 특성
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
@@ -65,5 +71,15 @@ public class Track extends BaseEntity {
         this.location = track.getLocation();
         this.description = track.getDescription();
         this.length = track.getLength();
+    }
+
+    public void updateGeoLocation(Double longitude, Double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public void updateWeather(String weather, Integer temperature) {
+        this.weather = weather;
+        this.temperature = temperature;
     }
 }

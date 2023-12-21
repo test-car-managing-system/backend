@@ -1,4 +1,4 @@
-package com.testcar.car.config;
+package com.testcar.car.common.config;
 
 
 import io.swagger.v3.oas.models.Components;

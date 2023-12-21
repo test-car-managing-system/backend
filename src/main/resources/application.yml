@@ -29,3 +29,9 @@ spring:
 
 jwt:
   secret-key: ${JWT_SECRET_KEY:secret1231241232141asdasdwe}
+
+kakao:
+  api-key: ${KAKAO_API_KEY:1234}
+
+weather:
+  api-key: ${WEATHER_API_KEY:1234}
